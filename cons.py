@@ -4,3 +4,4 @@ topics = ['Animals']
 url = 'https://free-images.com'
 
 questions = 10
+run = True 

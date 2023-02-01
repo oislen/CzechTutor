@@ -7,6 +7,7 @@ from PIL import Image
 from io import BytesIO
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import random
 
 def check_user_input(user_input, valid_input = None):
     """"""
@@ -54,13 +55,51 @@ def plot_english(image_url):
     image_page = requests.get(image_url)
     img = Image.open(BytesIO(image_page.content))
     plt.imshow(img)
+    plt.axis('off')
     plt.show()
     return 0
 
-def grade_answer(answer, target_sample, options, english, total):
+def select_form():
+    """"""
+    if random.uniform(0, 1) > 0.5:
+        form = 'Nominative Singular'
+    else:
+        form = 'Nominative Plural'
+    return form
+
+def formulate_question(english, form, options):
+    """"""
+    if form == 'Nominative Singular':
+        question = f'What is Czech for {english.title()}:'
+    else:
+        question = f'What is Czech for {english.title()}(s):'
+    # generate question options
+    valid_options = options[form].to_list()
+    question_options = ''.join([f'- {x} \n' for x in valid_options])
+    print(question)
+    print(question_options)
+    return valid_options
+
+def process_user_answer(valid_options):
+    """"""
+    valid_answer = 0
+    while valid_answer == 0:
+        # ask for user input
+        answer = input('Answer: ')
+        # remove leading and trailling white space from answer
+        answer = answer.strip()
+        # verify user input
+        user_input, return_code = check_user_input(answer, valid_options)
+        if return_code == 1:
+            print('Invalid answer selected')
+        else:
+            valid_answer = 1
+    return answer
+
+def grade_answer(answer, target_sample, form, options, english, total):
     """"""
     # retrieve the english translation of the answer
-    answer_english = options.loc[options['Nominative Singular'] == answer, 'English'].iloc[0]
+    answer_english = options.loc[options[form] == answer, 'English'].iloc[0]
     # determine if the correct answer was choosen
     result = 1 if answer_english == english else 0
     # update running total of game
@@ -70,32 +109,34 @@ def grade_answer(answer, target_sample, options, english, total):
     print(response)
     return total
 
-def main(total = 0, run = True):
+def main(questions = cons.questions):
     """
     """
-    while run:
+    while cons.run:
         # select vocabulary topic
         topic = select_topic()
+        # set total to zero
+        total = 0
         # read in Czech vocabulary data
         data = pd.read_excel(cons.vocab_fpath, sheet_name=topic)
         # loop over each question
-        for i in range(cons.questions):
+        for i in range(questions):
             # pull data for the questions
             target_sample, outside_samples, options = pull_data(data)
             # extract english translation of sample
             english = target_sample['English'].iloc[0]
+            # determine form of question
+            form = select_form()
             # plot image of english word
             plot_english(target_sample['Image'].iloc[0])
-            print(f'What is Czech for {english.title()}:')
-            print(''.join(options['Nominative Singular'].apply(lambda x: f'- {x} \n').to_list()))
-            # ask for user input
-            answer = input('Answer: ')
+            # pose question
+            valid_options = formulate_question(english, form, options)
+            # process user's answer
+            answer = process_user_answer(valid_options)
             # grade answer
-            grade_answer(answer, target_sample, options, english, total)   
+            total = grade_answer(answer, target_sample, form, options, english, total)  
         # print results
-        print(f'{total} out of {cons.questions} questions correct')
-        # set run to false to end programme
-        run = False
+        print(f'{total} out of {questions} questions correct')
     return 0
 
 
