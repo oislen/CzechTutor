@@ -1,5 +1,5 @@
 import cons
-from check_user_input import check_user_input
+from scripts.utilities.check_user_input import check_user_input
 
 def select_topic():
     # set parameter for topic selected

@@ -6,4 +6,5 @@ def select_form():
         form = 'Nominative Singular'
     else:
         form = 'Nominative Plural'
+    print(form)
     return form

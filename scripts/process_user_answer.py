@@ -1,4 +1,4 @@
-from scripts.check_user_input import check_user_input
+from scripts.utilities.check_user_input import check_user_input
 
 def process_user_answer(valid_options):
     """"""
@@ -6,6 +6,7 @@ def process_user_answer(valid_options):
     while valid_answer == 0:
         # ask for user input
         answer = input('Answer: ')
+        print(answer)
         # remove leading and trailling white space from answer
         answer = answer.strip()
         # verify user input
