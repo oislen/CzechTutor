@@ -1,10 +1,11 @@
 import cons
 import pandas as pd
 
-from scripts.select_topic import select_topic
+from scripts.utilities.plot_english import plot_english
+
 from scripts.pull_data import pull_data
+from scripts.select_topic import select_topic
 from scripts.select_form import select_form
-from scripts.plot_english import plot_english
 from scripts.formulate_question import formulate_question
 from scripts.process_user_answer import process_user_answer
 from scripts.grade_answer import grade_answer
