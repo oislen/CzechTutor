@@ -1,3 +1,5 @@
+from sys import exit
+
 def check_user_input(user_input, valid_input = None):
     """"""
     if user_input == 'q()':
