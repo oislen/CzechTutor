@@ -6,7 +6,7 @@ def formulate_question(english, form, options):
         question = f'What is Czech for {english.title()}(s):'
     # generate question options
     valid_options = options[form].to_list()
-    question_options = ''.join([f'- {x} \n' for x in valid_options])
+    question_options = ''.join([f'{i}. {x} \n' for i, x in enumerate(valid_options)])
     print(question)
     print(question_options)
     return valid_options
