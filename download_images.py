@@ -1,5 +1,5 @@
-import pandas as pd
 import cons
+import pandas as pd
 from scripts.utilities.webscraper import main
 
 # if running as main programme
