@@ -7,9 +7,9 @@ def select_topic():
     # while no topic has been selected
     while topic_selected == 0:
         # ask for user input
-        topic = input(f'Select a Topic: {cons.topics} \n')
+        topic = input(f'Select a Topic: {cons.topics}, or exit \n')
         # verify user input
-        user_input, return_code = check_user_input(topic, cons.topics)
+        user_input, return_code = check_user_input(topic, cons.topics + ['exit'])
         # if a valid topic has been selected
         if return_code == 0:
             # update topic selected parameter
