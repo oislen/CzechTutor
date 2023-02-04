@@ -10,7 +10,7 @@ from scripts.formulate_question import formulate_question
 from scripts.process_user_answer import process_user_answer
 from scripts.grade_answer import grade_answer
 
-def main(run = True, questions = 10):
+def main(run = True, questions = 10, n_options = 4):
     """
     """
     while run:
@@ -23,7 +23,7 @@ def main(run = True, questions = 10):
         # loop over each question
         for i in range(questions):
             # pull data for the questions
-            target_sample, outside_samples, options = pull_data(data)
+            target_sample, outside_samples, options = pull_data(data, n_options)
             # extract english translation of sample
             english = target_sample['English'].iloc[0]
             # determine form of question
