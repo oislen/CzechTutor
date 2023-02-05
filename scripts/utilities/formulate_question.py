@@ -14,7 +14,7 @@ def formulate_question(quest_dict):
         question = f'What is Czech for {english.title()}(s):'
     # generate question options
     valid_options = options[form].to_list()
-    question_options = ''.join([f'{i}. {x} \n' for i, x in enumerate(valid_options)])
+    question_options = ''.join([f'{i + 1}. {x} \n' for i, x in enumerate(valid_options)])
     # assign to question dictionary
     quest_dict['valid_options'] = valid_options
     print(question)
