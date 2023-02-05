@@ -11,7 +11,7 @@ images_dir = os.path.join(data_dir, 'images')
 # set file names
 vocab_fpath = os.path.join(data_dir, 'vocab.xlsx')
 # set available topics
-topics = ['Animals', 'City', 'Countryside', 'Drinks', 'Food']
+topics = ['Animals', 'City', 'Countryside', 'Drinks', 'Food', 'House']
 # set free-images url
 url = 'https://free-images.com'
 # combine all directories into one list
