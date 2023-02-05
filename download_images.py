@@ -1,6 +1,6 @@
 import cons
 import pandas as pd
-from scripts.utilities.webscraper import main
+from scripts.webscraper.webscraper import main
 
 # if running as main programme
 if __name__ == '__main__':
