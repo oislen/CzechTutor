@@ -7,7 +7,6 @@ def process_user_answer(quest_dict):
     while valid_answer == 0:
         # ask for user input
         answer = input('Answer: ')
-        print(answer)
         # remove leading and trailling white space from answer
         answer = answer.strip()
         # verify user input
