@@ -18,6 +18,9 @@ call conda install -c conda-forge openpyxl --yes
 :: install required visualisation packages
 call conda install -c conda-forge matplotlib --yes
 
+:: install tkinter for gui
+call conda install -c conda-forge tk --yes
+
 :: install jupyterlab
 call conda install -c conda-forge jupyterlab --yes
 
