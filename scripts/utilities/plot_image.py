@@ -6,7 +6,7 @@ from io import BytesIO
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
-def plot_target(quest_dict, plot_from = 'disk'):
+def plot_image(quest_dict, plot_from = 'disk'):
     """
     """
     # extract options from question dictionary
