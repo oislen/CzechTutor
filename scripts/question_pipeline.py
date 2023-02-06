@@ -1,12 +1,12 @@
 # load utility functions
 from scripts.utilities.select_form import select_form
 from scripts.utilities.pull_data import pull_data
-from scripts.utilities.plot_target import plot_image
+from scripts.utilities.plot_image import plot_image
 from scripts.utilities.formulate_question import formulate_question
 from scripts.utilities.process_user_answer import process_user_answer
 from scripts.utilities.grade_answer import grade_answer
 
-def question_pipeline(quest_dict, total):
+def question_pipeline(quest_dict, topic_dict):
     """
     """
     # pull data for the questions
@@ -20,5 +20,5 @@ def question_pipeline(quest_dict, total):
     # process user's answer
     quest_dict = process_user_answer(quest_dict)
     # grade answer
-    quest_dict, total = grade_answer(quest_dict, total)  
-    return quest_dict, total
+    quest_dict, topic_dict = grade_answer(quest_dict, topic_dict)  
+    return quest_dict, topic_dict
