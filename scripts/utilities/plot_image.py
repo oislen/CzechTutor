@@ -25,7 +25,7 @@ def plot_image(quest_dict, plot_from = 'disk'):
             image_page = requests.get(image_url)
             img = Image.open(BytesIO(image_page.content))
         # plot image
-        plt.figure(figsize=(10, 8))
+        plt.figure(figsize=(4, 3))
         plt.imshow(img)
         plt.axis('off')
         plt.show()
