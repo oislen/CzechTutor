@@ -9,10 +9,10 @@ from scripts.utilities.grade_answer import grade_answer
 def question_pipeline(quest_dict, total):
     """
     """
-    # determine form of question
-    quest_dict = select_form(quest_dict)
     # pull data for the questions
     quest_dict = pull_data(quest_dict)
+    # determine form of question
+    quest_dict = select_form(quest_dict)
     # plot image of english word
     plot_target(quest_dict)
     # pose question
