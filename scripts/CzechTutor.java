@@ -15,13 +15,13 @@ public class CzechTutor {
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader buf = new BufferedReader(isr);
             String lineJustFetched = null;
+            String[] arrayKeys = {"EN", "CZ", "REF"};
             // iterate over file lines and transform each line into a record set
             while(true){
                 lineJustFetched = buf.readLine();
                 if(lineJustFetched == null){  
                     break; 
                 }else{
-                    String[] arrayKeys = {"EN", "CZ", "REF"}; 
                     String[] arrayValues;
                     arrayValues = lineJustFetched.split("\t");
                     Map<String, String> mapObject = IntStream.range(0, arrayKeys.length).boxed().collect(Collectors.toMap(i -> arrayKeys[i], i -> arrayValues[i]));
