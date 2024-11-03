@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.Random;
 
 public class LoadData {
     public static void main(String[] args) {
@@ -14,8 +15,8 @@ public class LoadData {
             BufferedReader buf = new BufferedReader(isr);
             ArrayList<Map<String, String>> recordSet = new ArrayList<>();
             String lineJustFetched = null;
+            Random randomGenerator = new Random();
             
-
             while(true){
                 lineJustFetched = buf.readLine();
                 if(lineJustFetched == null){  
@@ -29,10 +30,10 @@ public class LoadData {
                 }
             }
 
-
             buf.close();
 
-            System.out.println(recordSet);
+            int index = randomGenerator.nextInt(recordSet.size());
+            System.out.println(recordSet.get(index));
 
         }catch(Exception e){
             e.printStackTrace();
