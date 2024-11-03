@@ -7,16 +7,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.Random;
 
-public class LoadData {
-    public static void main(String[] args) {
+public class CzechTutor {
+    public static ArrayList<Map<String, String>> LoadData(String dataFilePath) {
+        ArrayList<Map<String, String>> recordSet = new ArrayList<>();
         try{
-            FileInputStream fis = new FileInputStream("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+            FileInputStream fis = new FileInputStream(dataFilePath);
             InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
             BufferedReader buf = new BufferedReader(isr);
-            ArrayList<Map<String, String>> recordSet = new ArrayList<>();
             String lineJustFetched = null;
-            Random randomGenerator = new Random();
-            
+            // iterate over file lines and transform each line into a record set
             while(true){
                 lineJustFetched = buf.readLine();
                 if(lineJustFetched == null){  
@@ -29,14 +28,18 @@ public class LoadData {
                     recordSet.add(mapObject);
                 }
             }
-
             buf.close();
-
-            int index = randomGenerator.nextInt(recordSet.size());
-            System.out.println(recordSet.get(index));
-
         }catch(Exception e){
             e.printStackTrace();
         }
+        return recordSet;
+    }
+    public static void main(String[] args) {
+        // load czech / english language phrases from disk
+        ArrayList<Map<String, String>> recordSet = CzechTutor.LoadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+        // randomly select from loaded phrases
+        Random randomGenerator = new Random();
+        int index = randomGenerator.nextInt(recordSet.size());
+        System.out.println(recordSet.get(index));
     }
 }    
