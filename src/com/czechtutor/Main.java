@@ -38,30 +38,51 @@ public class Main {
     
     public static ArrayList<Integer> randomDataIndices(Integer nIndices, Integer upperIndexBound) {
         // randomly select nIndices between 0 and upperIndexBound
-        Random randomGenerator = new Random();
+        Random indexGenerator = new Random();
         ArrayList<Integer> indexArray = new ArrayList<>();
         for (int i = 0; i<nIndices; i++)
         {
-            Integer pick = randomGenerator.nextInt(upperIndexBound);
-            indexArray.add(pick);
+            Integer index = indexGenerator.nextInt(upperIndexBound);
+            indexArray.add(index);
         }
         return indexArray;
     }
     
     public static void main(String[] args) {
+        String fromLanguage;
+        String toLanguage;
+        Boolean isCZtoEN = true;
+        Integer nQuestions = 2;
+        Random answerIndexGenerator = new Random();
         // load czech / english language phrases from disk
         ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-        // randomly generate four indices from data
-        Integer upperIndexBound = recordSet.size();
-        Integer nIndices = 4;
-        ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
-        // extract randomly select index values from record set
-        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
-        // construct basic payload
-        HashMap<String,Object> payload = new HashMap<>();
-        payload.put("question", 1);
-        payload.put("phrases", filteredRecordSet);
-        payload.put("correct", 2);
-        System.out.println(payload);
+        // determine language translation direction
+        if(isCZtoEN){
+            fromLanguage = "CZ";
+            toLanguage = "EN";
+        }else{
+            fromLanguage = "EN";
+            toLanguage = "CZ";
+        }
+        for (int i = 0; i<nQuestions; i++)
+        {
+            // randomly generate four indices from data
+            Integer upperIndexBound = recordSet.size();
+            Integer nIndices = 4;
+            Integer answerIndex = answerIndexGenerator.nextInt(3);
+            ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
+            // extract randomly select index values from record set
+            ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+            // determine question phrase, answer and options
+            String phrase = filteredRecordSet.get(answerIndex).get(fromLanguage);
+            String answer = filteredRecordSet.get(answerIndex).get(toLanguage);
+            //ArrayList<String> options = filteredRecordSet.get(answerIndex).get("CZ");
+            // construct basic payload
+            HashMap<String,Object> payload = new HashMap<>();
+            payload.put("question", i);
+            payload.put("phrase", phrase);
+            payload.put("answer", answer);
+            System.out.println(payload);
+        }
     }
 }    
