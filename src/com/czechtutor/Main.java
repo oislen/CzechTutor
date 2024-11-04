@@ -2,12 +2,12 @@ package com.czechtutor;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -30,8 +30,8 @@ public class Main {
                     recordSet.add(mapObject);
                 }
             }
-        }catch(IOException  e){
-            System.out.println(e);
+        }catch(Exception e){  
+            e.printStackTrace();
         }
         return recordSet;
     }
@@ -58,7 +58,7 @@ public class Main {
         Random phaseIndexGenerator = new Random();
         Integer phaseIndex = phaseIndexGenerator.nextInt(3);
         String phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
-        String answer = filteredRecordSet.get(phaseIndex).get(toLanguage);
+        String solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
         ArrayList<String> options = new ArrayList<>();
         for( Map<String, String> obj : filteredRecordSet){
             options.add(obj.get(toLanguage));
@@ -68,20 +68,48 @@ public class Main {
         questionPayload.put("question", questionIndex);
         questionPayload.put("phrase", phrase);
         questionPayload.put("options", options);
-        questionPayload.put("answer", answer);
+        questionPayload.put("solution", solution);
         return questionPayload;
+    }
+
+    public static Integer countTotalCorrect(ArrayList<HashMap<String,Object>> results){
+        int totalCorrect = 0;
+        for( HashMap<String,Object> obj : results){
+            Boolean isCorrect = (Boolean) obj.get("correct");
+            if (isCorrect) {
+                totalCorrect=totalCorrect+1;
+            }
+        }
+        return totalCorrect;
     }
 
     public static void main(String[] args) {
         String fromLanguage = "CZ";
         String toLanguage = "EN";
         Integer nQuestions = 2;
-        // load czech / english language phrases from disk
-        ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-        for (int i = 0; i<nQuestions; i++)
-        {
-            HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, i, recordSet);
-            System.out.println(questionPayload);
+        ArrayList<HashMap<String,Object>> results = new ArrayList<>();
+        try (Scanner reader = new Scanner(System.in)) {
+            // load czech / english language phrases from disk
+            ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+            for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++)
+            {
+                // create question payload
+                HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, questionIndex, recordSet);
+                System.out.println(questionPayload);
+                // prompt user for answer
+                System.out.println("Enter an answer: ");
+                String answer = reader.nextLine();
+                // update results
+                questionPayload.put("answer", answer);
+                questionPayload.put("correct", questionPayload.get("answer").equals(questionPayload.get("solution")));
+                results.add(questionPayload);
+            }
+            // calculate total correct
+            Integer totalCorrect = countTotalCorrect(results);
+            System.out.println(results);
+            System.out.println("Total Correct Answer: " + totalCorrect);
+        }catch(Exception e){  
+            e.printStackTrace();
         }
     }
 }    
