@@ -20,9 +20,9 @@ public class Main {
             // iterate over file lines and transform each line into a record set
             while(true){
                 lineJustFetched = buf.readLine();
-                if(lineJustFetched == null){  
+                if (lineJustFetched == null) {
                     break; 
-                }else{
+                } else {
                     String[] strSplit = lineJustFetched.split("\t");
                     ArrayList<String> arrayValues = new ArrayList<>( Arrays.asList(strSplit)); 
                     HashMap<String, String> hashMapObject = new HashMap<>();
