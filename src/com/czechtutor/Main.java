@@ -25,11 +25,11 @@ public class Main {
                 }else{
                     String[] strSplit = lineJustFetched.split("\t");
                     ArrayList<String> arrayValues = new ArrayList<>( Arrays.asList(strSplit)); 
-                    HashMap<String, String> mapObject = new HashMap<>();
+                    HashMap<String, String> hashMapObject = new HashMap<>();
                     for (int i = 0; i<3; i++) {
-                        mapObject.put(arrayKeys.get(i), arrayValues.get(i));
+                        hashMapObject.put(arrayKeys.get(i), arrayValues.get(i));
                     }
-                    recordSet.add(mapObject);
+                    recordSet.add(hashMapObject);
                 }
             }
         }catch(Exception e){  
@@ -42,8 +42,7 @@ public class Main {
         // randomly select nIndices between 0 and upperIndexBound
         Random indexGenerator = new Random();
         ArrayList<Integer> indexArray = new ArrayList<>();
-        for (int i = 0; i<nIndices; i++)
-        {
+        for (int i = 0; i<nIndices; i++) {
             Integer index = indexGenerator.nextInt(upperIndexBound);
             indexArray.add(index);
         }
@@ -68,8 +67,8 @@ public class Main {
         String phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
         String solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
         ArrayList<String> options = new ArrayList<>();
-        for( HashMap<String, String> obj : filteredRecordSet){
-            options.add(obj.get(toLanguage));
+        for (HashMap<String, String> hashMapObject : filteredRecordSet) {
+            options.add(hashMapObject.get(toLanguage));
         }
         // construct question payload
         HashMap<String,Object> questionPayload = new HashMap<>();
@@ -82,8 +81,8 @@ public class Main {
 
     public static Integer countTotalCorrect(ArrayList<HashMap<String,Object>> results){
         int totalCorrect = 0;
-        for( HashMap<String,Object> obj : results){
-            Boolean isCorrect = (Boolean) obj.get("correct");
+        for (HashMap<String,Object> hashMapObject : results) {
+            Boolean isCorrect = (Boolean) hashMapObject.get("correct");
             if (isCorrect) {
                 totalCorrect=totalCorrect+1;
             }
@@ -99,8 +98,7 @@ public class Main {
         try (Scanner reader = new Scanner(System.in)) {
             // load czech / english language phrases from disk
             ArrayList<HashMap<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-            for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++)
-            {
+            for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
                 HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, questionIndex, recordSet);
                 System.out.println(questionPayload);
