@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CzechTutor {
+public class Main {
 
     public static ArrayList<Map<String, String>> loadData(String dataFilePath) {
         ArrayList<Map<String, String>> recordSet = new ArrayList<>();
@@ -48,11 +48,11 @@ public class CzechTutor {
     
     public static void main(String[] args) {
         // load czech / english language phrases from disk
-        ArrayList<Map<String, String>> recordSet = CzechTutor.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+        ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
         // randomly generate four indices from data
         Integer upperIndexBound = recordSet.size();
         Integer nIndices = 4;
-        ArrayList<Integer> indexArray = CzechTutor.randomDataIndices(nIndices, upperIndexBound);
+        ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
         // extract randomly select index values from record set
         ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
         // construct basic payload
