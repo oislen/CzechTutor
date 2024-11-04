@@ -47,7 +47,31 @@ public class Main {
         }
         return indexArray;
     }
-    
+
+    public static HashMap<String,Object> createQuestionPayload(String fromLanguage, String toLanguage, Integer questionIndex, ArrayList<Map<String, String>> recordSet){
+        // randomly generate four indices to extract from the record set
+        Integer upperIndexBound = recordSet.size();
+        Integer nIndices = 4;
+        ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
+        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+        // randomly determine the phase, answer and options
+        Random phaseIndexGenerator = new Random();
+        Integer phaseIndex = phaseIndexGenerator.nextInt(3);
+        String phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
+        String answer = filteredRecordSet.get(phaseIndex).get(toLanguage);
+        ArrayList<String> options = new ArrayList<>();
+        for( Map<String, String> obj : filteredRecordSet){
+            options.add(obj.get(toLanguage));
+        }
+        // construct question payload
+        HashMap<String,Object> questionPayload = new HashMap<>();
+        questionPayload.put("question", questionIndex);
+        questionPayload.put("phrase", phrase);
+        questionPayload.put("options", options);
+        questionPayload.put("answer", answer);
+        return questionPayload;
+    }
+
     public static void main(String[] args) {
         String fromLanguage = "CZ";
         String toLanguage = "EN";
@@ -56,24 +80,8 @@ public class Main {
         ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
         for (int i = 0; i<nQuestions; i++)
         {
-            // randomly generate four indices from data
-            Integer upperIndexBound = recordSet.size();
-            Integer nIndices = 4;
-            Random answerIndexGenerator = new Random();
-            Integer answerIndex = answerIndexGenerator.nextInt(3);
-            ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
-            // extract randomly select index values from record set
-            ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
-            // determine question phrase, answer and options
-            String phrase = filteredRecordSet.get(answerIndex).get(fromLanguage);
-            String answer = filteredRecordSet.get(answerIndex).get(toLanguage);
-            //ArrayList<String> options = filteredRecordSet.get(answerIndex).get("CZ");
-            // construct basic payload
-            HashMap<String,Object> payload = new HashMap<>();
-            payload.put("question", i);
-            payload.put("phrase", phrase);
-            payload.put("answer", answer);
-            System.out.println(payload);
+            HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, i, recordSet);
+            System.out.println(questionPayload);
         }
     }
 }    
