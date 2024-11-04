@@ -2,11 +2,11 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.Random;
-import org.json.JSONArray
 
 public class CzechTutor {
 
@@ -56,22 +56,13 @@ public class CzechTutor {
         Integer upperIndexBound = recordSet.size();
         Integer nIndices = 4;
         ArrayList<Integer> indexArray = CzechTutor.RandomDataIndices(nIndices, upperIndexBound);
-        // Expand logic here to construct payload
         // extract randomly select index values from record set
         ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<Map<String, String>> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
-
-        String message;
-        JSONObject json = new JSONObject();
-        json.put("name", "student");
-        JSONArray array = new JSONArray();
-        JSONObject item = new JSONObject();
-        item.put("information", "test");
-        item.put("id", 3);
-        item.put("name", "course1");
-        array.put(item);
-        json.put("course", array);
-        message = json.toString();
-
-        System.out.println(filteredRecordSet);
+        // construct basic payload
+        HashMap<String,Object> payload = new HashMap<String,Object>();
+        payload.put("question", 1);
+        payload.put("phrases", filteredRecordSet);
+        payload.put("correct", 2);
+        System.out.println(payload);
     }
 }    
