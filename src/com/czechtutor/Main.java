@@ -106,7 +106,7 @@ public class Main {
             }
             // calculate total correct
             Integer totalCorrect = countTotalCorrect(results);
-            System.out.println(results);
+            System.out.println("Results: " + results);
             System.out.println("Total Correct Answer: " + totalCorrect);
         }catch(Exception e){  
             e.printStackTrace();
