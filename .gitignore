@@ -6,3 +6,4 @@ data/ces-eng*
 out
 CzechTutor.iml
 .vscode
+*.class
