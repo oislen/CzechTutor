@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 import java.util.Random;
 
 public class CzechTutor {
+
     public static ArrayList<Map<String, String>> LoadData(String dataFilePath) {
         ArrayList<Map<String, String>> recordSet = new ArrayList<>();
         try{
@@ -34,12 +35,29 @@ public class CzechTutor {
         }
         return recordSet;
     }
+    
+    public static ArrayList<Integer> RandomDataIndices(Integer nIndices, Integer upperIndexBound) {
+        // randomly select nIndices between 0 and upperIndexBound
+        Random randomGenerator = new Random();
+        ArrayList<Integer> indexArray = new ArrayList<>();
+        for (int i = 0; i<nIndices; i++)
+        {
+            Integer pick = randomGenerator.nextInt(upperIndexBound);
+            indexArray.add(pick);
+        }
+        return indexArray;
+    }
+    
     public static void main(String[] args) {
         // load czech / english language phrases from disk
         ArrayList<Map<String, String>> recordSet = CzechTutor.LoadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-        // randomly select from loaded phrases
-        Random randomGenerator = new Random();
-        int index = randomGenerator.nextInt(recordSet.size());
-        System.out.println(recordSet.get(index));
+        // randomly generate four indices from data
+        Integer upperIndexBound = recordSet.size();
+        Integer nIndices = 4;
+        ArrayList<Integer> indexArray = CzechTutor.RandomDataIndices(nIndices, upperIndexBound);
+        // Expand logic here to construct payload
+        // extract randomly select index values from record set
+        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<Map<String, String>> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+        System.out.println(filteredRecordSet);
     }
 }    
