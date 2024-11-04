@@ -4,29 +4,31 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Main {
 
-    public static ArrayList<Map<String, String>> loadData(String dataFilePath) {
-        ArrayList<Map<String, String>> recordSet = new ArrayList<>();
+    public static ArrayList<HashMap<String, String>> loadData(String dataFilePath) {
+        ArrayList<HashMap<String, String>> recordSet = new ArrayList<>();
         try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(dataFilePath), "UTF-8"))) {
             String lineJustFetched;
-            String[] arrayKeys = {"EN", "CZ", "REF"};
+            String[] strKeys = {"EN", "CZ", "REF"};
+            ArrayList<String> arrayKeys = new ArrayList<>(Arrays.asList(strKeys)); 
             // iterate over file lines and transform each line into a record set
             while(true){
                 lineJustFetched = buf.readLine();
                 if(lineJustFetched == null){  
                     break; 
                 }else{
-                    String[] arrayValues;
-                    arrayValues = lineJustFetched.split("\t");
-                    Map<String, String> mapObject = IntStream.range(0, arrayKeys.length).boxed().collect(Collectors.toMap(i -> arrayKeys[i], i -> arrayValues[i]));
+                    String[] strSplit = lineJustFetched.split("\t");
+                    ArrayList<String> arrayValues = new ArrayList<>( Arrays.asList(strSplit)); 
+                    HashMap<String, String> mapObject = new HashMap<>();
+                    for (int i = 0; i<3; i++) {
+                        mapObject.put(arrayKeys.get(i), arrayValues.get(i));
+                    }
                     recordSet.add(mapObject);
                 }
             }
@@ -48,19 +50,25 @@ public class Main {
         return indexArray;
     }
 
-    public static HashMap<String,Object> createQuestionPayload(String fromLanguage, String toLanguage, Integer questionIndex, ArrayList<Map<String, String>> recordSet){
+    public static HashMap<String,Object> createQuestionPayload(String fromLanguage, String toLanguage, Integer questionIndex, ArrayList<HashMap<String, String>> recordSet){
         // randomly generate four indices to extract from the record set
         Integer upperIndexBound = recordSet.size();
         Integer nIndices = 4;
         ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
-        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+        //ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+        ArrayList<HashMap<String, String>> filteredRecordSet = new ArrayList<>();
+        for (int i = 0; i<recordSet.size(); i++) {
+            if (indexArray.contains(i)) {
+                filteredRecordSet.add(recordSet.get(i));
+            }
+        }
         // randomly determine the phase, answer and options
         Random phaseIndexGenerator = new Random();
         Integer phaseIndex = phaseIndexGenerator.nextInt(3);
         String phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
         String solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
         ArrayList<String> options = new ArrayList<>();
-        for( Map<String, String> obj : filteredRecordSet){
+        for( HashMap<String, String> obj : filteredRecordSet){
             options.add(obj.get(toLanguage));
         }
         // construct question payload
@@ -90,7 +98,7 @@ public class Main {
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             // load czech / english language phrases from disk
-            ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+            ArrayList<HashMap<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++)
             {
                 // create question payload
