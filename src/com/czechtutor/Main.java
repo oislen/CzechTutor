@@ -106,10 +106,12 @@ public class Main {
                 // prompt user for answer
                 System.out.println("Enter an answer: ");
                 String answer = reader.nextLine();
-                // update results
-                questionPayload.put("answer", answer);
-                questionPayload.put("correct", questionPayload.get("answer").equals(questionPayload.get("solution")));
-                results.add(questionPayload);
+                // create results payload and update results
+                HashMap<String,Object> answerPayload = new HashMap<>(questionPayload);
+                answerPayload.put("answer", answer);
+                answerPayload.put("correct", answerPayload.get("answer").equals(answerPayload.get("solution")));
+                answerPayload.remove("options");
+                results.add(answerPayload);
             }
             // calculate total correct
             Integer totalCorrect = countTotalCorrect(results);
