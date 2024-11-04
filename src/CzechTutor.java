@@ -1,22 +1,20 @@
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.Random;
 
 public class CzechTutor {
 
-    public static ArrayList<Map<String, String>> LoadData(String dataFilePath) {
+    public static ArrayList<Map<String, String>> loadData(String dataFilePath) {
         ArrayList<Map<String, String>> recordSet = new ArrayList<>();
-        try{
-            FileInputStream fis = new FileInputStream(dataFilePath);
-            InputStreamReader isr = new InputStreamReader(fis, "UTF-8");
-            BufferedReader buf = new BufferedReader(isr);
-            String lineJustFetched = null;
+        try (BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(dataFilePath), "UTF-8"))) {
+            String lineJustFetched;
             String[] arrayKeys = {"EN", "CZ", "REF"};
             // iterate over file lines and transform each line into a record set
             while(true){
@@ -30,14 +28,13 @@ public class CzechTutor {
                     recordSet.add(mapObject);
                 }
             }
-            buf.close();
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch(IOException  e){
+            System.out.println(e);
         }
         return recordSet;
     }
     
-    public static ArrayList<Integer> RandomDataIndices(Integer nIndices, Integer upperIndexBound) {
+    public static ArrayList<Integer> randomDataIndices(Integer nIndices, Integer upperIndexBound) {
         // randomly select nIndices between 0 and upperIndexBound
         Random randomGenerator = new Random();
         ArrayList<Integer> indexArray = new ArrayList<>();
@@ -51,15 +48,15 @@ public class CzechTutor {
     
     public static void main(String[] args) {
         // load czech / english language phrases from disk
-        ArrayList<Map<String, String>> recordSet = CzechTutor.LoadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
+        ArrayList<Map<String, String>> recordSet = CzechTutor.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
         // randomly generate four indices from data
         Integer upperIndexBound = recordSet.size();
         Integer nIndices = 4;
-        ArrayList<Integer> indexArray = CzechTutor.RandomDataIndices(nIndices, upperIndexBound);
+        ArrayList<Integer> indexArray = CzechTutor.randomDataIndices(nIndices, upperIndexBound);
         // extract randomly select index values from record set
-        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<Map<String, String>> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
+        ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
         // construct basic payload
-        HashMap<String,Object> payload = new HashMap<String,Object>();
+        HashMap<String,Object> payload = new HashMap<>();
         payload.put("question", 1);
         payload.put("phrases", filteredRecordSet);
         payload.put("correct", 2);
