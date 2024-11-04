@@ -49,26 +49,17 @@ public class Main {
     }
     
     public static void main(String[] args) {
-        String fromLanguage;
-        String toLanguage;
-        Boolean isCZtoEN = true;
+        String fromLanguage = "CZ";
+        String toLanguage = "EN";
         Integer nQuestions = 2;
-        Random answerIndexGenerator = new Random();
         // load czech / english language phrases from disk
         ArrayList<Map<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-        // determine language translation direction
-        if(isCZtoEN){
-            fromLanguage = "CZ";
-            toLanguage = "EN";
-        }else{
-            fromLanguage = "EN";
-            toLanguage = "CZ";
-        }
         for (int i = 0; i<nQuestions; i++)
         {
             // randomly generate four indices from data
             Integer upperIndexBound = recordSet.size();
             Integer nIndices = 4;
+            Random answerIndexGenerator = new Random();
             Integer answerIndex = answerIndexGenerator.nextInt(3);
             ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
             // extract randomly select index values from record set
