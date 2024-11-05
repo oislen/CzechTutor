@@ -52,7 +52,7 @@ public class Main {
     public static HashMap<String,Object> createQuestionPayload(String fromLanguage, String toLanguage, Integer questionIndex, ArrayList<HashMap<String, String>> recordSet){
         // randomly generate four indices to extract from the record set
         Integer upperIndexBound = recordSet.size();
-        Integer nIndices = 4;
+        final Integer nIndices = 4;
         ArrayList<Integer> indexArray = Main.randomDataIndices(nIndices, upperIndexBound);
         //ArrayList<Map<String, String>> filteredRecordSet = new ArrayList<> (indexArray.stream().map(recordSet::get).collect(Collectors.toList()));
         ArrayList<HashMap<String, String>> filteredRecordSet = new ArrayList<>();
@@ -91,9 +91,9 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        String fromLanguage = "CZ";
-        String toLanguage = "EN";
-        Integer nQuestions = 2;
+        final String fromLanguage = "CZ";
+        final String toLanguage = "EN";
+        final Integer nQuestions = 2;
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             // load czech / english language phrases from disk
@@ -103,13 +103,14 @@ public class Main {
                 // create question payload
                 HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, questionIndex, recordSet);
                 System.out.println(questionPayload);
-                // prompt user for answer
-                System.out.println("Enter an answer: ");
+                // prompt user for answer and determine if correct
+                System.out.print("Enter an answer: ");
                 String answer = reader.nextLine();
+                Boolean correct = answer.toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
                 // create results payload and update results
                 HashMap<String,Object> answerPayload = new HashMap<>(questionPayload);
                 answerPayload.put("answer", answer);
-                answerPayload.put("correct", answerPayload.get("answer").equals(answerPayload.get("solution")));
+                answerPayload.put("correct", correct);
                 answerPayload.remove("options");
                 results.add(answerPayload);
             }
