@@ -98,7 +98,7 @@ public class Main {
         try (Scanner reader = new Scanner(System.in)) {
             // load czech / english language phrases from disk
             //ArrayList<HashMap<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces.txt");
-            ArrayList<HashMap<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\data\\ces-eng\\ces_bkp.txt");
+            ArrayList<HashMap<String, String>> recordSet = Main.loadData("E:\\GitHub\\CzechTutor\\src\\main\\resources\\ces_bkp.txt");
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
                 HashMap<String,Object> questionPayload = createQuestionPayload(fromLanguage, toLanguage, questionIndex, recordSet);
