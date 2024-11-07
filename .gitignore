@@ -1,9 +1,10 @@
 __pycache__
 .ipynb_checkpoints
-data/images
-data/ces-eng.zip
+arch/data/images
+arch/data/ces-eng*
 .idea
 out
 CzechTutor.iml
 .vscode
 *.class
+target
