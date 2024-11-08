@@ -5,4 +5,5 @@ Czech Vocab Builder
 https://www.manythings.org/anki/
 
 # TODO:
-1. Create test maven cases for all java modules
+1. Fix Czech java readfile encoding for ces.txt 
+2. Create test maven cases for all java modules
