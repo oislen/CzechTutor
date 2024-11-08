@@ -4,3 +4,4 @@ call mvnw exec:java -Dexec.mainClass="com.czechtutor.Main"
 :: call mvnw compile test
 :: call mvnw clean compile test package
 :: call mvnw clean install
+:: call mvnw spring-boot:run
