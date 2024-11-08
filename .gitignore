@@ -8,3 +8,4 @@ CzechTutor.iml
 .vscode
 *.class
 target
+.mvn
