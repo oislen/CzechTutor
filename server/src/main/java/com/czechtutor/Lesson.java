@@ -4,7 +4,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Main {
+public class Lesson {
+
+    public static Integer countTotalCorrect(ArrayList<HashMap<String,Object>> results){
+        int totalCorrect = 0;
+        for (HashMap<String,Object> hashMapObject : results) {
+            Boolean isCorrect = (Boolean) hashMapObject.get("correct");
+            if (isCorrect) {
+                totalCorrect=totalCorrect+1;
+            }
+        }
+        return totalCorrect;
+    }
 
     public static void main(String[] args) {
         final String fromLanguage = "CZ";
@@ -17,21 +28,18 @@ public class Main {
             ArrayList<HashMap<String, String>> recordSet = Data.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\ces_bkp.txt");
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
-                HashMap<String,Object> questionPayload = Payload.create(fromLanguage, toLanguage, questionIndex, recordSet);
+                HashMap<String,Object> questionPayload = Question.create(fromLanguage, toLanguage, questionIndex, recordSet);
+                // TODO: println question phrase with question index
                 System.out.println(questionPayload);
                 // prompt user for answer and determine if correct
                 System.out.print("Enter an answer: ");
                 String answer = reader.nextLine();
-                Boolean correct = answer.toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
-                // create results payload and update results
-                HashMap<String,Object> answerPayload = new HashMap<>(questionPayload);
-                answerPayload.put("answer", answer);
-                answerPayload.put("correct", correct);
-                answerPayload.remove("options");
+                // create answer payload and update results
+                HashMap<String,Object> answerPayload = Answer.create(questionPayload, answer);
                 results.add(answerPayload);
             }
             // calculate total correct
-            Integer totalCorrect = Evaluate.countTotalCorrect(results);
+            Integer totalCorrect = countTotalCorrect(results);
             System.out.println("Results: " + results);
             System.out.println("Total Correct Answer: " + totalCorrect);
         }catch(Exception e){  

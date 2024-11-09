@@ -4,7 +4,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-public class Payload {
+public class Question {
+
+    public class Choose {
+        public static ArrayList<Integer> randomIndices(Integer nIndices, Integer upperIndexBound) {
+            // randomly select nIndices between 0 and upperIndexBound
+            Random indexGenerator = new Random();
+            ArrayList<Integer> indexArray = new ArrayList<>();
+            for (int i = 0; i<nIndices; i++) {
+                Integer index = indexGenerator.nextInt(upperIndexBound);
+                indexArray.add(index);
+            }
+            return indexArray;
+        }
+    }    
 
     public static HashMap<String,Object> create(String fromLanguage, String toLanguage, Integer questionIndex, ArrayList<HashMap<String, String>> recordSet){
         // randomly generate four indices to extract from the record set
