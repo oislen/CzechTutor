@@ -21,12 +21,12 @@ public class Main {
         final String fromLanguage = "CZ";
         final String toLanguage = "EN";
         final Integer nQuestions = 2;
-        ArrayList<HashMap<String,Object>> lesson = Lesson.create(fromLanguage, toLanguage, nQuestions);
+        ArrayList<HashMap<String,Object>> quiz = Quiz.create(fromLanguage, toLanguage, nQuestions);
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
-                HashMap<String,Object> questionPayload = lesson.get(questionIndex);
+                HashMap<String,Object> questionPayload = quiz.get(questionIndex);
                 // TODO: println question phrase with question index
                 System.out.println(questionPayload);
                 // prompt user for answer and determine if correct
