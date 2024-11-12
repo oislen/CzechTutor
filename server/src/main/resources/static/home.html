@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<h2>Czech Tutor</h2>
+
+<p>Configure a Czech language lesson below:</p>
+
+<form id="lesson_config_form">
+    <h3>Select the language to translate from:</h3>
+    <fieldset id="fromLanguage">
+      <label for="fromLanguage">From Language</label><br>
+      <input type="radio" id="czech" value="Czech" name="fromLanguage" checked="checked">
+      <label for="czech">Czech</label><br>
+      <input type="radio" id="english" value="English" name="fromLanguage">
+      <label for="english">English</label><br>
+    </fieldset>
+  
+    <h3>Select the language to translate to:</h3>
+    <fieldset id="toLanguage">
+      <label for="toLanguage">To Language</label><br>
+      <input type="radio" id="czech" value="Czech" name="toLanguage">
+      <label for="czech">Czech</label><br>
+      <input type="radio" id="english" value="English" name="toLanguage" checked="checked">
+      <label for="english">English</label><br>
+    </fieldset>
+    <br>
+    <input type="button" id="submit-button" onclick="myfunction()" value="Submit">
+
+</form>
+
+<script>
+    async function uploadFile() {
+        let formData = new FormData();
+        formData.append("data", fileupload.files[0]);
+        await fetch('http://localhost:8080/photoz', {
+            method: "POST",
+            body: formData
+        }).then(result =>    result.text())
+            .then(text => alert(text));
+    }
+    function myfunction() {
+        document.getElementById("lesson_config_form").submit();
+    }
+</script>
+</body>
+</html>

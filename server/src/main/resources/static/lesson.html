@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h2>Question Template</h2>
+
+<form id="question_form">
+
+    <h3>Translate the following phase from {fromLanguage} to {toLanguage}:</h3>
+    <fieldset id="fromLanguage">
+      <label for="fromLanguage">{PHASE TO TRANSLATE}</label><br>
+      <input type="radio" id="option1" value="" name="option1">
+      <label for="option1">OPTION 1</label><br>
+      <input type="radio" id="option2" value="" name="option2">
+      <label for="option2">OPTION 2</label><br>
+      <input type="radio" id="option3" value="" name="option3">
+      <label for="option3">OPTION 3</label><br>
+      <input type="radio" id="option4" value="" name="option4">
+      <label for="option4">OPTION 4</label><br>
+    </fieldset>
+    <br>
+    <input type="button" id="submit-button" onclick="myfunction()" value="Submit">
+</form>
+
+<script>
+    window.onload = function() {
+      document.getElementById('option1').value = 'Option 1';
+      document.getElementById('option2').value = 'Option 2';
+      document.getElementById('option3').value = 'Option 3';
+      document.getElementById('option4').value = 'Option 4';
+    };
+    function myfunction() {
+        document.getElementById("lesson_config_form").submit();
+    }
+</script>
+</body>
+</html>
