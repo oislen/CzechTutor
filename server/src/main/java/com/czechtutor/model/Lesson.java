@@ -1,15 +1,13 @@
 package com.czechtutor.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotEmpty;
 
-//@Table("Lesson")
+@Table("Lesson")
 public class Lesson {
 	
 	@Id
@@ -22,7 +20,7 @@ public class Lesson {
 	private String toLanguage;
 	
 	@NotEmpty
-	private Integer nQuestions
+	private Integer nQuestions;
 
     public void set(HashMap<String,Object>  payload){
         // set the class objects
@@ -40,4 +38,5 @@ public class Lesson {
         payload.put("toLanguage", toLanguage);
         payload.put("nQuestions", nQuestions);
         return payload;
+	}
 }

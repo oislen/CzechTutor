@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotEmpty;
 
-//@Table("Question")
+@Table("Question")
 public class Question {
 	
 	@Id
@@ -52,19 +52,17 @@ public class Question {
         // randomly determine the phase, answer and options
         Random phaseIndexGenerator = new Random();
         Integer phaseIndex = phaseIndexGenerator.nextInt(3);
-        String phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
-        String solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
-        ArrayList<String> options = new ArrayList<>();
+        ArrayList<String> optionsArray = new ArrayList<>();
         for (HashMap<String, String> hashMapObject : filteredRecordSet) {
-            options.add(hashMapObject.get(toLanguage));
+            optionsArray.add(hashMapObject.get(toLanguage));
         }
         // set the class objects
 		this.questionId = (Integer) payload.get("questionId");
 		this.lessonId = (Integer) payload.get("lessonId");
-        this.questionSubId = (Integer) payload("questionSubId");
-        this.phrase = phrase;
-        this.options = options;
-        this.solution = solution;
+        this.questionSubId = (Integer) payload.get("questionSubId");
+        this.phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
+        this.options = optionsArray;
+        this.solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
     }
 	
     public HashMap<String,Object> getHashMap(){
@@ -77,4 +75,5 @@ public class Question {
         payload.put("options", options);
         payload.put("solution", solution);
         return payload;
+    }
 }

@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotEmpty;
 
-//@Table("Answer")
+@Table("Answer")
 public class Answer {
  
 	@Id
@@ -26,20 +26,21 @@ public class Answer {
     private Boolean correct; 
 	
     public void set(HashMap<String,Object> payload) {
-        // determine if answer was correct for the question
-        Boolean correct = payload.get("answer").toString().toLowerCase().trim().equals(payload.get("solution").toString().toLowerCase().trim());
 		// set class objects
 		this.answerId = (Integer) payload.get("questionId");
 		this.lessonId = (Integer) payload.get("lessonId");
 		this.answerSubId = (Integer) payload.get("questionSubId");
         this.answer = (String) payload.get("answer");
-        this.correct = correct;
+        // determine if answer was correct for the question
+        this.correct = (Boolean) payload.get("answer").toString().toLowerCase().trim().equals(payload.get("solution").toString().toLowerCase().trim());
     }
  
     public HashMap<String,Object> getHashMap() {
         // create results payload and update results
         HashMap<String,Object> payload = new HashMap<>();
-        payload.put("id", id);
+        payload.put("answerId", answerId);
+        payload.put("lessonId", lessonId);
+        payload.put("answerSubId", answerSubId);
         payload.put("answer", answer);
         payload.put("correct", correct);
         return payload;
