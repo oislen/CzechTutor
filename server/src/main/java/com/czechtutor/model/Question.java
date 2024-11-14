@@ -7,7 +7,7 @@ import java.util.Random;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotEmpty;
 
 @Table("Question")
 public class Question {
@@ -15,19 +15,19 @@ public class Question {
 	@Id
 	private Integer questionId;
 	
-	@NotEmpty
+	//@NotEmpty
 	private Integer lessonId;
 	
-	@NotEmpty
+	//@NotEmpty
 	private Integer questionSubId;
 	
-    @NotEmpty
+    //@NotEmpty
     private String phrase;
 	
-    @NotEmpty
+    //@NotEmpty
     private ArrayList<String> options;
 	
-    @NotEmpty
+    //@NotEmpty
     private String solution; 
 
     public void set(HashMap<String,Object>  payload, ArrayList<HashMap<String, String>> recordSet){

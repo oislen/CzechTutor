@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotEmpty;
 
 @Table("Answer")
 public class Answer {
@@ -13,16 +13,16 @@ public class Answer {
 	@Id
 	private Integer answerId;
 	
-	@NotEmpty
+	//@NotEmpty
 	private Integer lessonId;
 	
-	@NotEmpty
+	//@NotEmpty
 	private Integer answerSubId;
 	
-    @NotEmpty
+    //@NotEmpty
     private String answer; 
 	
-    @NotEmpty
+    //@NotEmpty
     private Boolean correct; 
 	
     public void set(HashMap<String,Object> payload) {

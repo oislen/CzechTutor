@@ -2,7 +2,6 @@ package com.czechtutor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,9 +24,11 @@ public class ApplicationController {
         return options;
     }
 
+    /*
     @GetMapping("/lesson")
     public ArrayList<HashMap<String,Object>> lesson() {
         ArrayList<HashMap<String,Object>> quiz = Quiz.create(fromLanguage, toLanguage, nQuestions);
         return quiz;
     }
+    */
 }

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import com.czechtutor.model.Answer;
+import com.czechtutor.model.Question;
+
 public class Main {
 
     public static Integer countTotalCorrect(ArrayList<HashMap<String,Object>> results){
@@ -18,23 +21,27 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        final Integer lessonId = 1;
         final String fromLanguage = "CZ";
         final String toLanguage = "EN";
         final Integer nQuestions = 2;
-        ArrayList<HashMap<String,Object>> quiz = Quiz.create(fromLanguage, toLanguage, nQuestions);
+        ArrayList<Question> quiz = Quiz.create(lessonId, fromLanguage, toLanguage, nQuestions);
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
-                HashMap<String,Object> questionPayload = quiz.get(questionIndex);
-                // TODO: println question phrase with question index
+                Question question = quiz.get(questionIndex);
+                HashMap<String,Object> questionPayload;
+                questionPayload = question.getHashMap();
                 System.out.println(questionPayload);
                 // prompt user for answer and determine if correct
                 System.out.print("Enter an answer: ");
-                String answer = reader.nextLine();
+                String input = reader.nextLine();
                 // create answer payload and update results
-                HashMap<String,Object> answerPayload = Answer.create(questionPayload, answer);
-                results.add(answerPayload);
+                Answer answer = new Answer();
+                questionPayload.put("answer", input);
+                answer.set(questionPayload);
+                results.add(answer.getHashMap());
             }
             // calculate total correct
             Integer totalCorrect = countTotalCorrect(results);
