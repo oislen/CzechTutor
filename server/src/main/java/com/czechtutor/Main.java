@@ -25,7 +25,8 @@ public class Main {
         final String fromLanguage = "CZ";
         final String toLanguage = "EN";
         final Integer nQuestions = 2;
-        ArrayList<Question> quiz = Quiz.create(lessonId, fromLanguage, toLanguage, nQuestions);
+        final Integer nOptions = 4;
+        ArrayList<Question> quiz = Quiz.create(lessonId, fromLanguage, toLanguage, nQuestions, nOptions);
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {

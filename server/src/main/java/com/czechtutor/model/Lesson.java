@@ -15,12 +15,15 @@ public class Lesson {
 	
 	//@NotEmpty
 	private String fromLanguage;
-	
+
 	//@NotEmpty
 	private String toLanguage;
 	
 	//@NotEmpty
 	private Integer nQuestions;
+	
+	//@NotEmpty
+	private Integer nOptions;
 
     public void set(HashMap<String,Object>  payload){
         // set the class objects
@@ -28,6 +31,7 @@ public class Lesson {
 		this.fromLanguage = (String) payload.get("fromLanguage");
 		this.toLanguage = (String) payload.get("toLanguage");
 		this.nQuestions = (Integer) payload.get("nQuestions");
+		this.nOptions = (Integer) payload.get("nOptions");
     }
 	
     public HashMap<String,Object> getHashMap(){
@@ -37,6 +41,7 @@ public class Lesson {
         payload.put("fromLanguage", fromLanguage);
         payload.put("toLanguage", toLanguage);
         payload.put("nQuestions", nQuestions);
+        payload.put("nOptions", nOptions);
         return payload;
 	}
 }

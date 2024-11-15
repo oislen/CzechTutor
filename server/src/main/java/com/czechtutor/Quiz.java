@@ -8,13 +8,14 @@ import com.czechtutor.model.Question;
 
 public class Quiz {
 
-    public static ArrayList<Question> create(Integer lessonId, String fromLanguage, String toLanguage, Integer nQuestions) {
+    public static ArrayList<Question> create(Integer lessonId, String fromLanguage, String toLanguage, Integer nQuestions, Integer nOptions) {
         // create a lesson payload to pass to lesson class
         HashMap<String, Object> lessonPayload = new HashMap<>();
         lessonPayload.put("lessonId", lessonId);
         lessonPayload.put("fromLanguage", fromLanguage);
         lessonPayload.put("toLanguage", toLanguage);
         lessonPayload.put("nQuestions", nQuestions);
+        lessonPayload.put("nOptions", nOptions);
         Lesson lesson = new Lesson();
         lesson.set(lessonPayload);
         // load czech / english language phrases from disk

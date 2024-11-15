@@ -33,13 +33,17 @@ public class Question {
     public void set(HashMap<String,Object>  payload, ArrayList<HashMap<String, String>> recordSet){
 		final String fromLanguage = (String) payload.get("fromLanguage");
 		final String toLanguage = (String) payload.get("toLanguage");
-        final Integer nIndices = (Integer) payload.get("nQuestions");
+        final Integer nOptions = (Integer) payload.get("nOptions");
         final Integer upperIndexBound = recordSet.size();
-        // randomly select nIndices to extract from the record set (between 0 and upperIndexBound)
-		Random indexGenerator = new Random();
+        // create random generator and set seed if required
+		Random randomGenerator = new Random();
+        if (payload.containsKey("randomSeed")) {
+            randomGenerator.setSeed((Long) payload.get("randomSeed"));
+        }
+        // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
 		ArrayList<Integer> indexArray = new ArrayList<>();
-		for (int i = 0; i<nIndices; i++) {
-			Integer index = indexGenerator.nextInt(upperIndexBound);
+		for (int i = 0; i<nOptions; i++) {
+			Integer index = randomGenerator.nextInt(upperIndexBound);
 			indexArray.add(index);
             }
 		// select the records corresponding to the random indices 
@@ -50,8 +54,7 @@ public class Question {
             }
         }
         // randomly determine the phase, answer and options
-        Random phaseIndexGenerator = new Random();
-        Integer phaseIndex = phaseIndexGenerator.nextInt(3);
+        Integer phaseIndex = randomGenerator.nextInt(nOptions - 1);
         ArrayList<String> optionsArray = new ArrayList<>();
         for (HashMap<String, String> hashMapObject : filteredRecordSet) {
             optionsArray.add(hashMapObject.get(toLanguage));
