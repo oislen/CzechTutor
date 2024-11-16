@@ -30,15 +30,15 @@ public class Question {
     //@NotEmpty
     private String solution; 
 
-    public void set(HashMap<String,Object>  payload, ArrayList<HashMap<String, String>> recordSet){
-		final String fromLanguage = (String) payload.get("fromLanguage");
-		final String toLanguage = (String) payload.get("toLanguage");
-        final Integer nOptions = (Integer) payload.get("nOptions");
+    public void set(HashMap<String,Object>  lessonPayload, ArrayList<HashMap<String, String>> recordSet){
+		final String fromLanguage = (String) lessonPayload.get("fromLanguage");
+		final String toLanguage = (String) lessonPayload.get("toLanguage");
+        final Integer nOptions = (Integer) lessonPayload.get("nOptions");
         final Integer upperIndexBound = recordSet.size();
         // create random generator and set seed if required
 		Random randomGenerator = new Random();
-        if (payload.containsKey("randomSeed")) {
-            randomGenerator.setSeed((Long) payload.get("randomSeed"));
+        if (lessonPayload.containsKey("randomSeed")) {
+            randomGenerator.setSeed((Long) lessonPayload.get("randomSeed"));
         }
         // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
 		ArrayList<Integer> indexArray = new ArrayList<>();
@@ -60,23 +60,23 @@ public class Question {
             optionsArray.add(hashMapObject.get(toLanguage));
         }
         // set the class objects
-		this.questionId = (Integer) payload.get("questionId");
-		this.lessonId = (Integer) payload.get("lessonId");
-        this.questionSubId = (Integer) payload.get("questionSubId");
+		this.questionId = (Integer) lessonPayload.get("questionId");
+		this.lessonId = (Integer) lessonPayload.get("lessonId");
+        this.questionSubId = (Integer) lessonPayload.get("questionSubId");
         this.phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
         this.options = optionsArray;
         this.solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
     }
 	
-    public HashMap<String,Object> getHashMap(){
-	    // construct question payload
-        HashMap<String,Object> payload = new HashMap<>();
-        payload.put("questionId", questionId);
-        payload.put("lessonId", lessonId);
-        payload.put("questionSubId", questionSubId);
-        payload.put("phrase", phrase);
-        payload.put("options", options);
-        payload.put("solution", solution);
-        return payload;
+    public HashMap<String,Object> getQuestionPayload(){
+	    // construct questionPayload
+        HashMap<String,Object> questionPayload = new HashMap<>();
+        questionPayload.put("questionId", questionId);
+        questionPayload.put("lessonId", lessonId);
+        questionPayload.put("questionSubId", questionSubId);
+        questionPayload.put("phrase", phrase);
+        questionPayload.put("options", options);
+        questionPayload.put("solution", solution);
+        return questionPayload;
     }
 }

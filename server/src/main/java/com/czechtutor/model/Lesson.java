@@ -33,15 +33,19 @@ public class Lesson {
 		this.nQuestions = (Integer) payload.get("nQuestions");
 		this.nOptions = (Integer) payload.get("nOptions");
     }
-	
-    public HashMap<String,Object> getHashMap(){
-	    // construct question payload
-        HashMap<String,Object> payload = new HashMap<>();
-        payload.put("lessonId", lessonId);
-        payload.put("fromLanguage", fromLanguage);
-        payload.put("toLanguage", toLanguage);
-        payload.put("nQuestions", nQuestions);
-        payload.put("nOptions", nOptions);
-        return payload;
+
+    public HashMap<String,Object> getLessonPayload(){
+	    // construct lesson payload
+        HashMap<String,Object> lessonPayload = new HashMap<>();
+        lessonPayload.put("lessonId", lessonId);
+        lessonPayload.put("fromLanguage", fromLanguage);
+        lessonPayload.put("toLanguage", toLanguage);
+        lessonPayload.put("nQuestions", nQuestions);
+        lessonPayload.put("nOptions", nOptions);
+        return lessonPayload;
+	}
+		
+    public Integer getNQuestions(){
+		return nQuestions;
 	}
 }

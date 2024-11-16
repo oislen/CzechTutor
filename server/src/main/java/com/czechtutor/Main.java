@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 import com.czechtutor.model.Answer;
 import com.czechtutor.model.Question;
+import com.czechtutor.service.Quiz;
 
 public class Main {
 
@@ -14,26 +15,35 @@ public class Main {
         for (HashMap<String,Object> hashMapObject : results) {
             Boolean isCorrect = (Boolean) hashMapObject.get("correct");
             if (isCorrect) {
-                totalCorrect=totalCorrect+1;
+                totalCorrect++;
             }
         }
         return totalCorrect;
     }
 
     public static void main(String[] args) {
+		// default settings (from client side)
         final Integer lessonId = 1;
-        final String fromLanguage = "CZ";
-        final String toLanguage = "EN";
-        final Integer nQuestions = 2;
+        String fromLanguage = "CZ";
+        String toLanguage = "EN";
+        final Integer nQuestions = 5;
         final Integer nOptions = 4;
-        ArrayList<Question> quiz = Quiz.create(lessonId, fromLanguage, toLanguage, nQuestions, nOptions);
+        // create a lesson payload
+        HashMap<String, Object> lessonPayload = new HashMap<>();
+        lessonPayload.put("lessonId", lessonId);
+        lessonPayload.put("fromLanguage", fromLanguage);
+        lessonPayload.put("toLanguage", toLanguage);
+        lessonPayload.put("nQuestions", nQuestions);
+        lessonPayload.put("nOptions", nOptions);
+        // generate a quiz
+        ArrayList<Question> quiz = Quiz.create(lessonPayload);
         ArrayList<HashMap<String,Object>> results = new ArrayList<>();
         try (Scanner reader = new Scanner(System.in)) {
             for (int questionIndex = 0; questionIndex<nQuestions; questionIndex++) {
                 // create question payload
                 Question question = quiz.get(questionIndex);
                 HashMap<String,Object> questionPayload;
-                questionPayload = question.getHashMap();
+                questionPayload = question.getQuestionPayload();
                 System.out.println(questionPayload);
                 // prompt user for answer and determine if correct
                 System.out.print("Enter an answer: ");
@@ -42,7 +52,7 @@ public class Main {
                 Answer answer = new Answer();
                 questionPayload.put("answer", input);
                 answer.set(questionPayload);
-                results.add(answer.getHashMap());
+                results.add(answer.getAnswerPayload());
             }
             // calculate total correct
             Integer totalCorrect = countTotalCorrect(results);

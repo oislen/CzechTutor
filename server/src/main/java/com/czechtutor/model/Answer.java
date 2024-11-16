@@ -25,25 +25,25 @@ public class Answer {
     //@NotEmpty
     private Boolean correct; 
 	
-    public void set(HashMap<String,Object> payload) {
+    public void set(HashMap<String,Object> questionPayload) {
 		// set class objects
-		this.answerId = (Integer) payload.get("questionId");
-		this.lessonId = (Integer) payload.get("lessonId");
-		this.answerSubId = (Integer) payload.get("questionSubId");
-        this.answer = (String) payload.get("answer");
+		this.answerId = (Integer) questionPayload.get("questionId");
+		this.lessonId = (Integer) questionPayload.get("lessonId");
+		this.answerSubId = (Integer) questionPayload.get("questionSubId");
+        this.answer = (String) questionPayload.get("answer");
         // determine if answer was correct for the question
-        this.correct = (Boolean) payload.get("answer").toString().toLowerCase().trim().equals(payload.get("solution").toString().toLowerCase().trim());
+        this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
     }
  
-    public HashMap<String,Object> getHashMap() {
-        // create results payload and update results
-        HashMap<String,Object> payload = new HashMap<>();
-        payload.put("answerId", answerId);
-        payload.put("lessonId", lessonId);
-        payload.put("answerSubId", answerSubId);
-        payload.put("answer", answer);
-        payload.put("correct", correct);
-        return payload;
+    public HashMap<String,Object> getAnswerPayload() {
+        // create answers payload and update results
+        HashMap<String,Object> answerPayload = new HashMap<>();
+        answerPayload.put("answerId", answerId);
+        answerPayload.put("lessonId", lessonId);
+        answerPayload.put("answerSubId", answerSubId);
+        answerPayload.put("answer", answer);
+        answerPayload.put("correct", correct);
+        return answerPayload;
     }
 
 }
