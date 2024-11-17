@@ -1,10 +1,8 @@
-package com.czechtutor;
+package com.czechtutor.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,7 +10,7 @@ import com.czechtutor.model.Question;
 import com.czechtutor.service.Quiz;
 
 @RestController
-public class ApplicationController {
+public class ApplicationRestController {
 
     final public Integer lessonId = 1;
     final public String fromLanguage = "CZ";
@@ -20,20 +18,9 @@ public class ApplicationController {
     final public Integer nQuestions = 6;
     final public Integer nOptions = 4;
 
-    @GetMapping("/")
-    public String hello() {
-        return "Hello World";
-    }
-
-    @GetMapping("/home")
-    public ArrayList<Object> home() {
-        ArrayList<Object> options = new ArrayList<>(Arrays.asList(fromLanguage, toLanguage, nQuestions, nOptions));
-        return options;
-    }
-
     @PostMapping("/home")
     //public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
-    public ArrayList<Question> create() {
+    public ArrayList<Question> createQuizPayload() {
         // create a lesson payload
         HashMap<String, Object> lessonPayload = new HashMap<>();
         lessonPayload.put("lessonId", lessonId);
@@ -44,14 +31,5 @@ public class ApplicationController {
         // generate a quiz
         ArrayList<Question> quiz = Quiz.create(lessonPayload);
         return quiz;
-        //return photozService.save(file.getOriginalFilename(), file.getContentType(), file.getBytes());
     }
-
-    /*
-    @GetMapping("/lesson")
-    public ArrayList<HashMap<String,Object>> lesson() {
-        ArrayList<HashMap<String,Object>> quiz = Quiz.create(fromLanguage, toLanguage, nQuestions);
-        return quiz;
-    }
-    */
 }
