@@ -27,7 +27,7 @@ public class Answer {
 	
     public void set(HashMap<String,Object> questionPayload) {
 		// set class objects
-		this.answerId = (Integer) questionPayload.get("questionId");
+		//this.answerId = (Integer) questionPayload.get("questionId");
 		this.lessonId = (Integer) questionPayload.get("lessonId");
 		this.answerSubId = (Integer) questionPayload.get("questionSubId");
         this.answer = (String) questionPayload.get("answer");
