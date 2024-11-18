@@ -30,4 +30,11 @@ public class ApplicationRestController {
         ArrayList<Question> quiz = quizService.create(payload);
         return quiz;
     }
+    
+    @PostMapping("/lesson")
+    public Integer createResultsPayload(@RequestBody ArrayList<HashMap<String,Object>> payload) {
+        // calculate results
+        Integer totalCorrect = quizService.countTotalCorrect(payload);
+        return totalCorrect;
+    }
 }
