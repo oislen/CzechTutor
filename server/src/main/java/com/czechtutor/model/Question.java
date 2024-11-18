@@ -1,8 +1,6 @@
 package com.czechtutor.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -39,45 +37,17 @@ public class Question {
     //@NotEmpty
     private String solution; 
 
-    public void set(HashMap<String,Object>  lessonPayload, ArrayList<HashMap<String, String>> recordSet){
-		final String fromLanguage = (String) lessonPayload.get("fromLanguage");
-		final String toLanguage = (String) lessonPayload.get("toLanguage");
-        final Integer nOptions = (Integer) lessonPayload.get("nOptions");
-        final Integer upperIndexBound = recordSet.size();
-        // create random generator and set seed if required
-		Random randomGenerator = new Random();
-        if (lessonPayload.containsKey("randomSeed")) {
-            randomGenerator.setSeed((Long) lessonPayload.get("randomSeed"));
-        }
-        // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
-		ArrayList<Integer> indexArray = new ArrayList<>();
-		for (int i = 0; i<nOptions; i++) {
-			Integer index = randomGenerator.nextInt(upperIndexBound);
-			indexArray.add(index);
-            }
-		// select the records corresponding to the random indices 
-        ArrayList<HashMap<String, String>> filteredRecordSet = new ArrayList<>();
-        for (int i = 0; i<recordSet.size(); i++) {
-            if (indexArray.contains(i)) {
-                filteredRecordSet.add(recordSet.get(i));
-            }
-        }
-        // randomly determine the phase, answer and options
-        Integer phaseIndex = randomGenerator.nextInt(nOptions - 1);
-        ArrayList<String> optionsArray = new ArrayList<>();
-        for (HashMap<String, String> hashMapObject : filteredRecordSet) {
-            optionsArray.add(hashMapObject.get(toLanguage));
-        }
+    public void set(HashMap<String,Object>  payload){
         // set the class objects
-		//this.questionId = (Integer) lessonPayload.get("questionId");
-		this.lessonId = (Integer) lessonPayload.get("lessonId");
-        this.questionSubId = (Integer) lessonPayload.get("questionSubId");
-        this.phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
-        this.option1 = optionsArray.get(0);
-        this.option2 = optionsArray.get(1);
-        this.option3 = optionsArray.get(2);
-        this.option4 = optionsArray.get(3);
-        this.solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
+		//this.questionId = (Integer) payload.get("questionId");
+		this.lessonId = (Integer) payload.get("lessonId");
+        this.questionSubId = (Integer) payload.get("questionSubId");
+        this.phrase = (String) payload.get("phrase");
+        this.option1 = (String) payload.get("option1");
+        this.option2 = (String) payload.get("option2");
+        this.option3 = (String) payload.get("option3");
+        this.option4 = (String) payload.get("option4");
+        this.solution = (String) payload.get("solution");
     }
 	
     public HashMap<String,Object> getQuestionPayload(){
