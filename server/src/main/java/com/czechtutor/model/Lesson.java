@@ -27,7 +27,7 @@ public class Lesson {
 
     public void set(HashMap<String,Object>  payload){
         // set the class objects
-		this.lessonId = (Integer) payload.get("lessonId");
+		//this.lessonId = (Integer) payload.get("lessonId");
 		this.fromLanguage = (String) payload.get("fromLanguage");
 		this.toLanguage = (String) payload.get("toLanguage");
 		this.nQuestions = (Integer) payload.get("nQuestions");
