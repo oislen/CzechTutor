@@ -30,7 +30,7 @@ public class Ces {
         this.REF = (String) payload.get("REF");
     }
 	
-    public HashMap<String,Object> getQuestionPayload(){
+    public HashMap<String,Object> getCesPayload(){
 	    // construct questionPayload
         HashMap<String,Object> questionPayload = new HashMap<>();
         questionPayload.put("ID", ID);
