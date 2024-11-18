@@ -7,16 +7,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.czechtutor.model.Question;
-import com.czechtutor.service.Quiz;
+import com.czechtutor.service.QuizService;
 
 @RestController
 public class ApplicationRestController {
 
-    final public Integer lessonId = 1;
-    final public String fromLanguage = "CZ";
-    final public String toLanguage = "EN";
-    final public Integer nQuestions = 6;
-    final public Integer nOptions = 4;
+    public Integer lessonId = 1;
+    public String fromLanguage = "CZ";
+    public String toLanguage = "EN";
+    public Integer nQuestions = 6;
+    public Integer nOptions = 4;
+
+    private final QuizService quizService;
+
+    public ApplicationRestController(QuizService quizService) {
+        this.quizService = quizService;
+    }
 
     @PostMapping("/home")
     //public Photo create(@RequestPart("data") MultipartFile file) throws IOException {
@@ -29,7 +35,7 @@ public class ApplicationRestController {
         lessonPayload.put("nQuestions", nQuestions);
         lessonPayload.put("nOptions", nOptions);
         // generate a quiz
-        ArrayList<Question> quiz = Quiz.create(lessonPayload);
+        ArrayList<Question> quiz = quizService.create(lessonPayload);
         return quiz;
     }
 }
