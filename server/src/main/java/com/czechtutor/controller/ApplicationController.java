@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ApplicationController {
 
     final public Integer lessonId = 1;
-    final public String fromLanguage = "CZ";
-    final public String toLanguage = "EN";
+    public String fromLanguage = "CZ";
+    public String toLanguage = "EN";
     final public Integer nQuestions = 6;
     final public Integer nOptions = 4;
     

@@ -12,11 +12,11 @@ import com.czechtutor.service.QuizService;
 @RestController
 public class ApplicationRestController {
 
-    public Integer lessonId = 1;
+    final public Integer lessonId = 1;
     public String fromLanguage = "CZ";
     public String toLanguage = "EN";
-    public Integer nQuestions = 6;
-    public Integer nOptions = 4;
+    final public Integer nQuestions = 6;
+    final public Integer nOptions = 4;
 
     private final QuizService quizService;
 
