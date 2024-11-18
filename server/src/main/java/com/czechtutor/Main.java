@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import com.czechtutor.arch.Quiz;
 import com.czechtutor.model.Answer;
 import com.czechtutor.model.Question;
-import com.czechtutor.service.Quiz;
 
 public class Main {
 
