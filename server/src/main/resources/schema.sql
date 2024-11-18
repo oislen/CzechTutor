@@ -13,3 +13,10 @@ create table if not exists answer (
     answer varchar(255) not null,
     correct boolean not null
 );
+
+create table if not exists ces(
+  id INT PRIMARY KEY,
+  en varchar(255),
+  cz varchar(255),
+  ref varchar(255)
+) as select * from CSVREAD('E:\GitHub\CzechTutor\server\src\main\resources\data\ces.csv');
