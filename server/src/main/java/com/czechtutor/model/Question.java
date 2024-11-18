@@ -25,8 +25,17 @@ public class Question {
     private String phrase;
 	
     //@NotEmpty
-    private ArrayList<String> options;
+    private String option1;
 	
+    //@NotEmpty
+    private String option2;
+    
+    //@NotEmpty
+    private String option3;
+
+    //@NotEmpty
+    private String option4;
+
     //@NotEmpty
     private String solution; 
 
@@ -60,11 +69,14 @@ public class Question {
             optionsArray.add(hashMapObject.get(toLanguage));
         }
         // set the class objects
-		this.questionId = (Integer) lessonPayload.get("questionId");
+		//this.questionId = (Integer) lessonPayload.get("questionId");
 		this.lessonId = (Integer) lessonPayload.get("lessonId");
         this.questionSubId = (Integer) lessonPayload.get("questionSubId");
         this.phrase = filteredRecordSet.get(phaseIndex).get(fromLanguage);
-        this.options = optionsArray;
+        this.option1 = optionsArray.get(0);
+        this.option2 = optionsArray.get(1);
+        this.option3 = optionsArray.get(2);
+        this.option4 = optionsArray.get(3);
         this.solution = filteredRecordSet.get(phaseIndex).get(toLanguage);
     }
 	
@@ -75,7 +87,10 @@ public class Question {
         questionPayload.put("lessonId", lessonId);
         questionPayload.put("questionSubId", questionSubId);
         questionPayload.put("phrase", phrase);
-        questionPayload.put("options", options);
+        questionPayload.put("option1", option1);
+        questionPayload.put("option2", option2);
+        questionPayload.put("option3", option3);
+        questionPayload.put("option4", option4);
         questionPayload.put("solution", solution);
         return questionPayload;
     }
