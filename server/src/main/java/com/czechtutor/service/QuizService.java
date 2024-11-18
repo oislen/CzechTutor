@@ -8,14 +8,17 @@ import org.springframework.stereotype.Service;
 import com.czechtutor.model.Lesson;
 import com.czechtutor.model.Question;
 import com.czechtutor.repository.LessonRepository;
+import com.czechtutor.repository.QuestionRepository;
 
 @Service
 public class QuizService {
 
     private final LessonRepository lessonRepository;
+    private final QuestionRepository questionRepository;
 
-    public QuizService(LessonRepository lessonRepository) {
+    public QuizService(LessonRepository lessonRepository, QuestionRepository questionRepository) {
         this.lessonRepository = lessonRepository;
+        this.questionRepository = questionRepository;
     }
 
     public ArrayList<Question> create(HashMap<String, Object> payload) {
@@ -37,6 +40,7 @@ public class QuizService {
             // set question
             Question question = new Question();
             question.set(lessonPayload, recordSet);
+            questionRepository.save(question);
             quiz.add(question);
             // increment questionId
             questionId++;
