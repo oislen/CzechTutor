@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.czechtutor.model.Lesson;
-import com.czechtutor.model.Question;
+import com.czechtutor.arch.Question;
 import com.czechtutor.service.DataService;
 
 public class Quiz {
