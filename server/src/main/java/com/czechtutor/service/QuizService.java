@@ -88,7 +88,18 @@ public class QuizService {
         return quiz;
     }
 
-    public void deleteAll() {
+    public Integer countTotalCorrect(ArrayList<HashMap<String,Object>> results){
+        int totalCorrect = 0;
+        for (HashMap<String,Object> hashMapObject : results) {
+            Boolean isCorrect = (Boolean) hashMapObject.get("correct");
+            if (isCorrect) {
+                totalCorrect++;
+            }
+        }
+        return totalCorrect;
+    }
+
+    public void clearTables() {
         // clear all records from database
         lessonRepository.deleteAll();
         questionRepository.deleteAll();
