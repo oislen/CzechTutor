@@ -45,7 +45,19 @@ public class Lesson {
         return lessonPayload;
 	}
 		
+    public String getFromLanguage(){
+		return fromLanguage;
+	}
+	
+    public String getToLanguage(){
+		return toLanguage;
+	}
+	
     public Integer getNQuestions(){
 		return nQuestions;
+	}
+	
+    public Integer getNOptions(){
+		return nOptions;
 	}
 }
