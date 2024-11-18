@@ -27,7 +27,7 @@ public class QuizService {
         // set the initial questionId
         Integer questionId = 1;
         // load czech / english language phrases from disk
-        ArrayList<HashMap<String, String>> recordSet = DataService.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\ces_bkp.txt");
+        ArrayList<HashMap<String, String>> recordSet = DataService.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\data\\ces_bkp.txt");
         for (int questionSubId = 1; questionSubId<=lesson.getNQuestions(); questionSubId++) {
             // create question payload
             HashMap<String, Object> lessonPayload;
