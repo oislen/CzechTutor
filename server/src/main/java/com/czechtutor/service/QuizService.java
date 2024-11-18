@@ -6,6 +6,7 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
+import com.czechtutor.model.Ces;
 import com.czechtutor.model.Lesson;
 import com.czechtutor.model.Question;
 import com.czechtutor.repository.CesRepository;
@@ -33,11 +34,10 @@ public class QuizService {
         ArrayList<Question> quiz = new ArrayList<>();
         // set the initial questionId
         Integer questionId = 1;
-        // load czech / english language phrases from disk
-        ArrayList<HashMap<String, String>> recordSet = DataService.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\data\\ces_bkp.txt");
+        // load czech / english language phrases from h2 database
         for (int questionSubId = 1; questionSubId<=lesson.getNQuestions(); questionSubId++) {
             // set question
-            final Integer upperIndexBound = recordSet.size();
+            Integer upperIndexBound = (int) cesRepository.count();
             // create random generator and set seed if required
             Random randomGenerator = new Random();
             if (payload.containsKey("randomSeed")) {
@@ -50,16 +50,18 @@ public class QuizService {
                 indexArray.add(index);
                 }
             // select the records corresponding to the random indices 
-            ArrayList<HashMap<String, String>> filteredRecordSet = new ArrayList<>();
-            for (int i = 0; i<recordSet.size(); i++) {
+            ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
+            for (int i = 1; i<=upperIndexBound; i++) {
                 if (indexArray.contains(i)) {
-                    filteredRecordSet.add(recordSet.get(i));
+                    Ces cesPayload = cesRepository.findById(i).orElse(null);
+                    HashMap<String, Object> cesRecord = cesPayload.getCesPayload();
+                    filteredRecordSet.add(cesRecord);
                 }
             }
             // randomly determine the phase, answer and options
             Integer phaseIndex = randomGenerator.nextInt(lesson.getNOptions() - 1);
-            ArrayList<String> optionsArray = new ArrayList<>();
-            for (HashMap<String, String> hashMapObject : filteredRecordSet) {
+            ArrayList<Object> optionsArray = new ArrayList<>();
+            for (HashMap<String, Object> hashMapObject : filteredRecordSet) {
                 optionsArray.add(hashMapObject.get(lesson.getToLanguage()));
             }
             // create question payload
