@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.czechtutor.model.Ces;
 import com.czechtutor.model.Lesson;
 import com.czechtutor.model.Question;
+import com.czechtutor.repository.AnswerRepository;
 import com.czechtutor.repository.CesRepository;
 import com.czechtutor.repository.LessonRepository;
 import com.czechtutor.repository.QuestionRepository;
@@ -19,11 +20,13 @@ public class QuizService {
     private final LessonRepository lessonRepository;
     private final QuestionRepository questionRepository;
     private final CesRepository cesRepository;
+    private final AnswerRepository answerRepository;
 
-    public QuizService(LessonRepository lessonRepository, QuestionRepository questionRepository, CesRepository cesRepository) {
+    public QuizService(LessonRepository lessonRepository, QuestionRepository questionRepository, CesRepository cesRepository, AnswerRepository answerRepository) {
         this.lessonRepository = lessonRepository;
         this.questionRepository = questionRepository;
         this.cesRepository = cesRepository;
+        this.answerRepository = answerRepository;
     }
 
     public ArrayList<Question> create(HashMap<String, Object> payload) {
@@ -84,4 +87,12 @@ public class QuizService {
         }
         return quiz;
     }
+
+    public void deleteAll() {
+        // clear all records from database
+        lessonRepository.deleteAll();
+        questionRepository.deleteAll();
+        answerRepository.deleteAll();
+    }
+    
 }
