@@ -30,23 +30,10 @@
       <label for="english">English</label><br>
     </fieldset>
     <br>
-    <input type="button" id="submit-button" onclick="myfunction()" value="Submit">
+    <input type="button" id="submit-button" onclick="submitForm()" value="Submit">
 
 </form>
 
-<script>
-    async function uploadFile() {
-        let formData = new FormData();
-        formData.append("data", fileupload.files[0]);
-        await fetch('http://localhost:8080/photoz', {
-            method: "POST",
-            body: formData
-        }).then(result =>    result.text())
-            .then(text => alert(text));
-    }
-    function myfunction() {
-        document.getElementById("lesson_config_form").submit();
-    }
-</script>
+<script src="js/src/home.js"></script>
 </body>
 </html>
