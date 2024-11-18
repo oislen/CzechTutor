@@ -9,7 +9,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 //import javax.validation.constraints.NotEmpty;
 
-@Table("Question")
+@Table("QUESTION")
 public class Question {
 	
 	@Id
