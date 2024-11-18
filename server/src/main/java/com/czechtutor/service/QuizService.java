@@ -59,7 +59,7 @@ public class QuizService {
                 }
             }
             // randomly determine the phase, answer and options
-            Integer phaseIndex = randomGenerator.nextInt(lesson.getNOptions() - 1);
+            Integer phaseIndex = randomGenerator.nextInt(lesson.getNOptions());
             ArrayList<Object> optionsArray = new ArrayList<>();
             for (HashMap<String, Object> hashMapObject : filteredRecordSet) {
                 optionsArray.add(hashMapObject.get(lesson.getToLanguage()));
