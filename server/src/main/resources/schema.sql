@@ -6,8 +6,20 @@ create table if not exists lesson (
     n_options tinyint not null
 );
 
+create table if not exists question (
+    question_id bigint auto_increment primary key,
+    lesson_id bigint not null,
+    question_sub_id tinyint not null,
+    phrase varchar(255) not null,
+    option1 varchar(255) not null,
+    option2 varchar(255) not null,
+    option3 varchar(255) not null,
+    option4 varchar(255) not null,
+    solution varchar(255) not null
+);
+
 create table if not exists answer (
-    answer_id bigint primary key,
+    answer_id bigint auto_increment primary key,
     lesson_id bigint not null,
     answer_sub_id tinyint not null,
     answer varchar(255) not null,
@@ -15,7 +27,7 @@ create table if not exists answer (
 );
 
 create table if not exists ces(
-  id INT PRIMARY KEY,
+  id bigint primary key,
   en varchar(255),
   cz varchar(255),
   ref varchar(255)
