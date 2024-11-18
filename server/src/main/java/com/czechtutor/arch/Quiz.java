@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.czechtutor.model.Lesson;
-import com.czechtutor.arch.Question;
-import com.czechtutor.service.DataService;
 
 public class Quiz {
 
@@ -17,7 +15,7 @@ public class Quiz {
         // set the initial questionId
         Integer questionId = 1;
         // load czech / english language phrases from disk
-        ArrayList<HashMap<String, String>> recordSet = DataService.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\data\\ces_bkp.txt");
+        ArrayList<HashMap<String, String>> recordSet = Data.load("E:\\GitHub\\CzechTutor\\server\\src\\main\\resources\\data\\ces_bkp.txt");
         for (int questionSubId = 1; questionSubId<=lesson.getNQuestions(); questionSubId++) {
             // create question payload
             HashMap<String, Object> lessonPayload;

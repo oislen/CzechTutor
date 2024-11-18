@@ -1,4 +1,4 @@
-package com.czechtutor.service;
+package com.czechtutor.arch;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class DataService {
+public class Data {
 
     public static ArrayList<HashMap<String, String>> load(String dataFilePath) {
         ArrayList<HashMap<String, String>> recordSet = new ArrayList<>();
