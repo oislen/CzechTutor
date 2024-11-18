@@ -12,7 +12,6 @@ import com.czechtutor.service.QuizService;
 @RestController
 public class ApplicationRestController {
 
-    public Integer lessonId = 1;
     public String fromLanguage = "CZ";
     public String toLanguage = "EN";
     final public Integer nQuestions = 6;
@@ -29,7 +28,6 @@ public class ApplicationRestController {
     public ArrayList<Question> createQuizPayload() {
         // create a lesson payload
         HashMap<String, Object> lessonPayload = new HashMap<>();
-        lessonPayload.put("lessonId", lessonId);
         lessonPayload.put("fromLanguage", fromLanguage);
         lessonPayload.put("toLanguage", toLanguage);
         lessonPayload.put("nQuestions", nQuestions);
