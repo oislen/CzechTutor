@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import com.czechtutor.arch.Quiz;
 import com.czechtutor.model.Answer;
-import com.czechtutor.model.Question;
+import com.czechtutor.arch.Question;
 
 public class Main {
 
