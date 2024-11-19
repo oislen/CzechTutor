@@ -22,7 +22,7 @@ public class ApplicationRestController {
         this.quizService = quizService;
     }
     
-    @PostMapping("/home")
+    @PostMapping(path="/home", consumes="application/json")
     public ArrayList<Question> createQuizPayload(@RequestBody HashMap<String, Object> payload) {
         payload.put("nQuestions", nQuestions);
         payload.put("nOptions", nOptions);
