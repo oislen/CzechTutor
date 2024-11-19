@@ -1,4 +1,5 @@
 async function submitForm() {
-    let formData = new FormData();
-    await fetch('http://localhost:8080/home', {method: "POST", body: formData}).then(result => result.text()).then(text => alert(text));
+    let fromLanguage = document.querySelector('input[name="fromLanguage"]:checked').value;
+    let toLanguage = document.querySelector('input[name="toLanguage"]:checked').value;
+    await fetch('http://localhost:8080/home', {method: "POST", body: JSON.stringify({"fromLanguage":fromLanguage, "toLanguage":toLanguage}), headers:{'Accept':'application/json', "Content-Type":"application/json"}}).then(result => result.text()).then(text => alert(text));
 };
