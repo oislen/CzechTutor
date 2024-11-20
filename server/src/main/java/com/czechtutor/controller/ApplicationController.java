@@ -60,13 +60,13 @@ public class ApplicationController {
         return totalCorrect;
     }
 
-    @GetMapping(path="/results")
-    public String getResultsPage() {
-        return "results";
+    @GetMapping(path="/result")
+    public String getResultPage() {
+        return "result";
     }
 
-    @PostMapping(path="/results")
-    public String redirectResultstoHome() {
-        return "redirect:/home";
+    @PostMapping(path="/result")
+    public String redirectResulttoHome() {
+        return "redirect:home";
     }
 }
