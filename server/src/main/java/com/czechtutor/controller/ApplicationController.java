@@ -25,7 +25,7 @@ public class ApplicationController {
     }
            
     @GetMapping(path="/")
-    public String redirectHomePage() {
+    public String redirectIndextoHomePage() {
         return "redirect:/home";
     }
 
@@ -62,4 +62,8 @@ public class ApplicationController {
         return "results";
     }
 
+    @PostMapping(path="/results")
+    public String redirectResultstoHome() {
+        return "redirect:/home";
+    }
 }
