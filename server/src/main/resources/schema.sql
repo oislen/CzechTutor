@@ -26,6 +26,12 @@ create table if not exists answer (
     correct boolean not null
 );
 
+create table if not exists result (
+    result_id bigint auto_increment primary key,
+    lesson_id bigint not null,
+    result tinyint not null
+);
+
 create table if not exists ces(
   id bigint primary key,
   en varchar(255),
