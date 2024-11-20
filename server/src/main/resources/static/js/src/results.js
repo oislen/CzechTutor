@@ -1,6 +1,3 @@
-window.onload = function() {
-    document.getElementById('option1').value = 'Option 1';
-    document.getElementById('option2').value = 'Option 2';
-    document.getElementById('option3').value = 'Option 3';
-    document.getElementById('option4').value = 'Option 4';
-  };
+async function goHome() {
+  await fetch('http://localhost:8080/results', {method: "POST"});
+};
