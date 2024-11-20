@@ -15,18 +15,18 @@
     <h3>Select the language to translate from:</h3>
     <fieldset id="fromLanguage">
       <label for="fromLanguage">From Language</label><br>
-      <input type="radio" id="czech" value="CZ" name="fromLanguage" checked="checked">
+      <input type="radio" id="czech" th:value="${CZ}" name="fromLanguage" checked="checked">
       <label for="czech">Czech</label><br>
-      <input type="radio" id="english" value="EN" name="fromLanguage">
+      <input type="radio" id="english" th:value="${EN}" name="fromLanguage">
       <label for="english">English</label><br>
     </fieldset>
   
     <h3>Select the language to translate to:</h3>
     <fieldset id="toLanguage">
       <label for="toLanguage">To Language</label><br>
-      <input type="radio" id="czech" value="CZ" name="toLanguage">
+      <input type="radio" id="czech" th:value="${CZ}" name="toLanguage">
       <label for="czech">Czech</label><br>
-      <input type="radio" id="english" value="EN" name="toLanguage" checked="checked">
+      <input type="radio" id="english" th:value="${EN}" name="toLanguage" checked="checked">
       <label for="english">English</label><br>
     </fieldset>
     <br>
