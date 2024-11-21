@@ -6,11 +6,10 @@ import java.util.HashMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.czechtutor.model.Question;
 import com.czechtutor.service.QuizService;
 
 @Controller
@@ -25,48 +24,56 @@ public class ApplicationController {
         this.quizService = quizService;
     }
            
-    @GetMapping(path="/")
+    @GetMapping(value="/")
     public String redirectIndextoHomePage() {
+        System.out.println("Redirecting home.");
         return "redirect:/home";
     }
 
-    @GetMapping(path="/home")
+    @GetMapping(value="/home")
     public String getHomePage(Model model) {
         model.addAttribute("CZ", "CZ");
         model.addAttribute("EN", "EN");
+        System.out.println("At home.");
         return "home";
     }
 
-    @PostMapping(path="/home", consumes="application/json")
-    @ResponseBody
-    public ArrayList<Question> createQuizPayload(@RequestBody HashMap<String, Object> payload) {
+    @PostMapping(value="/home", consumes="application/json")
+    public String createQuizPayload(@RequestBody HashMap<String, Object> payload, Model model) {
+        // generate a quiz
         payload.put("nQuestions", nQuestions);
         payload.put("nOptions", nOptions);
-        // generate a quiz
-        ArrayList<Question> quiz = quizService.create(payload);
-        return quiz;
+        ArrayList<HashMap<String, Object>> quiz = quizService.create(payload);
+        model.addAttribute("quiz", quiz);
+        String lessonId = quiz.get(0).get("lessonId").toString();
+        // redirect to view
+        System.out.println("Redirecting to lesson");
+        String view = "/lesson/" + lessonId;
+        return "redirect:"+view;
     }
 
-    @GetMapping(path="/lesson")
-    public String getLessonPage() {
+    @GetMapping(value="/lesson/{lessonId}")
+    public String getLessonPage(@PathVariable("lessonId") Integer lessonId, Model model) {
+        System.out.println("At Lesson.");
         return "lesson";
     }
 
-    @PostMapping(path="/lesson", consumes="application/json")
-    @ResponseBody
+    @PostMapping(value="/lesson/{lessonId}", consumes="application/json")
     public Integer createResultsPayload(@RequestBody ArrayList<HashMap<String,Object>> payload) {
         // calculate results
         Integer totalCorrect = quizService.countTotalCorrect(payload);
         return totalCorrect;
     }
 
-    @GetMapping(path="/result")
-    public String getResultPage() {
+    @GetMapping(value="/result/{lessonId}")
+    public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
+        System.out.println("At result.");
         return "result";
     }
 
-    @PostMapping(path="/result")
-    public String redirectResulttoHome() {
-        return "redirect:home";
+    @PostMapping(value="/result/{lessonId}")
+    public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId, Model model) {
+        System.out.println("Redirecting home.");
+        return "redirect:/home";
     }
 }
