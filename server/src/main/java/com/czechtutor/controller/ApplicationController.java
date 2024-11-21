@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.czechtutor.model.Lesson;
 import com.czechtutor.service.QuizService;
 
 @Controller
@@ -32,15 +33,16 @@ public class ApplicationController {
 
     @GetMapping(value="/home")
     public String getHomePage(Model model) {
-        model.addAttribute("CZ", "CZ");
-        model.addAttribute("EN", "EN");
+        model.addAttribute("lessonForm", new Lesson());
         System.out.println("At home.");
         return "home";
     }
 
+    /*
     @PostMapping(value="/home", consumes="application/json")
-    public String createQuizPayload(@RequestBody HashMap<String, Object> payload, Model model) {
+    public String createQuizPayload(@ModelAttribute Lesson lesson, Model model) {
         // generate a quiz
+        System.out.println(lesson);
         payload.put("nQuestions", nQuestions);
         payload.put("nOptions", nOptions);
         ArrayList<HashMap<String, Object>> quiz = quizService.create(payload);
@@ -49,14 +51,18 @@ public class ApplicationController {
         // redirect to view
         System.out.println("Redirecting to lesson");
         String view = "/lesson/" + lessonId;
+        String view = "/lesson/1";
         return "redirect:"+view;
     }
+    */
 
+    /*
     @GetMapping(value="/lesson/{lessonId}")
     public String getLessonPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("At Lesson.");
         return "lesson";
     }
+    */
 
     @PostMapping(value="/lesson/{lessonId}", consumes="application/json")
     public String createResultsPayload(@RequestBody ArrayList<HashMap<String,Object>> payload, Model model) {
