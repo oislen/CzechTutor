@@ -29,12 +29,12 @@ public class QuizService {
         this.answerRepository = answerRepository;
     }
 
-    public ArrayList<Question> create(HashMap<String, Object> payload) {
+    public ArrayList<HashMap<String, Object>> create(HashMap<String, Object> payload) {
         Lesson lesson = new Lesson();
         lesson.set(payload);
         lessonRepository.save(lesson);
         // create an array for holding the questions
-        ArrayList<Question> quiz = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> quiz = new ArrayList<>();
         // set the initial questionId
         Integer questionId = 1;
         // load czech / english language phrases from h2 database
@@ -81,7 +81,7 @@ public class QuizService {
             Question question = new Question();
             question.set(lessonPayload);
             questionRepository.save(question);
-            quiz.add(question);
+            quiz.add(question.getQuestionPayload());
             // increment questionId
             questionId++;
         }
