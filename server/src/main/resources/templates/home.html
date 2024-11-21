@@ -11,29 +11,28 @@
 
 <p>Configure a Czech language lesson below:</p>
 
-<form id="lesson_config_form">
+<form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lessonForm}">
     <h3>Select the language to translate from:</h3>
     <fieldset id="fromLanguage">
       <label for="fromLanguage">From Language</label><br>
-      <input type="radio" id="czech" th:value="${CZ}" name="fromLanguage" checked="checked">
+      <input type="radio" id="czech" value="CZ" name="fromLanguage" checked="checked" th:field="*{fromLanguage}">
       <label for="czech">Czech</label><br>
-      <input type="radio" id="english" th:value="${EN}" name="fromLanguage">
+      <input type="radio" id="english" value="EN" name="fromLanguage" th:field="*{fromLanguage}">
       <label for="english">English</label><br>
     </fieldset>
   
     <h3>Select the language to translate to:</h3>
     <fieldset id="toLanguage">
       <label for="toLanguage">To Language</label><br>
-      <input type="radio" id="czech" th:value="${CZ}" name="toLanguage">
+      <input type="radio" id="czech" value="CZ" name="toLanguage" th:field="*{toLanguage}">
       <label for="czech">Czech</label><br>
-      <input type="radio" id="english" th:value="${EN}" name="toLanguage" checked="checked">
+      <input type="radio" id="english" value="EN" name="toLanguage" checked="checked" th:field="*{toLanguage}">
       <label for="english">English</label><br>
     </fieldset>
     <br>
-    <input type="button" id="submit-button" onclick="submitForm()" value="Submit">
+    <button type="submit">Submit</button>
 
 </form>
 
-<script type="text/javascript" src="/js/src/home.js"></script>
 </body>
 </html>
