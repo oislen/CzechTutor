@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 //import javax.validation.constraints.NotEmpty;
 
@@ -13,16 +15,16 @@ public class Lesson {
 	@Id
 	private Integer lessonId;
 	
-	//@NotEmpty
+	@NonNull
 	private String fromLanguage;
 
-	//@NotEmpty
+	@NonNull
 	private String toLanguage;
 	
-	//@NotEmpty
+	@Nullable
 	private Integer nQuestions;
 	
-	//@NotEmpty
+	@Nullable
 	private Integer nOptions;
 
     public void set(HashMap<String,Object>  payload){
@@ -44,20 +46,45 @@ public class Lesson {
         lessonPayload.put("nOptions", nOptions);
         return lessonPayload;
 	}
-		
+
+    public Integer getLessonId(){
+		return lessonId;
+	}
+	
+    public void setLessonId(Integer lessonId){
+		this.lessonId = lessonId;
+	}
+
     public String getFromLanguage(){
 		return fromLanguage;
 	}
 	
+    public void setFromLanguage(String fromLanguage){
+		this.fromLanguage = fromLanguage;
+	}
+
     public String getToLanguage(){
 		return toLanguage;
 	}
 	
+    public void setToLanguage(String toLanguage){
+		this.toLanguage = toLanguage;
+	}
+
     public Integer getNQuestions(){
 		return nQuestions;
 	}
 	
+    public void setNQuestions(Integer nQuestions){
+		this.nQuestions = nQuestions;
+	}
+
     public Integer getNOptions(){
 		return nOptions;
 	}
+	
+    public void setNOptions(Integer nOptions){
+		this.nOptions = nOptions;
+	}
+
 }
