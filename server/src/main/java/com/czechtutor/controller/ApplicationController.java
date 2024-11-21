@@ -71,6 +71,7 @@ public class ApplicationController {
 
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
+        model.addAttribute("lessonId", lessonId);
         System.out.println("At result.");
         return "result";
     }
