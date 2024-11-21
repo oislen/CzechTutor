@@ -59,10 +59,14 @@ public class ApplicationController {
     }
 
     @PostMapping(value="/lesson/{lessonId}", consumes="application/json")
-    public Integer createResultsPayload(@RequestBody ArrayList<HashMap<String,Object>> payload) {
-        // calculate results
+    public String createResultsPayload(@RequestBody ArrayList<HashMap<String,Object>> payload, Model model) {
+        // generate quiz results
         Integer totalCorrect = quizService.countTotalCorrect(payload);
-        return totalCorrect;
+        model.addAttribute("totalCorrect", totalCorrect);
+        String lessonId = payload.get(0).get("lessonId").toString();
+        // redirect to view
+        String view = "/lesson/" + lessonId;
+        return "redirect:"+view;
     }
 
     @GetMapping(value="/result/{lessonId}")
