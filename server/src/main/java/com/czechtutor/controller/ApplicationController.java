@@ -63,6 +63,7 @@ public class ApplicationController {
         String lessonId = String.valueOf(quiz.get(0).getLessonId());
         String view = "/lesson/" + lessonId;
         System.out.println(view);
+        // persist model attributes
         redirectAttrs.addFlashAttribute("lesson", lesson);
         redirectAttrs.addFlashAttribute("quiz", quiz);
         return "redirect:"+view;
@@ -95,7 +96,7 @@ public class ApplicationController {
 
     @PostMapping(value="/result/{lessonId}")
     public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId, Model model, RedirectAttributes redirectAttrs) {
-        System.out.println("Redirecting home.");
+        System.out.println("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
 }
