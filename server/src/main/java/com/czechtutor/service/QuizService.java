@@ -29,10 +29,11 @@ public class QuizService {
         this.answerRepository = answerRepository;
     }
 
-    public ArrayList<HashMap<String, Object>> create(HashMap<String, Object> payload) {
-        Lesson lesson = new Lesson();
-        lesson.set(payload);
+    public ArrayList<HashMap<String, Object>> create(Lesson lesson) {
+        // Lesson lesson = new Lesson();
+        // lesson.set(payload);
         lessonRepository.save(lesson);
+        HashMap<String, Object> payload = lesson.getLessonPayload();
         // create an array for holding the questions
         ArrayList<HashMap<String, Object>> quiz = new ArrayList<>();
         // set the initial questionId
