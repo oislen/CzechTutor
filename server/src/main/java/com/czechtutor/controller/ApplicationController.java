@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,8 +17,11 @@ import com.czechtutor.service.QuizService;
 @Controller
 public class ApplicationController {
      
+    final public String czLanguage = "CZ";
+    final public String enLanguage = "EN";
     final public Integer nQuestions = 6;
     final public Integer nOptions = 4;
+    final public String checkButtonChecked = "checked";
     
     private final QuizService quizService;
     
@@ -33,28 +37,28 @@ public class ApplicationController {
 
     @GetMapping(value="/home")
     public String getHomePage(Model model) {
+        model.addAttribute("czLanguage", czLanguage);
+        model.addAttribute("enLanguage", enLanguage);
+        model.addAttribute("checkButtonChecked", checkButtonChecked);
         model.addAttribute("lessonForm", new Lesson());
         System.out.println("At home.");
         return "home";
     }
 
-    /*
-    @PostMapping(value="/home", consumes="application/json")
+    @PostMapping(value="/home")
     public String createQuizPayload(@ModelAttribute Lesson lesson, Model model) {
         // generate a quiz
-        System.out.println(lesson);
-        payload.put("nQuestions", nQuestions);
-        payload.put("nOptions", nOptions);
-        ArrayList<HashMap<String, Object>> quiz = quizService.create(payload);
+        lesson.setNQuestions(nQuestions);
+        lesson.setNOptions(nOptions);
+        System.out.println(lesson.getLessonPayload());
+        ArrayList<HashMap<String, Object>> quiz = quizService.create(lesson);
         model.addAttribute("quiz", quiz);
         String lessonId = quiz.get(0).get("lessonId").toString();
         // redirect to view
         System.out.println("Redirecting to lesson");
         String view = "/lesson/" + lessonId;
-        String view = "/lesson/1";
         return "redirect:"+view;
     }
-    */
 
     /*
     @GetMapping(value="/lesson/{lessonId}")
