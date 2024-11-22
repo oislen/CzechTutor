@@ -15,19 +15,19 @@
     <h3>Select the language to translate from:</h3>
     <fieldset id="fromLanguage">
       <label for="fromLanguage">From Language</label><br>
-      <input type="radio" id="czech" value="CZ" name="fromLanguage" checked="checked" th:field="*{fromLanguage}">
-      <label for="czech">Czech</label><br>
-      <input type="radio" id="english" value="EN" name="fromLanguage" th:field="*{fromLanguage}">
-      <label for="english">English</label><br>
+      <input type="radio" id="fromLanguage" th:value="${czLanguage}" name="fromLanguage" th:checked="${checkButtonChecked}" th:field="*{fromLanguage}" />
+      <th:block th:text="${czLanguage}"/>
+      <input type="radio" id="fromLanguage" th:value="${enLanguage}" name="fromLanguage" th:field="*{fromLanguage}"/>
+      <th:block th:text="${enLanguage}"/>
     </fieldset>
   
     <h3>Select the language to translate to:</h3>
     <fieldset id="toLanguage">
       <label for="toLanguage">To Language</label><br>
-      <input type="radio" id="czech" value="CZ" name="toLanguage" th:field="*{toLanguage}">
-      <label for="czech">Czech</label><br>
-      <input type="radio" id="english" value="EN" name="toLanguage" checked="checked" th:field="*{toLanguage}">
-      <label for="english">English</label><br>
+      <input type="radio" id="toLanguage" th:value="${czLanguage}" name="toLanguage" th:field="*{toLanguage}" />
+      <th:block th:text="${czLanguage}"/>
+      <input type="radio" id="toLanguage" th:value="${enLanguage}" name="toLanguage" th:checked="${checkButtonChecked}" th:field="*{toLanguage}" />
+      <th:block th:text="${enLanguage}"/>
     </fieldset>
     <br>
     <button type="submit">Submit</button>
