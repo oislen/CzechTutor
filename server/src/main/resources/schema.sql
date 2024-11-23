@@ -9,7 +9,6 @@ create table if not exists lesson (
 create table if not exists question (
     question_id bigint auto_increment primary key,
     lesson_id bigint not null,
-    question_sub_id tinyint not null,
     phrase varchar(255) not null,
     option1 varchar(255) not null,
     option2 varchar(255) not null,
@@ -21,7 +20,6 @@ create table if not exists question (
 create table if not exists answer (
     answer_id bigint auto_increment primary key,
     lesson_id bigint not null,
-    answer_sub_id tinyint not null,
     answer varchar(255) not null,
     correct boolean not null
 );
