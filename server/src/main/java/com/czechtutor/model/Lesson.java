@@ -4,8 +4,6 @@ import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
 
 //import javax.validation.constraints.NotEmpty;
 
@@ -15,16 +13,16 @@ public class Lesson {
 	@Id
 	private Integer lessonId;
 	
-	@NonNull
+	//@NonNull
 	private String fromLanguage;
 
-	@NonNull
+	//@NonNull
 	private String toLanguage;
 	
-	@Nullable
+	//@Nullable
 	private Integer nQuestions;
 	
-	@Nullable
+	//@Nullable
 	private Integer nOptions;
 
     public void set(HashMap<String,Object>  payload){
