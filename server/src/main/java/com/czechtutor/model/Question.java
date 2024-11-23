@@ -16,9 +16,6 @@ public class Question {
 	//@NotEmpty
 	private Integer lessonId;
 	
-	//@NotEmpty
-	private Integer questionSubId;
-	
     //@NotEmpty
     private String phrase;
 	
@@ -41,7 +38,6 @@ public class Question {
         // set the class objects
 		//this.questionId = (Integer) payload.get("questionId");
 		this.lessonId = (Integer) payload.get("lessonId");
-        this.questionSubId = (Integer) payload.get("questionSubId");
         this.phrase = (String) payload.get("phrase");
         this.option1 = (String) payload.get("option1");
         this.option2 = (String) payload.get("option2");
@@ -55,7 +51,6 @@ public class Question {
         HashMap<String,Object> questionPayload = new HashMap<>();
         questionPayload.put("questionId", questionId);
         questionPayload.put("lessonId", lessonId);
-        questionPayload.put("questionSubId", questionSubId);
         questionPayload.put("phrase", phrase);
         questionPayload.put("option1", option1);
         questionPayload.put("option2", option2);
@@ -79,14 +74,6 @@ public class Question {
 	
     public void setLessonId(Integer lessonId){
 		this.lessonId = lessonId;
-	}
-
-    public Integer getSubQuestionId(){
-		return questionSubId;
-	}
-	
-    public void setSubQuestionId(Integer questionSubId){
-		this.questionSubId = questionSubId;
 	}
 
     public String getPhrase(){
