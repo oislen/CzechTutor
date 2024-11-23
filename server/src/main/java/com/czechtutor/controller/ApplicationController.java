@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.czechtutor.model.Answer;
 import com.czechtutor.model.Lesson;
 import com.czechtutor.model.Question;
-import com.czechtutor.repository.QuestionRepository;
+import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
 
@@ -23,14 +24,14 @@ public class ApplicationController {
     final public Integer nOptions = 4;
     final public String checkButtonChecked = "checked";
     
-    private final QuestionRepository questionRepository;
-    private final QuestionService questionService;
     private final LessonService lessonService;
+    private final QuestionService questionService;
+    private final AnswerService answerService;
     
-    public ApplicationController(LessonService lessonService, QuestionRepository questionRepository, QuestionService questionService) {
-        this.questionRepository = questionRepository;
-        this.questionService = questionService;
+    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService) {
         this.lessonService = lessonService;
+        this.questionService = questionService;
+        this.answerService = answerService;
     }
            
     @GetMapping(value="/")
@@ -71,16 +72,19 @@ public class ApplicationController {
         // generate a question
         Lesson lesson = (Lesson) model.getAttribute("lesson");
         Question question = questionService.create(lesson);
-        questionRepository.save(question);
+        questionService.save(question);
         Integer questionId = question.getQuestionId();
+        String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
         // persist model attributes
         model.addAttribute("lesson", lesson);
         model.addAttribute("question", question);
+        model.addAttribute("path", path);
         redirectAttrs.addFlashAttribute("lesson", lesson);
         redirectAttrs.addFlashAttribute("question", question);
+        redirectAttrs.addFlashAttribute("path", path);
         System.out.println(model.toString());
         // redirect to view
-        String view = "/lesson/" + String.valueOf(lessonId) + "/" + String.valueOf(questionId);
+        String view = "/lesson/" + path;
         System.out.println(view);
         return "redirect:"+view;
     }
@@ -88,24 +92,32 @@ public class ApplicationController {
     @GetMapping(value="/lesson/{lessonId}/{questionId}")
     public String getLessonPage(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, Model model, RedirectAttributes redirectAttrs) {
         System.out.println("~~~~~ Redirecting to lesson.");
+        model.addAttribute("answerForm", new Answer());
         System.out.println(model.toString());
         return "lesson";
     }
 
-    /*
-    @PostMapping(value="/lesson/{lessonId}", consumes="application/json")
-    public String createResultsPayload(@ModelAttribute Answer answer, Model model, RedirectAttributes redirectAttrs) {
-        System.out.println("~~~~~ Redirecting to result");
+    @PostMapping(value="/lesson/{lessonId}/{questionId}")
+    public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute Answer answer, Model model, RedirectAttributes redirectAttrs) {
+        System.out.println("~~~~~ Creating answer");
+        // generate a lesson
+        System.out.println(answer.getAnswerPayload());
+        answer.setCorrect(true);
+        answerService.save(answer);
+        String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
+        System.out.println(answer.getAnswerPayload());
+        // persist model attributes
+        Lesson lesson = (Lesson) model.getAttribute("lesson");
+        model.addAttribute("answer", answer);
+        redirectAttrs.addFlashAttribute("lesson", lesson);
+        redirectAttrs.addFlashAttribute("answer", answer);
+        redirectAttrs.addFlashAttribute("path", path);
         System.out.println(model.toString());
-        // generate quiz results
-        Integer totalCorrect = quizService.countTotalCorrect(answer.getAnswerPayload());
-        model.addAttribute("totalCorrect", totalCorrect);
-        String lessonId = payload.get(0).get("lessonId").toString();
         // redirect to view
-        String view = "/result/" + lessonId;
+        String view = "/lesson/" + path;
+        System.out.println(view);
         return "redirect:"+view;
     }
-    */
 
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
