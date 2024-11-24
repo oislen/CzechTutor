@@ -6,12 +6,11 @@
 </head>
 <body>
 
-
 <h2>Czech Tutor</h2>
 
 <p>Configure a Czech language lesson below:</p>
 
-<form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lessonForm}">
+<form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lesson}">
     <h3>Select the language to translate from:</h3>
     <fieldset id="fromLanguage">
       <label for="fromLanguage">From Language</label><br>
@@ -20,7 +19,6 @@
       <input type="radio" id="fromLanguage" th:value="${enLanguage}" name="fromEnLanguage" th:field="*{fromLanguage}"/>
       <label for="fromEnLanguage" th:text="${enLanguage}"></label><br>
     </fieldset>
-  
     <h3>Select the language to translate to:</h3>
     <fieldset id="toLanguage">
       <label for="toLanguage">To Language</label><br>
@@ -31,7 +29,6 @@
     </fieldset>
     <br>
     <button type="submit">Submit</button>
-
 </form>
 
 </body>
