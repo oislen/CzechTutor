@@ -57,10 +57,10 @@ public class ApplicationController {
         lessonModel.setNQuestions(nQuestions);
         lessonModel.setNOptions(nOptions);
         lessonService.save(lessonModel);
-        String path = String.valueOf(lessonModel.getLessonId());
-        System.out.println(lessonModel.getLessonPayload());
         // redirect to view
+        String path = String.valueOf(lessonModel.getLessonId());
         String view = "/lesson/" + path;
+        System.out.println(lessonModel.getLessonPayload());
         return "redirect:"+view;
     }
 
@@ -72,11 +72,11 @@ public class ApplicationController {
         QuestionModel questionModel = questionService.create(lessonModel);
         questionService.save(questionModel);
         Integer questionId = questionModel.getQuestionId();
-        String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
-        System.out.println(questionModel.getQuestionPayload());
         // redirect to view
+        String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
         String view = "/lesson/" + path;
         System.out.println(view);
+        System.out.println(questionModel.getQuestionPayload());
         return "redirect:"+view;
     }
 
@@ -95,15 +95,15 @@ public class ApplicationController {
     @PostMapping(value="/lesson/{lessonId}/{questionId}")
     public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute AnswerModel answerModel) {
         System.out.println("~~~~~ Creating answer");
-        // generate a lesson
-        System.out.println(answerModel.getAnswerPayload());
-        answerModel.setCorrect(true);
+        // generate a answer
+        QuestionModel questionModel = questionService.get(questionId);
+        answerModel.setCorrect(answerService.isCorrect(questionModel, answerModel));
         answerService.save(answerModel);
-        String path = String.valueOf(lessonId);
-        System.out.println(answerModel.getAnswerPayload());
         // redirect to view
+        String path = String.valueOf(lessonId);
         String view = "/lesson/" + path;
         System.out.println(view);
+        System.out.println(answerModel.getAnswerPayload());
         return "redirect:"+view;
     }
 
