@@ -69,6 +69,7 @@ public class ApplicationController {
         System.out.println("~~~~~ Creating question.");
         // generate a question
         LessonModel lessonModel = lessonService.get(lessonId);
+        //Integer nOptions = lessonModel.getNOptions();
         QuestionModel questionModel = questionService.create(lessonModel);
         questionService.save(questionModel);
         Integer questionId = questionModel.getQuestionId();
