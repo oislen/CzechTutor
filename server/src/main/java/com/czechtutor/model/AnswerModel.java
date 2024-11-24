@@ -15,6 +15,9 @@ public class AnswerModel {
 	
 	//@NotEmpty
 	private Integer lessonId;
+
+	//@NotEmpty
+	private Integer questionId;
 	
   //@NotEmpty
   private String answer; 
@@ -26,6 +29,7 @@ public class AnswerModel {
 		// set class objects
 		//this.answerId = (Integer) questionPayload.get("questionId");
 		this.lessonId = (Integer) questionPayload.get("lessonId");
+		this.questionId = (Integer) questionPayload.get("questionId");
     this.answer = (String) questionPayload.get("answer");
     // determine if answer was correct for the question
     this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
@@ -36,6 +40,7 @@ public class AnswerModel {
     HashMap<String,Object> answerPayload = new HashMap<>();
     answerPayload.put("answerId", answerId);
     answerPayload.put("lessonId", lessonId);
+    answerPayload.put("questionId", questionId);
     answerPayload.put("answer", answer);
     answerPayload.put("correct", correct);
     return answerPayload;
@@ -55,6 +60,14 @@ public class AnswerModel {
 	
   public void setLessonId(Integer lessonId){
 		this.lessonId = lessonId;
+	}
+
+  public Integer getQuestionId(){
+		return questionId;
+	}
+	
+  public void setQuestionId(Integer questionId){
+		this.questionId = questionId;
 	}
 
   public String getAnswer(){
