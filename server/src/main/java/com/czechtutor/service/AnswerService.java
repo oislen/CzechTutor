@@ -3,6 +3,7 @@ package com.czechtutor.service;
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
+import com.czechtutor.model.QuestionModel;
 import com.czechtutor.repository.AnswerRepository;
 
 @Service
@@ -22,4 +23,8 @@ public class AnswerService {
         answerRepository.save(answerModel);
     }
     
+    public Boolean isCorrect(QuestionModel questionModel, AnswerModel answerModel){
+        return (Boolean) answerModel.getAnswer().toLowerCase().trim().equals(questionModel.getSolution().toLowerCase().trim());  
+    }
+
 }
