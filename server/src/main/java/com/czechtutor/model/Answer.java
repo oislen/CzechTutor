@@ -17,7 +17,7 @@ public class Answer {
 	private Integer lessonId;
 	
     //@NotEmpty
-    private String answer; 
+    private String answerText; 
 	
     //@NotEmpty
     private Boolean correct; 
@@ -26,9 +26,9 @@ public class Answer {
 		// set class objects
 		//this.answerId = (Integer) questionPayload.get("questionId");
 		this.lessonId = (Integer) questionPayload.get("lessonId");
-        this.answer = (String) questionPayload.get("answer");
+        this.answerText = (String) questionPayload.get("answerText");
         // determine if answer was correct for the question
-        this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
+        this.correct = (Boolean) questionPayload.get("answerText").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
     }
  
     public HashMap<String,Object> getAnswerPayload() {
@@ -36,7 +36,7 @@ public class Answer {
         HashMap<String,Object> answerPayload = new HashMap<>();
         answerPayload.put("answerId", answerId);
         answerPayload.put("lessonId", lessonId);
-        answerPayload.put("answer", answer);
+        answerPayload.put("answerText", answerText);
         answerPayload.put("correct", correct);
         return answerPayload;
     }
@@ -57,12 +57,12 @@ public class Answer {
 		this.lessonId = lessonId;
 	}
 
-    public String getAnswer(){
-		return answer;
+    public String getAnswerText(){
+		return answerText;
 	}
 	
-    public void setAnswer(String answer){
-		this.answer = answer;
+    public void setAnswerText(String answerText){
+		this.answerText = answerText;
 	}
 
     public Boolean getCorrect(){
