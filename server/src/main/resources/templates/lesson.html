@@ -10,18 +10,18 @@
 
 <h3>Translate the following phase.</h3>
 
-<p th:text="${question.phrase}" />
+<p th:text="${questionModel.phrase}" />
 
-<form id="question_form" th:method="post" th:action="@{/lesson/{path}(path=${path})}" th:object="${answer}">
+<form id="question_form" th:method="post" th:action="@{/lesson/{path}(path=${path})}" th:object="${answerModel}">
     <fieldset id="question">
-      <input type="radio" id="question" th:value="${question.option1}" name="option1" th:field="*{answerText}" />
-      <label for="option1" th:text="${question.option1}"></label><br>
-      <input type="radio" id="question" th:value="${question.option2}" name="option2" th:field="*{answerText}" />
-      <label for="option2" th:text="${question.option2}"></label><br>
-      <input type="radio" id="question" th:value="${question.option3}" name="option3" th:field="*{answerText}" />
-      <label for="option3" th:text="${question.option3}"></label><br>
-      <input type="radio" id="question" th:value="${question.option4}" name="option4" th:field="*{answerText}" />
-      <label for="option4" th:text="${question.option4}"></label><br>
+      <input type="radio" id="question" th:value="${questionModel.option1}" name="option1" th:field="*{answer}" />
+      <label for="option1" th:text="${questionModel.option1}"></label><br>
+      <input type="radio" id="question" th:value="${questionModel.option2}" name="option2" th:field="*{answer}" />
+      <label for="option2" th:text="${questionModel.option2}"></label><br>
+      <input type="radio" id="question" th:value="${questionModel.option3}" name="option3" th:field="*{answer}" />
+      <label for="option3" th:text="${questionModel.option3}"></label><br>
+      <input type="radio" id="question" th:value="${questionModel.option4}" name="option4" th:field="*{answer}" />
+      <label for="option4" th:text="${questionModel.option4}"></label><br>
     </fieldset>
     <br>
     <button type="submit">Submit</button>

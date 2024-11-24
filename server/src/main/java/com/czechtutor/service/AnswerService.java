@@ -2,7 +2,7 @@ package com.czechtutor.service;
 
 import org.springframework.stereotype.Service;
 
-import com.czechtutor.model.Answer;
+import com.czechtutor.model.AnswerModel;
 import com.czechtutor.repository.AnswerRepository;
 
 @Service
@@ -14,12 +14,12 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }   
 
-    public Answer get(Integer id) {
+    public AnswerModel get(Integer id) {
         return answerRepository.findById(id).orElse(null);
     }
 
-    public void save(Answer answer) {
-        answerRepository.save(answer);
+    public void save(AnswerModel answerModel) {
+        answerRepository.save(answerModel);
     }
     
 }

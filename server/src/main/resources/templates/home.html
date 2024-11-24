@@ -10,7 +10,7 @@
 
 <p>Configure a Czech language lesson below:</p>
 
-<form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lesson}">
+<form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lessonModel}">
     <h3>Select the language to translate from:</h3>
     <fieldset id="fromLanguage">
       <label for="fromLanguage">From Language</label><br>

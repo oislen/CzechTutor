@@ -7,8 +7,8 @@ import org.springframework.data.relational.core.mapping.Table;
 
 //import javax.validation.constraints.NotEmpty;
 
-@Table("RESULT")
-public class Result {
+@Table("RESULTS")
+public class ResultModel {
  
 	@Id
 	private Integer resultId;

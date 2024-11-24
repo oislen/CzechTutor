@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 //import javax.validation.constraints.NotEmpty;
 
 @Table("CES")
-public class Ces {
+public class CesModel {
 	
 	@Id
 	private Integer ID;

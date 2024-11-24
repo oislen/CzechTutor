@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.czechtutor.model.Answer;
-import com.czechtutor.model.Lesson;
-import com.czechtutor.model.Question;
+import com.czechtutor.model.AnswerModel;
+import com.czechtutor.model.LessonModel;
+import com.czechtutor.model.QuestionModel;
 import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
@@ -45,20 +45,20 @@ public class ApplicationController {
         model.addAttribute("czLanguage", czLanguage);
         model.addAttribute("enLanguage", enLanguage);
         model.addAttribute("checkButtonChecked", checkButtonChecked);
-        model.addAttribute("lesson", new Lesson());
+        model.addAttribute("lessonModel", new LessonModel());
         System.out.println(model.toString());
         return "home";
     }
 
     @PostMapping(value="/home")
-    public String createLesson(@ModelAttribute Lesson lesson) {
+    public String createLesson(@ModelAttribute LessonModel lessonModel) {
         System.out.println("~~~~~ Creating lesson");
         // generate a lesson
-        lesson.setNQuestions(nQuestions);
-        lesson.setNOptions(nOptions);
-        lessonService.save(lesson);
-        String path = String.valueOf(lesson.getLessonId());
-        System.out.println(lesson.getLessonPayload());
+        lessonModel.setNQuestions(nQuestions);
+        lessonModel.setNOptions(nOptions);
+        lessonService.save(lessonModel);
+        String path = String.valueOf(lessonModel.getLessonId());
+        System.out.println(lessonModel.getLessonPayload());
         // redirect to view
         String view = "/lesson/" + path;
         return "redirect:"+view;
@@ -68,12 +68,12 @@ public class ApplicationController {
     public String createQuestion(@PathVariable("lessonId") Integer lessonId) {
         System.out.println("~~~~~ Creating question.");
         // generate a question
-        Lesson lesson = lessonService.get(lessonId);
-        Question question = questionService.create(lesson);
-        questionService.save(question);
-        Integer questionId = question.getQuestionId();
+        LessonModel lessonModel = lessonService.get(lessonId);
+        QuestionModel questionModel = questionService.create(lessonModel);
+        questionService.save(questionModel);
+        Integer questionId = questionModel.getQuestionId();
         String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
-        System.out.println(question.getQuestionPayload());
+        System.out.println(questionModel.getQuestionPayload());
         // redirect to view
         String view = "/lesson/" + path;
         System.out.println(view);
@@ -83,24 +83,24 @@ public class ApplicationController {
     @GetMapping(value="/lesson/{lessonId}/{questionId}")
     public String getLessonPage(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, Model model) {
         System.out.println("~~~~~ Redirecting to lesson.");
-        Question question = questionService.get(questionId);
+        QuestionModel questionModel = questionService.get(questionId);
         String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
-        model.addAttribute("question", question);
-        model.addAttribute("answer", new Answer());
+        model.addAttribute("questionModel", questionModel);
+        model.addAttribute("answerModel", new AnswerModel());
         model.addAttribute("path", path);
         System.out.println(model.toString());
         return "lesson";
     }
 
     @PostMapping(value="/lesson/{lessonId}/{questionId}")
-    public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute Answer answer) {
+    public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute AnswerModel answerModel) {
         System.out.println("~~~~~ Creating answer");
         // generate a lesson
-        System.out.println(answer.getAnswerPayload());
-        answer.setCorrect(true);
-        answerService.save(answer);
+        System.out.println(answerModel.getAnswerPayload());
+        answerModel.setCorrect(true);
+        answerService.save(answerModel);
         String path = String.valueOf(lessonId);
-        System.out.println(answer.getAnswerPayload());
+        System.out.println(answerModel.getAnswerPayload());
         // redirect to view
         String view = "/lesson/" + path;
         System.out.println(view);

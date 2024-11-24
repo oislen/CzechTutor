@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
-import com.czechtutor.arch.Quiz;
-import com.czechtutor.model.Answer;
 import com.czechtutor.arch.Question;
+import com.czechtutor.arch.Quiz;
+import com.czechtutor.model.AnswerModel;
 
 public class Main {
 
@@ -49,7 +49,7 @@ public class Main {
                 System.out.print("Enter an answer: ");
                 String input = reader.nextLine();
                 // create answer payload and update results
-                Answer answer = new Answer();
+                AnswerModel answer = new AnswerModel();
                 questionPayload.put("answer", input);
                 answer.set(questionPayload);
                 results.add(answer.getAnswerPayload());

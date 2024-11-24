@@ -1,8 +1,9 @@
 package com.czechtutor.service;
 
-import com.czechtutor.model.Lesson;
-import com.czechtutor.repository.LessonRepository;
 import org.springframework.stereotype.Service;
+
+import com.czechtutor.model.LessonModel;
+import com.czechtutor.repository.LessonRepository;
 
 @Service
 public class LessonService {
@@ -13,11 +14,11 @@ public class LessonService {
         this.lessonRepository = lessonRepository;
     }   
 
-    public Lesson get(Integer id) {
+    public LessonModel get(Integer id) {
         return lessonRepository.findById(id).orElse(null);
     }
 
-    public void save(Lesson lesson) {
-        lessonRepository.save(lesson);
+    public void save(LessonModel lessonModel) {
+        lessonRepository.save(lessonModel);
     }
 }

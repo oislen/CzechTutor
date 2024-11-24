@@ -6,9 +6,9 @@ import java.util.Random;
 
 import org.springframework.stereotype.Service;
 
-import com.czechtutor.model.Ces;
-import com.czechtutor.model.Lesson;
-import com.czechtutor.model.Question;
+import com.czechtutor.model.CesModel;
+import com.czechtutor.model.LessonModel;
+import com.czechtutor.model.QuestionModel;
 import com.czechtutor.repository.CesRepository;
 import com.czechtutor.repository.QuestionRepository;
 
@@ -23,15 +23,15 @@ public class QuestionService {
         this.cesRepository = cesRepository;
     }   
 
-    public Question get(Integer id) {
+    public QuestionModel get(Integer id) {
         return questionRepository.findById(id).orElse(null);
     }
 
-    public void save(Question question) {
+    public void save(QuestionModel question) {
         questionRepository.save(question);
     }
 
-    public Question create(Lesson lesson) {
+    public QuestionModel create(LessonModel lessonModel) {
         // set question
         Integer upperIndexBound = (int) cesRepository.count();
         // create random generator and set seed if required
@@ -41,7 +41,7 @@ public class QuestionService {
         //}
         // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
         ArrayList<Integer> indexArray = new ArrayList<>();
-        for (int i = 0; i<lesson.getNOptions(); i++) {
+        for (int i = 0; i<lessonModel.getNOptions(); i++) {
             Integer index = randomGenerator.nextInt(upperIndexBound);
             indexArray.add(index);
             }
@@ -49,31 +49,31 @@ public class QuestionService {
         ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
         for (int i = 1; i<=upperIndexBound; i++) {
             if (indexArray.contains(i)) {
-                Ces cesPayload = cesRepository.findById(i).orElse(null);
-                HashMap<String, Object> cesRecord = cesPayload.getCesPayload();
-                filteredRecordSet.add(cesRecord);
+                CesModel cesModel = cesRepository.findById(i).orElse(null);
+                HashMap<String, Object> cesPayload = cesModel.getCesPayload();
+                filteredRecordSet.add(cesPayload);
             }
         }
         // randomly determine the phase, answer and options
-        Integer phaseIndex = randomGenerator.nextInt(lesson.getNOptions());
+        Integer phaseIndex = randomGenerator.nextInt(lessonModel.getNOptions());
         ArrayList<Object> optionsArray = new ArrayList<>();
         for (HashMap<String, Object> hashMapObject : filteredRecordSet) {
-            optionsArray.add(hashMapObject.get(lesson.getToLanguage()));
+            optionsArray.add(hashMapObject.get(lessonModel.getToLanguage()));
         }
         // create question payload
         HashMap<String, Object> lessonPayload;
-        lessonPayload = lesson.getLessonPayload();
-        lessonPayload.put("phrase", filteredRecordSet.get(phaseIndex).get(lesson.getFromLanguage()));
+        lessonPayload = lessonModel.getLessonPayload();
+        lessonPayload.put("phrase", filteredRecordSet.get(phaseIndex).get(lessonModel.getFromLanguage()));
         lessonPayload.put("option1", optionsArray.get(0));
         lessonPayload.put("option2", optionsArray.get(1));
         lessonPayload.put("option3",  optionsArray.get(2));
         lessonPayload.put("option4", optionsArray.get(3));
-        lessonPayload.put("solution", filteredRecordSet.get(phaseIndex).get(lesson.getToLanguage()));
+        lessonPayload.put("solution", filteredRecordSet.get(phaseIndex).get(lessonModel.getToLanguage()));
         // create a question
-        Question question = new Question();
-        question.set(lessonPayload);
-        questionRepository.save(question);
-        return question;
+        QuestionModel questionModel = new QuestionModel();
+        questionModel.set(lessonPayload);
+        questionRepository.save(questionModel);
+        return questionModel;
     }
 
 }
