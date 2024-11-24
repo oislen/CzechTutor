@@ -20,7 +20,7 @@ create table if not exists question (
 create table if not exists answer (
     answer_id bigint auto_increment primary key,
     lesson_id bigint not null,
-    answer varchar(255) not null,
+    answer_text varchar(255) not null,
     correct boolean not null
 );
 
