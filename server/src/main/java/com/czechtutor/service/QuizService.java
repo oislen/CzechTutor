@@ -9,30 +9,30 @@ import org.springframework.stereotype.Service;
 import com.czechtutor.model.CesModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
-import com.czechtutor.repository.AnswerRepository;
-import com.czechtutor.repository.CesRepository;
-import com.czechtutor.repository.LessonRepository;
-import com.czechtutor.repository.QuestionRepository;
+import com.czechtutor.repository.crud.AnswerCrudRepository;
+import com.czechtutor.repository.crud.CesCrudRepository;
+import com.czechtutor.repository.crud.LessonCrudRepository;
+import com.czechtutor.repository.crud.QuestionCrudRepository;
 
 @Service
 public class QuizService {
 
-    private final LessonRepository lessonRepository;
-    private final QuestionRepository questionRepository;
-    private final CesRepository cesRepository;
-    private final AnswerRepository answerRepository;
+    private final LessonCrudRepository lessonCrudRepository;
+    private final QuestionCrudRepository questionCrudRepository;
+    private final CesCrudRepository cesCrudRepository;
+    private final AnswerCrudRepository answerCrudRepository;
 
-    public QuizService(LessonRepository lessonRepository, QuestionRepository questionRepository, CesRepository cesRepository, AnswerRepository answerRepository) {
-        this.lessonRepository = lessonRepository;
-        this.questionRepository = questionRepository;
-        this.cesRepository = cesRepository;
-        this.answerRepository = answerRepository;
+    public QuizService(LessonCrudRepository lessonCrudRepository, QuestionCrudRepository questionCrudRepository, CesCrudRepository cesCrudRepository, AnswerCrudRepository answerCrudRepository) {
+        this.lessonCrudRepository = lessonCrudRepository;
+        this.questionCrudRepository = questionCrudRepository;
+        this.cesCrudRepository = cesCrudRepository;
+        this.answerCrudRepository = answerCrudRepository;
     }
 
     public ArrayList<QuestionModel> create(LessonModel lessonModel) {
         // Lesson lesson = new Lesson();
         // lesson.set(payload);
-        lessonRepository.save(lessonModel);
+        lessonCrudRepository.save(lessonModel);
         HashMap<String, Object> payload = lessonModel.getLessonPayload();
         // create an array for holding the questions
         ArrayList<QuestionModel> quiz = new ArrayList<>();
@@ -41,7 +41,7 @@ public class QuizService {
         // load czech / english language phrases from h2 database
         for (int questionSubId = 1; questionSubId<=lessonModel.getNQuestions(); questionSubId++) {
             // set question
-            Integer upperIndexBound = (int) cesRepository.count();
+            Integer upperIndexBound = (int) cesCrudRepository.count();
             // create random generator and set seed if required
             Random randomGenerator = new Random();
             if (payload.containsKey("randomSeed")) {
@@ -57,7 +57,7 @@ public class QuizService {
             ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
             for (int i = 1; i<=upperIndexBound; i++) {
                 if (indexArray.contains(i)) {
-                    CesModel cesModel = cesRepository.findById(i).orElse(null);
+                    CesModel cesModel = cesCrudRepository.findById(i).orElse(null);
                     HashMap<String, Object> cesPayload = cesModel.getCesPayload();
                     filteredRecordSet.add(cesPayload);
                 }
@@ -81,7 +81,7 @@ public class QuizService {
             // create a question
             QuestionModel questionModel = new QuestionModel();
             questionModel.set(lessonPayload);
-            questionRepository.save(questionModel);
+            questionCrudRepository.save(questionModel);
             //quiz.add(question.getQuestionPayload());
             quiz.add(questionModel);
             // increment questionId
@@ -103,9 +103,9 @@ public class QuizService {
 
     public void clearTables() {
         // clear all records from database
-        lessonRepository.deleteAll();
-        questionRepository.deleteAll();
-        answerRepository.deleteAll();
+        lessonCrudRepository.deleteAll();
+        questionCrudRepository.deleteAll();
+        answerCrudRepository.deleteAll();
     }
     
 }

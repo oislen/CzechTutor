@@ -3,22 +3,22 @@ package com.czechtutor.service;
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.ResultModel;
-import com.czechtutor.repository.ResultRepository;
+import com.czechtutor.repository.crud.ResultCrudRepository;
 
 @Service
 public class ResultService {
 
-    private final ResultRepository resultRepository;
+    private final ResultCrudRepository resultCrudRepository;
 
-    public ResultService(ResultRepository resultRepository) {
-        this.resultRepository = resultRepository;
+    public ResultService(ResultCrudRepository resultCrudRepository) {
+        this.resultCrudRepository = resultCrudRepository;
     }   
 
     public ResultModel get(Integer id) {
-        return resultRepository.findById(id).orElse(null);
+        return resultCrudRepository.findById(id).orElse(null);
     }
 
     public void save(ResultModel resultModel) {
-        resultRepository.save(resultModel);
+        resultCrudRepository.save(resultModel);
     }
 }

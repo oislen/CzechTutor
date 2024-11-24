@@ -4,23 +4,23 @@ import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.QuestionModel;
-import com.czechtutor.repository.AnswerRepository;
+import com.czechtutor.repository.crud.AnswerCrudRepository;
 
 @Service
 public class AnswerService {
     
-    private final AnswerRepository answerRepository;
+    private final AnswerCrudRepository answerCrudRepository;
 
-    public AnswerService(AnswerRepository answerRepository) {
-        this.answerRepository = answerRepository;
+    public AnswerService(AnswerCrudRepository answerCrudRepository) {
+        this.answerCrudRepository = answerCrudRepository;
     }   
 
     public AnswerModel get(Integer id) {
-        return answerRepository.findById(id).orElse(null);
+        return answerCrudRepository.findById(id).orElse(null);
     }
 
     public void save(AnswerModel answerModel) {
-        answerRepository.save(answerModel);
+        answerCrudRepository.save(answerModel);
     }
     
     public Boolean isCorrect(QuestionModel questionModel, AnswerModel answerModel){

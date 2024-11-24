@@ -9,31 +9,31 @@ import org.springframework.stereotype.Service;
 import com.czechtutor.model.CesModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
-import com.czechtutor.repository.CesRepository;
-import com.czechtutor.repository.QuestionRepository;
+import com.czechtutor.repository.crud.CesCrudRepository;
+import com.czechtutor.repository.crud.QuestionCrudRepository;
 
 @Service
 public class QuestionService {
     
-    private final QuestionRepository questionRepository;
-    private final CesRepository cesRepository;
+    private final QuestionCrudRepository questionCrudRepository;
+    private final CesCrudRepository cesCrudRepository;
 
-    public QuestionService(QuestionRepository questionRepository, CesRepository cesRepository) {
-        this.questionRepository = questionRepository;
-        this.cesRepository = cesRepository;
+    public QuestionService(QuestionCrudRepository questionCrudRepository, CesCrudRepository cesCrudRepository) {
+        this.questionCrudRepository = questionCrudRepository;
+        this.cesCrudRepository = cesCrudRepository;
     }   
 
     public QuestionModel get(Integer id) {
-        return questionRepository.findById(id).orElse(null);
+        return questionCrudRepository.findById(id).orElse(null);
     }
 
     public void save(QuestionModel question) {
-        questionRepository.save(question);
+        questionCrudRepository.save(question);
     }
 
     public QuestionModel create(LessonModel lessonModel) {
         // set question
-        Integer upperIndexBound = (int) cesRepository.count();
+        Integer upperIndexBound = (int) cesCrudRepository.count();
         // create random generator and set seed if required
         Random randomGenerator = new Random();
         //if (payload.containsKey("randomSeed")) {
@@ -49,7 +49,7 @@ public class QuestionService {
         ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
         for (int i = 1; i<=upperIndexBound; i++) {
             if (indexArray.contains(i)) {
-                CesModel cesModel = cesRepository.findById(i).orElse(null);
+                CesModel cesModel = cesCrudRepository.findById(i).orElse(null);
                 HashMap<String, Object> cesPayload = cesModel.getCesPayload();
                 filteredRecordSet.add(cesPayload);
             }
@@ -72,7 +72,7 @@ public class QuestionService {
         // create a question
         QuestionModel questionModel = new QuestionModel();
         questionModel.set(lessonPayload);
-        questionRepository.save(questionModel);
+        questionCrudRepository.save(questionModel);
         return questionModel;
     }
 
