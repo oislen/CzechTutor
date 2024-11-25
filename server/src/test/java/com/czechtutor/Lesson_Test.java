@@ -1,7 +1,5 @@
 package com.czechtutor;
 
-import java.util.HashMap;
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -13,40 +11,45 @@ public class Lesson_Test {
     final String expFromLanguage = "CZ";
     final String expToLanguage = "EN";
     final Integer expNQuestions = 2;
+    final Integer expNOptions = 4;
     LessonModel lessonModel = new LessonModel();
     
     {
-        HashMap<String, Object> lessonPayload = new HashMap<>();
-        lessonPayload.put("lessonId", expLessonId);
-        lessonPayload.put("fromLanguage", expFromLanguage);
-        lessonPayload.put("toLanguage", expToLanguage);
-        lessonPayload.put("nQuestions", expNQuestions);
-        lessonModel.set(lessonPayload);
+        lessonModel.setLessonId(expLessonId);
+        lessonModel.setFromLanguage(expFromLanguage);
+        lessonModel.setToLanguage(expToLanguage);
+        lessonModel.setNQuestions(expNQuestions);
+        lessonModel.setNOptions(expNOptions);
     }
     
 
     @Test
     void LessonId_Test() {
-        Integer obsLessonId = (Integer) lessonModel.getLessonPayload().get("lessonId");
+        Integer obsLessonId = lessonModel.getLessonId();
         Assertions.assertEquals(expLessonId, obsLessonId);
     }
 
     @Test
     void FromLanguage_Test() {
-        String obsFromLanguage = (String) lessonModel.getLessonPayload().get("fromLanguage");
+        String obsFromLanguage = lessonModel.getFromLanguage();
         Assertions.assertEquals(expFromLanguage, obsFromLanguage);
     }
     
     @Test
     void ToLanguage_Test() {
-        String obsToLanguage = (String) lessonModel.getLessonPayload().get("toLanguage");
+        String obsToLanguage = lessonModel.getToLanguage();
         Assertions.assertEquals(expToLanguage, obsToLanguage);
     }
 
     @Test
     void NQuestions_Test() {
-        Integer obsNQuestions = (Integer) lessonModel.getLessonPayload().get("nQuestions");
+        Integer obsNQuestions = lessonModel.getNQuestions();
         Assertions.assertEquals(expNQuestions, obsNQuestions);
     }
 
+    @Test
+    void NOptions_Test() {
+        Integer obsNOptions = lessonModel.getNOptions();
+        Assertions.assertEquals(expNOptions, obsNOptions);
+    }
 }
