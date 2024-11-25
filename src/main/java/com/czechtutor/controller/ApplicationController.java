@@ -57,6 +57,11 @@ public class ApplicationController {
     public String createLesson(@ModelAttribute LessonModel lessonModel) {
         System.out.println("~~~~~ Creating lesson");
         // generate a lesson
+        if (lessonModel.getFromLanguage().equals(czLanguage)){
+            lessonModel.setToLanguage(enLanguage);
+        } else {
+            lessonModel.setToLanguage(czLanguage);
+        }
         lessonModel.setNOptions(nOptions);
         lessonService.save(lessonModel);
         // redirect to view
