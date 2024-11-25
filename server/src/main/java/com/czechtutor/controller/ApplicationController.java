@@ -1,5 +1,7 @@
 package com.czechtutor.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,27 +12,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
+import com.czechtutor.model.ResultModel;
 import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
+import com.czechtutor.service.ResultService;
 
 @Controller
 public class ApplicationController {
      
     final public String czLanguage = "CZ";
     final public String enLanguage = "EN";
-    final public Integer nQuestions = 6;
+    final public Integer nQuestions = 2;
     final public Integer nOptions = 4;
     final public String checkButtonChecked = "checked";
     
     private final LessonService lessonService;
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final ResultService resultService;
     
-    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService) {
+    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService) {
         this.lessonService = lessonService;
         this.questionService = questionService;
         this.answerService = answerService;
+        this.resultService = resultService;
     }
            
     @GetMapping(value="/")
@@ -82,8 +88,18 @@ public class ApplicationController {
             System.out.println(questionModel.getQuestionPayload());
             return "redirect:"+view;
         } else {
+            System.out.println("~~~~~ Creating result.");
+            // generate the results of the lesson
+            ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
+            Integer totalCorrect = resultService.countTotalCorrect(lessonAnswers);
+            // create a result
+            ResultModel resultModel = resultService.create(lessonId, totalCorrect);
+            resultService.save(resultModel);
+            // redirect to view
             String path = String.valueOf(lessonId);
             String view = "/result/" + path;
+            System.out.println(view);
+            System.out.println(resultModel.getResultPayload());
             return "redirect:"+view;
         }
     }
@@ -118,7 +134,12 @@ public class ApplicationController {
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("~~~~~ Creating result.");
-        model.addAttribute("lessonId", lessonId);
+        ResultModel resultModel = resultService.findByLessonId(lessonId);
+        String resultMessage = "Answer " + String.valueOf(resultModel.getResult()) + " out of " + String.valueOf(nQuestions) + " correct";
+        String path = String.valueOf(lessonId);
+        model.addAttribute("resultMessage", resultMessage);
+        model.addAttribute("path", path);
+        System.out.println(model.toString());
         return "result";
     }
 
