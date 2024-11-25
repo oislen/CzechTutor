@@ -1,5 +1,7 @@
 package com.czechtutor.controller;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Controller;
@@ -138,10 +140,18 @@ public class ApplicationController {
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
+        ArrayList<QuestionModel> lessonQuestions = questionService.findByLessonId(lessonId);
+        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
         ResultModel resultModel = resultService.findByLessonId(lessonId);
-        String resultMessage = "Answer " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " correct";
+        DecimalFormat decimalFormatter = new DecimalFormat("#.##");
+        decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
+        String scoreMessage = String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
+        String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
-        model.addAttribute("resultMessage", resultMessage);
+        model.addAttribute("scoreMessage", scoreMessage);
+        model.addAttribute("nCorrectMessage", nCorrectMessage);
+        model.addAttribute("lessonQuestions", lessonQuestions);
+        model.addAttribute("lessonAnswers", lessonAnswers);
         model.addAttribute("path", path);
         System.out.println(model.toString());
         return "result";
