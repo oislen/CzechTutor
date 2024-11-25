@@ -5,10 +5,10 @@ __pycache__
 *.class
 CzechTutor.iml
 
-server/arch/data/images
-server/arch/data/ces-eng*
-server/out
-server/target
+arch/data/images
+arch/data/ces-eng*
+out
+target
 
 HELP.md
 target/
