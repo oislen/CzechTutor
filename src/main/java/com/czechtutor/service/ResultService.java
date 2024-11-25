@@ -1,10 +1,12 @@
 package com.czechtutor.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
+import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
 import com.czechtutor.repository.crud.ResultCrudRepository;
 
@@ -46,6 +48,26 @@ public class ResultService {
 
     public ResultModel  findByLessonId(Integer lessonId) {
         return resultCrudRepository.findByLessonId(String.valueOf(lessonId));
+    }
+
+    public ArrayList<HashMap<String, Object>> createLessonSummary(ArrayList<QuestionModel> lessonQuestions, ArrayList<AnswerModel> lessonAnswers, Integer nQuestions) {
+        // initialise output object
+        ArrayList<HashMap<String, Object>> lessonQuestionsAnswersArray = new ArrayList<>();
+        // iterate over each question index
+        for (int i = 0; i<nQuestions; i++) {
+            // create a temporary object to fill
+            HashMap<String, Object> lessonQuestionsAnswers = new HashMap<>();
+            // extract out question and answer
+            QuestionModel question = lessonQuestions.get(i);
+            AnswerModel answer = lessonAnswers.get(i);
+            // put relevant data into temporary object
+            lessonQuestionsAnswers.put("phrase", question.getPhrase());
+            lessonQuestionsAnswers.put("solution", question.getSolution());
+            lessonQuestionsAnswers.put("answer", answer.getAnswer());
+            lessonQuestionsAnswers.put("correct", answer.getCorrect());
+            lessonQuestionsAnswersArray.add(lessonQuestionsAnswers);
+        }
+        return lessonQuestionsAnswersArray;
     }
 
 }
