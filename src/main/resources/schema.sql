@@ -28,7 +28,8 @@ create table if not exists answers (
 create table if not exists results (
     result_id bigint auto_increment primary key,
     lesson_id bigint not null,
-    result tinyint not null
+    n_correct tinyint not null,
+    score real not null
 );
 
 create table if not exists ces(
