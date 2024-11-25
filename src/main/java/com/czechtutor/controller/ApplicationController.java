@@ -142,9 +142,28 @@ public class ApplicationController {
         return "result";
     }
 
-    @PostMapping(value="/result/{lessonId}")
-    public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId, Model model) {
+    @PostMapping(value="/resultHome/{lessonId}")
+    public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId) {
         System.out.println("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
+
+    @PostMapping(value="/resultRedo/{lessonId}")
+    public String redirectResulttoLesson(@PathVariable("lessonId") Integer lessonId) {
+        System.out.println("~~~~~ Creating lesson");
+        // generate a new lesson from the current lesson
+        LessonModel currentLessonModel = lessonService.get(lessonId);
+        LessonModel newLessonModel = new LessonModel();
+        newLessonModel.setFromLanguage(currentLessonModel.getFromLanguage());
+        newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
+        newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
+        newLessonModel.setNOptions(currentLessonModel.getNOptions());
+        lessonService.save(newLessonModel);
+        // redirect to view
+        String path = String.valueOf(newLessonModel.getLessonId());
+        String view = "/lesson/" + path;
+        System.out.println(newLessonModel.getLessonPayload());
+        return "redirect:"+view;
+    }
+
 }
