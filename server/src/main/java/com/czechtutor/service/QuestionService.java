@@ -76,4 +76,7 @@ public class QuestionService {
         return questionModel;
     }
 
+    public ArrayList<QuestionModel>  findByLessonId(Integer lessonId) {
+        return questionCrudRepository.findByLessonId(String.valueOf(lessonId));
+    }
 }
