@@ -15,3 +15,10 @@ Czech to English phrases and vocabulary sourced from:
 ```
 exeSpring.cmd
 ```
+
+# Data Model
+
+```
+select * from lessons as l inner join results as r on l.lesson_id = r.lesson_id;
+select * from questions as q inner join answers as a on q.question_id = a.question_id;
+```
