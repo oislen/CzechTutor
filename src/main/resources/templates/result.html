@@ -10,8 +10,12 @@
 
 <h3 th:text="${resultMessage}" />
 
-<form th:method="post" th:action="@{/result/{path}(path=${path})}">
-    <button type="submit">Submit</button>
+<form th:method="post" th:action="@{/resultHome/{path}(path=${path})}">
+    <button type="submit">Home</button>
+</form>
+
+<form th:method="post" th:action="@{/resultRedo/{path}(path=${path})}">
+    <button type="submit">Redo</button>
 </form>
 
 </body>
