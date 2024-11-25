@@ -23,7 +23,7 @@ public class ApplicationController {
      
     final public String czLanguage = "CZ";
     final public String enLanguage = "EN";
-    final public Integer nQuestions = 2;
+    final public Integer nQuestions = 6;
     final public Integer nOptions = 4;
     final public String checkButtonChecked = "checked";
     
