@@ -17,13 +17,17 @@ public class ResultModel {
 	private Integer lessonId;
 	
 	//@NotEmpty
-	private Integer result;
+	private Integer nCorrect;
 	
+	//@NotEmpty
+	private Float score;
+
   public void set(HashMap<String,Object> payload) {
 		// set class objects
 		//this.resultId = (Integer) payload.get("resultId");
 		this.lessonId = (Integer) payload.get("lessonId");
-		this.result = (Integer) payload.get("result");
+		this.nCorrect = (Integer) payload.get("nCorrect");
+		this.score = (Float) payload.get("score");
   }
  
   public HashMap<String,Object> getResultPayload() {
@@ -31,7 +35,8 @@ public class ResultModel {
     HashMap<String,Object> resultsPayload = new HashMap<>();
     resultsPayload.put("resultId", resultId);
     resultsPayload.put("lessonId", lessonId);
-    resultsPayload.put("result", result);
+    resultsPayload.put("nCorrect", nCorrect);
+    resultsPayload.put("score", score);
     return resultsPayload;
   }
 
@@ -43,12 +48,20 @@ public class ResultModel {
     this.lessonId = lessonId;
   }
   
-  public Integer getResult(){
-    return result;
+  public Integer getNCorrect(){
+    return nCorrect;
   }
     
-  public void setResult(Integer result){
-    this.result = result;
+  public void setNCorrect(Integer nCorrect){
+    this.nCorrect = nCorrect;
+  }
+  
+  public Float getScore(){
+    return score;
+  }
+    
+  public void setScore(Float score){
+    this.score = score;
   }
 
 }
