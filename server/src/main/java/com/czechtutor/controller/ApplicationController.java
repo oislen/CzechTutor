@@ -66,19 +66,26 @@ public class ApplicationController {
 
     @GetMapping(value="/lesson/{lessonId}")
     public String createQuestion(@PathVariable("lessonId") Integer lessonId) {
-        System.out.println("~~~~~ Creating question.");
-        // generate a question
-        LessonModel lessonModel = lessonService.get(lessonId);
-        //Integer nOptions = lessonModel.getNOptions();
-        QuestionModel questionModel = questionService.create(lessonModel);
-        questionService.save(questionModel);
-        Integer questionId = questionModel.getQuestionId();
-        // redirect to view
-        String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
-        String view = "/lesson/" + path;
-        System.out.println(view);
-        System.out.println(questionModel.getQuestionPayload());
-        return "redirect:"+view;
+        // check NQuestions for lessonId against database
+        Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
+        if (nLessonQuestions < nQuestions) {
+            System.out.println("~~~~~ Creating question.");
+            // generate a question
+            LessonModel lessonModel = lessonService.get(lessonId);
+            QuestionModel questionModel = questionService.create(lessonModel);
+            questionService.save(questionModel);
+            Integer questionId = questionModel.getQuestionId();
+            // redirect to view
+            String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
+            String view = "/lesson/" + path;
+            System.out.println(view);
+            System.out.println(questionModel.getQuestionPayload());
+            return "redirect:"+view;
+        } else {
+            String path = String.valueOf(lessonId);
+            String view = "/result/" + path;
+            return "redirect:"+view;
+        }
     }
 
     @GetMapping(value="/lesson/{lessonId}/{questionId}")
@@ -110,8 +117,8 @@ public class ApplicationController {
 
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
+        System.out.println("~~~~~ Creating result.");
         model.addAttribute("lessonId", lessonId);
-        System.out.println("At result.");
         return "result";
     }
 
