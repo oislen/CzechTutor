@@ -23,9 +23,7 @@ public class ApplicationController {
      
     final public String czLanguage = "CZ";
     final public String enLanguage = "EN";
-    final public Integer nQuestions = 6;
     final public Integer nOptions = 4;
-    final public String checkButtonChecked = "checked";
     
     private final LessonService lessonService;
     private final QuestionService questionService;
@@ -50,7 +48,6 @@ public class ApplicationController {
         System.out.println("~~~~~ At home.");
         model.addAttribute("czLanguage", czLanguage);
         model.addAttribute("enLanguage", enLanguage);
-        model.addAttribute("checkButtonChecked", checkButtonChecked);
         model.addAttribute("lessonModel", new LessonModel());
         System.out.println(model.toString());
         return "home";
@@ -60,7 +57,6 @@ public class ApplicationController {
     public String createLesson(@ModelAttribute LessonModel lessonModel) {
         System.out.println("~~~~~ Creating lesson");
         // generate a lesson
-        lessonModel.setNQuestions(nQuestions);
         lessonModel.setNOptions(nOptions);
         lessonService.save(lessonModel);
         // redirect to view
@@ -73,6 +69,7 @@ public class ApplicationController {
     @GetMapping(value="/lesson/{lessonId}")
     public String createQuestion(@PathVariable("lessonId") Integer lessonId) {
         // check NQuestions for lessonId against database
+        Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
         if (nLessonQuestions < nQuestions) {
             System.out.println("~~~~~ Creating question.");
@@ -135,6 +132,7 @@ public class ApplicationController {
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("~~~~~ Creating result.");
+        Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         ResultModel resultModel = resultService.findByLessonId(lessonId);
         String resultMessage = "Answer " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " correct";
         String path = String.valueOf(lessonId);
