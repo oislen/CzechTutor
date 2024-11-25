@@ -8,7 +8,7 @@
 
 <h2>Results</h2>
 
-<h3> Answered N questions out of M correct.</h3>
+<h3 th:text="${resultMessage}" />
 
 <form th:method="post" th:action="@{/result/{path}(path=${path})}">
     <button type="submit">Submit</button>
