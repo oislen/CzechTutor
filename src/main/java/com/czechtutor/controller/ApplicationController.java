@@ -3,6 +3,7 @@ package com.czechtutor.controller;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -140,18 +141,21 @@ public class ApplicationController {
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
-        ArrayList<QuestionModel> lessonQuestions = questionService.findByLessonId(lessonId);
-        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
+        // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
         DecimalFormat decimalFormatter = new DecimalFormat("#.##");
         decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
         String scoreMessage = String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
+        // generate combined lesson questions and answers
+        ArrayList<QuestionModel> lessonQuestions = questionService.findByLessonId(lessonId);
+        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
+        ArrayList<HashMap<String, Object>> lessonQuestionsAnswersArray = resultService.createLessonSummary(lessonQuestions, lessonAnswers, nQuestions);
+        // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
-        model.addAttribute("lessonQuestions", lessonQuestions);
-        model.addAttribute("lessonAnswers", lessonAnswers);
+        model.addAttribute("lessonQuestionsAnswersArray", lessonQuestionsAnswersArray);
         model.addAttribute("path", path);
         System.out.println(model.toString());
         return "result";
