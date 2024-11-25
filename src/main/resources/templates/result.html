@@ -8,7 +8,9 @@
 
 <h2>Results</h2>
 
-<h3 th:text="${resultMessage}" />
+<h3 th:text="${scoreMessage}" />
+
+<h4 th:text="${nCorrectMessage}" />
 
 <form th:method="post" th:action="@{/resultHome/{path}(path=${path})}">
     <button type="submit">Home</button>
