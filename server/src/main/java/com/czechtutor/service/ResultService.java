@@ -1,7 +1,10 @@
 package com.czechtutor.service;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 
+import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.ResultModel;
 import com.czechtutor.repository.crud.ResultCrudRepository;
 
@@ -21,4 +24,27 @@ public class ResultService {
     public void save(ResultModel resultModel) {
         resultCrudRepository.save(resultModel);
     }
+    
+    public Integer countTotalCorrect(ArrayList<AnswerModel> lessonAnswers){
+        int totalCorrect = 0;
+        for (AnswerModel answer : lessonAnswers) {
+            if (answer.getCorrect()) {
+                totalCorrect++;
+            }
+        }
+        return totalCorrect;
+    }
+
+    public ResultModel create(Integer lessonId, Integer totalCorrect){
+        // create a result
+        ResultModel resultModel = new ResultModel();
+        resultModel.setLessonId(lessonId);
+        resultModel.setResult(totalCorrect);
+        return resultModel;
+    }
+
+    public ResultModel  findByLessonId(Integer lessonId) {
+        return resultCrudRepository.findByLessonId(String.valueOf(lessonId));
+    }
+
 }
