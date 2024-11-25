@@ -35,11 +35,12 @@ public class ResultService {
         return totalCorrect;
     }
 
-    public ResultModel create(Integer lessonId, Integer totalCorrect){
+    public ResultModel create(Integer lessonId, Integer nCorrect, Float score){
         // create a result
         ResultModel resultModel = new ResultModel();
         resultModel.setLessonId(lessonId);
-        resultModel.setResult(totalCorrect);
+        resultModel.setNCorrect(nCorrect);
+        resultModel.setScore(score);
         return resultModel;
     }
 
