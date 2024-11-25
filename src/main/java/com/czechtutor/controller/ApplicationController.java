@@ -40,7 +40,7 @@ public class ApplicationController {
         this.resultService = resultService;
     }
            
-    @GetMapping(value="/")
+    @GetMapping(value="*")
     public String redirectIndextoHomePage() {
         System.out.println("~~~~~ Redirecting home.");
         return "redirect:/home";
