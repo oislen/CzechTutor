@@ -1,5 +1,7 @@
 package com.czechtutor.service;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
@@ -25,6 +27,10 @@ public class AnswerService {
     
     public Boolean isCorrect(QuestionModel questionModel, AnswerModel answerModel){
         return (Boolean) answerModel.getAnswer().toLowerCase().trim().equals(questionModel.getSolution().toLowerCase().trim());  
+    }
+
+    public ArrayList<AnswerModel>  findByLessonId(Integer lessonId) {
+        return answerCrudRepository.findByLessonId(String.valueOf(lessonId));
     }
 
 }
