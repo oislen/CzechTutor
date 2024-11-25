@@ -12,6 +12,26 @@
 
 <h4 th:text="${nCorrectMessage}" />
 
+<table>
+    <thread>
+    <tr>
+      <th scope="col">Phrase</th>
+      <th scope="col">Solution</th>
+      <th scope="col">Answer</th>
+      <th scope="col">Correct</th>
+    </tr>
+    </thread>
+    <tbody>
+    <tr th:each="lessonQuestionsAnswers : ${lessonQuestionsAnswersArray}">
+      <td th:text="${lessonQuestionsAnswers.get('phrase')}" />
+      <td th:text="${lessonQuestionsAnswers.get('solution')}" />
+      <td th:text="${lessonQuestionsAnswers.get('answer')}" />
+      <td th:text="${lessonQuestionsAnswers.get('correct')}" />
+    </tr>
+    </tbody>
+</table>
+<br>
+
 <form th:method="post" th:action="@{/resultHome/{path}(path=${path})}">
     <button type="submit">Home</button>
 </form>
