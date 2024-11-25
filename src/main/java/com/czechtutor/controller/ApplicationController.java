@@ -91,9 +91,10 @@ public class ApplicationController {
             System.out.println("~~~~~ Creating result.");
             // generate the results of the lesson
             ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
-            Integer totalCorrect = resultService.countTotalCorrect(lessonAnswers);
+            Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
+            Float score = Float.valueOf(nCorrect) / Float.valueOf(nQuestions);
             // create a result
-            ResultModel resultModel = resultService.create(lessonId, totalCorrect);
+            ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
             resultService.save(resultModel);
             // redirect to view
             String path = String.valueOf(lessonId);
@@ -135,7 +136,7 @@ public class ApplicationController {
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         System.out.println("~~~~~ Creating result.");
         ResultModel resultModel = resultService.findByLessonId(lessonId);
-        String resultMessage = "Answer " + String.valueOf(resultModel.getResult()) + " out of " + String.valueOf(nQuestions) + " correct";
+        String resultMessage = "Answer " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " correct";
         String path = String.valueOf(lessonId);
         model.addAttribute("resultMessage", resultMessage);
         model.addAttribute("path", path);
