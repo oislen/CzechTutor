@@ -1,0 +1,1 @@
+call del E:\spring-boot-h2-db.mv.db
