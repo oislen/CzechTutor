@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <title>lesson</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}" />
 </head>
 <body>
 
-<h2>Lesson</h2>
+<div class="container">
 
-<h3>Translate the following phase.</h3>
+<h4 class="display-4">Lesson</h4>
+
+<h5 class="display-5">Translate the following phase.</h5>
 
 <p th:text="${questionModel.phrase}" />
 
@@ -25,8 +28,14 @@
       <label for="option4" th:text="${questionModel.option4}"></label><br>
     </fieldset>
     <br>
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-outline-dark">Submit</button>
 </form>
+
+</div>
+
+<footer id="footer">
+  <h6>CzechTutor © 2024</h4>
+</footer>
 
 </body>
 </html>
