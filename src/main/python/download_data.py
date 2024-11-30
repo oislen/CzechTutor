@@ -18,6 +18,9 @@ if False:
 data = pd.read_csv(os.path.join(destination_directory, "ces.txt"), sep="\t", names=["EN","CZ","REF"], header=None)
 # create ID column
 data['ID'] = data.index+1
+# calculate average phrase length
+data["LEN"] = data[['EN','CZ']].apply(lambda series: series.str.len()).mean(axis=1)
+data["LVL"]= pd.qcut(x=data["LEN"] , q=3, labels=["Easy","Medium","Hard"])
 # set column order
 data = data[["ID","EN","CZ","REF"]]
 # save data as .csv file
