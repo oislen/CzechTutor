@@ -9,6 +9,9 @@ arch/data/images
 arch/data/ces-eng*
 out
 target
+src/main/resources/data/_about.txt
+src/main/resources/data/ces.txt
+src/main/resources/data/ces_bkp.csv
 
 HELP.md
 target/
