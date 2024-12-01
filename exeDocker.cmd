@@ -14,8 +14,8 @@ docker image rm -f %DOCKER_IMAGE%
 call docker build --no-cache -t %DOCKER_IMAGE% . --build-arg GIT_BRANCH=%GIT_BRANCH%
 
 :: run docker container
-:: call docker run -it --name %DOCKER_CONTAINER_NAME% --memory 7GB --rm %DOCKER_IMAGE%
-call docker run -it --memory 7GB --rm %DOCKER_IMAGE%
+call docker run --name %DOCKER_CONTAINER_NAME% --publish 8080:8080 --memory 7GB --rm %DOCKER_IMAGE%
+::call docker run -it --memory 7GB --rm %DOCKER_IMAGE%
 
 :: useful docker commands
 :: docker images
