@@ -5,6 +5,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +25,8 @@ import com.czechtutor.service.ResultService;
 
 @Controller
 public class ApplicationController {
-     
+    
+    private static final Logger logger = LogManager.getLogger(ApplicationController.class);
     final public String czLanguage = "czech";
     final public String enLanguage = "english";
     final public Integer nOptions = 4;
@@ -42,7 +45,7 @@ public class ApplicationController {
            
     @GetMapping(value="*")
     public String redirectIndextoHomePage() {
-        System.out.println("~~~~~ Redirecting home.");
+        logger.info("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
 
@@ -55,18 +58,18 @@ public class ApplicationController {
         levels.add("Medium");
         levels.add("Hard");
         levels.add("Expert");
-        System.out.println("~~~~~ At home.");
+        logger.info("~~~~~ At home.");
         model.addAttribute("czLanguage", czLanguage);
         model.addAttribute("enLanguage", enLanguage);
         model.addAttribute("levels", levels);
         model.addAttribute("lessonModel", new LessonModel());
-        System.out.println(model.toString());
+        logger.info(model.toString());
         return "home";
     }
 
     @PostMapping(value="/home")
     public String createLesson(@ModelAttribute LessonModel lessonModel) {
-        System.out.println("~~~~~ Creating lesson");
+        logger.info("~~~~~ Creating lesson");
         // generate a lesson
         if (lessonModel.getFromLanguage().equals(czLanguage)){
             lessonModel.setToLanguage(enLanguage);
@@ -78,7 +81,7 @@ public class ApplicationController {
         // redirect to view
         String path = String.valueOf(lessonModel.getLessonId());
         String view = "/lesson/" + path;
-        System.out.println(lessonModel.getLessonPayload());
+        logger.info(lessonModel.getLessonPayload());
         return "redirect:"+view;
     }
 
@@ -88,7 +91,7 @@ public class ApplicationController {
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
         if (nLessonQuestions < nQuestions) {
-            System.out.println("~~~~~ Creating question.");
+            logger.info("~~~~~ Creating question.");
             // generate a question
             LessonModel lessonModel = lessonService.get(lessonId);
             QuestionModel questionModel = questionService.create(lessonModel);
@@ -97,11 +100,11 @@ public class ApplicationController {
             // redirect to view
             String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
             String view = "/lesson/" + path;
-            System.out.println(view);
-            System.out.println(questionModel.getQuestionPayload());
+            logger.info(view);
+            logger.info(questionModel.getQuestionPayload());
             return "redirect:"+view;
         } else {
-            System.out.println("~~~~~ Creating result.");
+            logger.info("~~~~~ Creating result.");
             // generate the results of the lesson
             ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
             Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
@@ -112,27 +115,27 @@ public class ApplicationController {
             // redirect to view
             String path = String.valueOf(lessonId);
             String view = "/result/" + path;
-            System.out.println(view);
-            System.out.println(resultModel.getResultPayload());
+            logger.info(view);
+            logger.info(resultModel.getResultPayload());
             return "redirect:"+view;
         }
     }
 
     @GetMapping(value="/lesson/{lessonId}/{questionId}")
     public String getLessonPage(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, Model model) {
-        System.out.println("~~~~~ Redirecting to lesson.");
+        logger.info("~~~~~ Redirecting to lesson.");
         QuestionModel questionModel = questionService.get(questionId);
         String path = String.valueOf(lessonId) + "/" + String.valueOf(questionId);
         model.addAttribute("questionModel", questionModel);
         model.addAttribute("answerModel", new AnswerModel());
         model.addAttribute("path", path);
-        System.out.println(model.toString());
+        logger.info(model.toString());
         return "lesson";
     }
 
     @PostMapping(value="/lesson/{lessonId}/{questionId}")
     public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute AnswerModel answerModel) {
-        System.out.println("~~~~~ Creating answer");
+        logger.info("~~~~~ Creating answer");
         // generate a answer
         QuestionModel questionModel = questionService.get(questionId);
         answerModel.setCorrect(answerService.isCorrect(questionModel, answerModel));
@@ -140,14 +143,14 @@ public class ApplicationController {
         // redirect to view
         String path = String.valueOf(lessonId);
         String view = "/lesson/" + path;
-        System.out.println(view);
-        System.out.println(answerModel.getAnswerPayload());
+        logger.info(view);
+        logger.info(answerModel.getAnswerPayload());
         return "redirect:"+view;
     }
 
     @GetMapping(value="/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
-        System.out.println("~~~~~ Creating result.");
+        logger.info("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
@@ -165,19 +168,19 @@ public class ApplicationController {
         model.addAttribute("nCorrectMessage", nCorrectMessage);
         model.addAttribute("lessonQuestionsAnswersArray", lessonQuestionsAnswersArray);
         model.addAttribute("path", path);
-        System.out.println(model.toString());
+        logger.info(model.toString());
         return "result";
     }
 
     @PostMapping(value="/resultHome/{lessonId}")
     public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId) {
-        System.out.println("~~~~~ Redirecting home.");
+        logger.info("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
 
     @PostMapping(value="/resultRedo/{lessonId}")
     public String redirectResulttoLesson(@PathVariable("lessonId") Integer lessonId) {
-        System.out.println("~~~~~ Creating lesson");
+        logger.info("~~~~~ Creating lesson");
         // generate a new lesson from the current lesson
         LessonModel currentLessonModel = lessonService.get(lessonId);
         LessonModel newLessonModel = new LessonModel();
@@ -190,7 +193,7 @@ public class ApplicationController {
         // redirect to view
         String path = String.valueOf(newLessonModel.getLessonId());
         String view = "/lesson/" + path;
-        System.out.println(newLessonModel.getLessonPayload());
+        logger.info(newLessonModel.getLessonPayload());
         return "redirect:"+view;
     }
 
