@@ -12,18 +12,11 @@ public class LessonModel {
 	
 	@Id
 	private Integer lessonId;
-	
-	//@NonNull
 	private String fromLanguage;
-
-	//@NonNull
 	private String toLanguage;
-	
-	//@Nullable
 	private Integer nQuestions;
-	
-	//@Nullable
 	private Integer nOptions;
+	private String level;
 
     public void set(HashMap<String,Object>  payload){
         // set the class objects
@@ -32,6 +25,7 @@ public class LessonModel {
 		this.toLanguage = (String) payload.get("toLanguage");
 		this.nQuestions = (Integer) payload.get("nQuestions");
 		this.nOptions = (Integer) payload.get("nOptions");
+		this.level = (String) payload.get("level");
     }
 
     public HashMap<String,Object> getLessonPayload(){
@@ -42,6 +36,7 @@ public class LessonModel {
         lessonPayload.put("toLanguage", toLanguage);
         lessonPayload.put("nQuestions", nQuestions);
         lessonPayload.put("nOptions", nOptions);
+        lessonPayload.put("level", level);
         return lessonPayload;
 	}
 
@@ -83,6 +78,14 @@ public class LessonModel {
 	
     public void setNOptions(Integer nOptions){
 		this.nOptions = nOptions;
+	}
+
+    public String getLevel(){
+		return level;
+	}
+	
+    public void setLevel(String level){
+		this.level = level;
 	}
 
 }
