@@ -63,7 +63,7 @@ def process_data(
         include_lowest=True
         )
     # set column order
-    data = data[["ID","EN","CZ","REF", "LVL"]]
+    data = data[["ID","EN","CZ","LVL","REF"]]
     # save data as .csv file
     data.to_csv(os.path.join(data_dir, data_csv_fname), index=False)
 
