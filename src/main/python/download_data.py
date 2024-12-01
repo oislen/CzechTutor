@@ -49,21 +49,21 @@ def process_data(
     
     """
     # load text data
-    data = pd.read_csv(os.path.join(data_dir, data_txt_fname), sep="\t", names=["En","Cz","Ref"], header=None)
+    data = pd.read_csv(os.path.join(data_dir, data_txt_fname), sep="\t", names=["english","czech","reference"], header=None)
     # create ID column
-    data['Id'] = data.index+1
+    data['id'] = data.index+1
     # calculate average phrase length
-    data["Len"] = data[['En','Cz']].apply(lambda series: series.str.split(' ').str.len()).mean(axis=1)
+    data["length"] = data[['english','czech']].apply(lambda series: series.str.split(' ').str.len()).mean(axis=1)
     # generate difficulty groups
-    data["Lvl"] = pd.cut(
-        x=data["Len"],
+    data["level"] = pd.cut(
+        x=data["length"],
         bins=[1, 3, 5, 7, 11, 50],
         right=False,
         labels=["Beginner", "Easy","Medium","Hard", "Expert"],
         include_lowest=True
         )
     # set column order
-    data = data[["Id","En","Cz","Lvl","Ref"]]
+    data = data[["id","english","czech","level","reference"]]
     # save data as .csv file
     data.to_csv(os.path.join(data_dir, data_csv_fname), index=False)
 
