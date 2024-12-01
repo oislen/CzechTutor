@@ -25,6 +25,10 @@
     <h5 class="display-5">Select the number of questions:</h5>
     <input id="nQuestionsSlider" type="range" min="2" max="16" th:field="*{nQuestions}" oninput="this.nextElementSibling.value = this.value" />
     <output for="nQuestionsSlider">6</output><br>
+    <h5 class="display-5">Select a difficulty</h5>
+    <select class="form-select" th:field="*{level}">
+    <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"></option>
+    </select><br>
     <br>
     <button type="submit" class="btn btn-outline-dark">Submit</button>
 </form>

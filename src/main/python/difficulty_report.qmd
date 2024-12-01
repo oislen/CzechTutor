@@ -1,0 +1,57 @@
+---
+title: "Difficulty Report"
+format:
+  html:
+    code-fold: true
+jupyter: python3
+---
+
+# Difficulty Report
+
+```{python}
+#| label: data-load
+#| 
+import os
+import os
+import requests
+import zipfile
+import io
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+# set destination directory
+destination_directory="E:\\GitHub\\CzechTutor\\src\\main\\resources\\data"
+# load text data
+data = pd.read_csv(os.path.join(destination_directory, "ces.txt"), sep="\t", names=["EN","CZ","REF"], header=None)
+# create ID column
+data['ID'] = data.index+1
+```
+
+# Plot Phrase Length
+
+```{python}
+#| label: phrase-length
+#| 
+# calculate average phrase length
+data["LEN"] = data[['EN','CZ']].apply(lambda series: series.str.split(' ').str.len()).mean(axis=1)
+# plot phrase length
+sns.histplot(data, x="LEN", bins=45).set_title("Phrase Length")
+plt.show()
+```
+
+# Plot Difficulty Count Groups
+
+```{python}
+#| label: difficulty-groups
+#| 
+data["LVL"] = pd.cut(x=data["LEN"], bins=[1, 3, 5, 7, 11, 50], right=False, labels=["Beginner", "Easy","Medium","Hard", "Expert"], include_lowest=True)
+# plot difficulty count groups
+sns.countplot(data=data, x="LVL")
+plt.show()
+```
+
+# Difficulty Group Lengths
+
+```{python}
+data.groupby(by=["LVL"], dropna=False).agg({'LEN':'mean'})
+```
