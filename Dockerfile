@@ -32,8 +32,8 @@ ENV PATH=${M2_HOME}/bin:${PATH}
 RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 
 # clone cat-classifier git repo
-#RUN git clone https://github.com/oislen/CzechTutor.git --branch ${GIT_BRANCH} /home/${user}/CzechTutor
-COPY . /home/${user}/CzechTutor
+RUN git clone https://github.com/oislen/CzechTutor.git --branch ${GIT_BRANCH} /home/${user}/CzechTutor
+#COPY . /home/${user}/CzechTutor
 
 WORKDIR /home/${user}/CzechTutor
 # compile maven spring boot project
