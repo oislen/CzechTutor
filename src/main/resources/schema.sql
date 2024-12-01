@@ -3,7 +3,8 @@ create table if not exists lessons (
     from_Language varchar(32) not null,
     to_Language varchar(32) not null,
     n_questions tinyint not null,
-    n_options tinyint not null
+    n_options tinyint not null,
+    level varchar(32) not null
 );
 
 create table if not exists questions (
@@ -34,7 +35,8 @@ create table if not exists results (
 
 create table if not exists ces(
   id bigint primary key,
-  en varchar(255),
-  cz varchar(255),
-  ref varchar(255)
+  english varchar(255),
+  czech varchar(255),
+  level varchar(255),
+  reference varchar(255)
 ) as select * from CSVREAD('E:\GitHub\CzechTutor\src\main\resources\data\ces.csv');
