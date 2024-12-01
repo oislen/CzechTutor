@@ -33,7 +33,8 @@ public class QuestionService {
 
     public QuestionModel create(LessonModel lessonModel) {
         // set question
-        Integer upperIndexBound = (int) cesCrudRepository.count();
+        ArrayList<CesModel> cesModelArray = cesCrudRepository.findByLevel(lessonModel.getLevel());
+        Integer upperIndexBound = (int) cesModelArray.size();
         // create random generator and set seed if required
         Random randomGenerator = new Random();
         //if (payload.containsKey("randomSeed")) {
@@ -49,7 +50,7 @@ public class QuestionService {
         ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
         for (int i = 1; i<=upperIndexBound; i++) {
             if (indexArray.contains(i)) {
-                CesModel cesModel = cesCrudRepository.findById(i).orElse(null);
+                CesModel cesModel = cesModelArray.get(i);
                 HashMap<String, Object> cesPayload = cesModel.getCesPayload();
                 filteredRecordSet.add(cesPayload);
             }
