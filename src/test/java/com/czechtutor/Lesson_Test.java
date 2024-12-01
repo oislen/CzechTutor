@@ -12,6 +12,7 @@ public class Lesson_Test {
     final String expToLanguage = "EN";
     final Integer expNQuestions = 2;
     final Integer expNOptions = 4;
+    final String expLevel = "Beginner";
     LessonModel lessonModel = new LessonModel();
     
     {
@@ -20,6 +21,7 @@ public class Lesson_Test {
         lessonModel.setToLanguage(expToLanguage);
         lessonModel.setNQuestions(expNQuestions);
         lessonModel.setNOptions(expNOptions);
+        lessonModel.setLevel(expLevel);
     }
     
 
@@ -51,5 +53,11 @@ public class Lesson_Test {
     void NOptions_Test() {
         Integer obsNOptions = lessonModel.getNOptions();
         Assertions.assertEquals(expNOptions, obsNOptions);
+    }
+
+    @Test
+    void Level_Test() {
+        String obsLevel = lessonModel.getLevel();
+        Assertions.assertEquals(expLevel, obsLevel);
     }
 }
