@@ -27,8 +27,6 @@ ENV M2_HOME=/opt/maven
 ENV MAVEN_HOME=/opt/maven
 ENV PATH=$PATH:/opt/jdk-23.0.1/bin/
 ENV PATH=${M2_HOME}/bin:${PATH}
-# compile maven spring boot project
-RUN mvn compile
 
 # set up home environment
 RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
@@ -38,3 +36,6 @@ RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 COPY . /home/${user}/CzechTutor
 
 WORKDIR /home/${user}/CzechTutor
+# compile maven spring boot project
+RUN mvn compile
+CMD ["mvn", "spring-boot:run"]
