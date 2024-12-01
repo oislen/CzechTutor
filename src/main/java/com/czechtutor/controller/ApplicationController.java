@@ -24,9 +24,10 @@ import com.czechtutor.service.ResultService;
 @Controller
 public class ApplicationController {
      
-    final public String czLanguage = "CZ";
-    final public String enLanguage = "EN";
+    final public String czLanguage = "czech";
+    final public String enLanguage = "english";
     final public Integer nOptions = 4;
+    final public String level = "Beginner";
     
     private final LessonService lessonService;
     private final QuestionService questionService;
@@ -51,6 +52,7 @@ public class ApplicationController {
         System.out.println("~~~~~ At home.");
         model.addAttribute("czLanguage", czLanguage);
         model.addAttribute("enLanguage", enLanguage);
+        model.addAttribute("level", level);
         model.addAttribute("lessonModel", new LessonModel());
         System.out.println(model.toString());
         return "home";
@@ -66,6 +68,7 @@ public class ApplicationController {
             lessonModel.setToLanguage(czLanguage);
         }
         lessonModel.setNOptions(nOptions);
+        lessonModel.setLevel(level);
         lessonService.save(lessonModel);
         // redirect to view
         String path = String.valueOf(lessonModel.getLessonId());
@@ -177,6 +180,7 @@ public class ApplicationController {
         newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
         newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
         newLessonModel.setNOptions(currentLessonModel.getNOptions());
+        newLessonModel.setLevel(currentLessonModel.getLevel());
         lessonService.save(newLessonModel);
         // redirect to view
         String path = String.valueOf(newLessonModel.getLessonId());
