@@ -27,7 +27,6 @@ public class ApplicationController {
     final public String czLanguage = "czech";
     final public String enLanguage = "english";
     final public Integer nOptions = 4;
-    final public String level = "Beginner";
     
     private final LessonService lessonService;
     private final QuestionService questionService;
@@ -49,10 +48,17 @@ public class ApplicationController {
 
     @GetMapping(value="/home")
     public String getHomePage(Model model) {
+        // set difficulty levels
+        ArrayList<String> levels = new ArrayList<>();
+        levels.add("Beginner");
+        levels.add("Easy");
+        levels.add("Medium");
+        levels.add("Hard");
+        levels.add("Expert");
         System.out.println("~~~~~ At home.");
         model.addAttribute("czLanguage", czLanguage);
         model.addAttribute("enLanguage", enLanguage);
-        model.addAttribute("level", level);
+        model.addAttribute("levels", levels);
         model.addAttribute("lessonModel", new LessonModel());
         System.out.println(model.toString());
         return "home";
@@ -68,7 +74,6 @@ public class ApplicationController {
             lessonModel.setToLanguage(czLanguage);
         }
         lessonModel.setNOptions(nOptions);
-        lessonModel.setLevel(level);
         lessonService.save(lessonModel);
         // redirect to view
         String path = String.valueOf(lessonModel.getLessonId());
