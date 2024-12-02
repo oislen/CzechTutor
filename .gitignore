@@ -13,6 +13,8 @@ src/main/resources/data/_about.txt
 src/main/resources/data/ces.txt
 src/main/resources/data/ces_bkp.csv
 logs
+spring-boot-h2-db.mv.db
+spring-boot-h2-db.trace.db
 
 HELP.md
 target/

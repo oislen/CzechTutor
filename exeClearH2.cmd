@@ -1,1 +1,1 @@
-call del E:\spring-boot-h2-db.mv.db
+call del E:\GitHub\CzechTutor\spring-boot-h2-db.mv.db

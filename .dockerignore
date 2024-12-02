@@ -1,0 +1,6 @@
+# ignore sub repos
+.idea
+.vscode
+out
+target
+CzechTutor.iml
