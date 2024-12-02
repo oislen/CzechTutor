@@ -26,16 +26,16 @@ public class AnswerModel {
      * @param questionPayload a hashmap of attributes to set the answer model with
      */ 
 	public void set(HashMap<String,Object> questionPayload) {
-			// set class objects
-			//this.answerId = (Integer) questionPayload.get("questionId");
-			this.lessonId = (Integer) questionPayload.get("lessonId");
-			this.questionId = (Integer) questionPayload.get("questionId");
+		// set class objects
+		//this.answerId = (Integer) questionPayload.get("questionId");
+		this.lessonId = (Integer) questionPayload.get("lessonId");
+		this.questionId = (Integer) questionPayload.get("questionId");
 		this.answer = (String) questionPayload.get("answer");
 		// determine if answer was correct for the question
 		this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
 	}
 
-   /**
+    /**
      * <p>Gets the attributes of an answer model as a hashmap of attribute values</p>
      * @return a hashmap of the answer model attributes
      */ 	
@@ -74,7 +74,7 @@ public class AnswerModel {
 			return lessonId;
 		}
 	
-   /**
+    /**
      * <p>Sets the lesson id attribute of an answer model</p>
      * @param lessonId the lesson id attribute
      */ 
