@@ -5,84 +5,155 @@ import java.util.HashMap;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
-//import javax.validation.constraints.NotEmpty;
-
+/**
+ * <p>
+ * The answer model class defines the schema / structure of an answer</p>
+ *
+ * @author oislen
+ */
 @Table("ANSWERS")
 public class AnswerModel {
- 
-	@Id
-	private Integer answerId;
-	
-	//@NotEmpty
-	private Integer lessonId;
 
-	//@NotEmpty
-	private Integer questionId;
-	
-  //@NotEmpty
-  private String answer; 
-	
-  //@NotEmpty
-  private Boolean correct; 
-	
-  public void set(HashMap<String,Object> questionPayload) {
-		// set class objects
-		//this.answerId = (Integer) questionPayload.get("questionId");
-		this.lessonId = (Integer) questionPayload.get("lessonId");
-		this.questionId = (Integer) questionPayload.get("questionId");
-    this.answer = (String) questionPayload.get("answer");
-    // determine if answer was correct for the question
-    this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
-  }
- 
-  public HashMap<String,Object> getAnswerPayload() {
-    // create answers payload and update results
-    HashMap<String,Object> answerPayload = new HashMap<>();
-    answerPayload.put("answerId", answerId);
-    answerPayload.put("lessonId", lessonId);
-    answerPayload.put("questionId", questionId);
-    answerPayload.put("answer", answer);
-    answerPayload.put("correct", correct);
-    return answerPayload;
-  }
+    @Id
+    private Integer answerId;
+    private Integer lessonId;
+    private Integer questionId;
+    private String answer;
+    private Boolean correct;
 
-  public Integer getAnswerId(){
-		return answerId;
-	}
-	
-  public void setAnswerId(Integer answerId){
-		this.answerId = answerId;
-	}
+    /**
+     * <p>
+     * Sets the attributes of an answer model using a hashmap of attribute
+     * values</p>
+     *
+     * @param questionPayload a hashmap of attributes to set the answer model
+     * with
+     */
+    public void set(HashMap<String, Object> questionPayload) {
+        // set class objects
+        //this.answerId = (Integer) questionPayload.get("questionId");
+        this.lessonId = (Integer) questionPayload.get("lessonId");
+        this.questionId = (Integer) questionPayload.get("questionId");
+        this.answer = (String) questionPayload.get("answer");
+        // determine if answer was correct for the question
+        this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
+    }
 
-  public Integer getLessonId(){
-		return lessonId;
-	}
-	
-  public void setLessonId(Integer lessonId){
-		this.lessonId = lessonId;
-	}
+    /**
+     * <p>
+     * Gets the attributes of an answer model as a hashmap of attribute
+     * values</p>
+     *
+     * @return a hashmap of the answer model attributes
+     */
+    public HashMap<String, Object> getAnswerPayload() {
+        // create answers payload and update results
+        HashMap<String, Object> answerPayload = new HashMap<>();
+        answerPayload.put("answerId", answerId);
+        answerPayload.put("lessonId", lessonId);
+        answerPayload.put("questionId", questionId);
+        answerPayload.put("answer", answer);
+        answerPayload.put("correct", correct);
+        return answerPayload;
+    }
 
-  public Integer getQuestionId(){
-		return questionId;
-	}
-	
-  public void setQuestionId(Integer questionId){
-		this.questionId = questionId;
-	}
+    /**
+     * <p>
+     * Gets the answer id attribute of an answer model</p>
+     *
+     * @return the answer id attribute
+     */
+    public Integer getAnswerId() {
+        return answerId;
+    }
 
-  public String getAnswer(){
-		return answer;
-	}
-	
-  public void setAnswer(String answer){
-		this.answer = answer;
-	}
+    /**
+     * <p>
+     * Sets the answer id attribute of an answer model</p>
+     *
+     * @param answerId the answer id attribute
+     */
+    public void setAnswerId(Integer answerId) {
+        this.answerId = answerId;
+    }
 
-  public Boolean getCorrect(){
-		return correct;
-	}
-	
-  public void setCorrect(Boolean correct){
-		this.correct = correct;
-	}
+    /**
+     * <p>
+     * Gets the lesson id attribute of an answer model</p>
+     *
+     * @return the lesson id attribute
+     */
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    /**
+     * <p>
+     * Sets the lesson id attribute of an answer model</p>
+     *
+     * @param lessonId the lesson id attribute
+     */
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
+
+    /**
+     * <p>
+     * Gets the question id attribute of an answer model</p>
+     *
+     * @return the question id attribute
+     */
+    public Integer getQuestionId() {
+        return questionId;
+    }
+
+    /**
+     * <p>
+     * Sets the question id attribute of an answer model</p>
+     *
+     * @param questionId the question id attribute
+     */
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
+    /**
+     * <p>
+     * Gets the answer attribute of an answer model</p>
+     *
+     * @return the answer attribute
+     */
+    public String getAnswer() {
+        return answer;
+    }
+
+    /**
+     * <p>
+     * Sets the answer attribute of an answer model</p>
+     *
+     * @param answer the answer attribute
+     */
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
+
+    /**
+     * <p>
+     * Gets the correct attribute of an answer model</p>
+     *
+     * @return the correct attribute
+     */
+    public Boolean getCorrect() {
+        return correct;
+    }
+
+    /**
+     * <p>
+     * Sets the correct attribute of an answer model</p>
+     *
+     * @param correct the correct attribute
+     */
+    public void setCorrect(Boolean correct) {
+        this.correct = correct;
+    }
 }
