@@ -34,7 +34,7 @@ public class LessonService {
 
     /**
      * <p>
-     * Writes an lesson model to the database</p>
+     * Writes a lesson model to the database</p>
      *
      * @param LessonModel the lesson model
      */
