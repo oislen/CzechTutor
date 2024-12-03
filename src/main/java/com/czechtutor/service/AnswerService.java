@@ -11,7 +11,7 @@ import com.czechtutor.repository.crud.AnswerCrudRepository;
 /**
  * <p>
  * The answer service class defines the available processes for generating and
- * modifying answer model</p>
+ * modifying the answer model</p>
  *
  * @author oislen
  */
