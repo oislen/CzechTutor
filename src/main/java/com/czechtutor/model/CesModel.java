@@ -58,7 +58,7 @@ public class CesModel {
      * <p>
      * Gets the ces id attribute of a ces model</p>
      *
-     * @returns the ces id attribute
+     * @return the ces id attribute
      */
     public Integer getId() {
         return id;
@@ -78,7 +78,7 @@ public class CesModel {
      * <p>
      * Gets the ces english attribute of a ces model</p>
      *
-     * @returns the ces english attribute
+     * @return the ces english attribute
      */
     public String getEnglish() {
         return english;
@@ -98,7 +98,7 @@ public class CesModel {
      * <p>
      * Gets the ces czech attribute of a ces model</p>
      *
-     * @returns the ces czech attribute
+     * @return the ces czech attribute
      */
     public String getCzech() {
         return czech;
@@ -118,7 +118,7 @@ public class CesModel {
      * <p>
      * Gets the ces level attribute of a ces model</p>
      *
-     * @returns the ces level attribute
+     * @return the ces level attribute
      */
     public String getLevel() {
         return level;
@@ -138,7 +138,7 @@ public class CesModel {
      * <p>
      * Gets the ces reference attribute of a ces model</p>
      *
-     * @returns the ces reference attribute
+     * @return the ces reference attribute
      */
     public String getReference() {
         return reference;

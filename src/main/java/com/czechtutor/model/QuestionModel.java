@@ -68,7 +68,7 @@ public class QuestionModel {
      * <p>
      * Gets the question id attribute of a question model</p>
      *
-     * @returns the question id attribute
+     * @return the question id attribute
      */
     public Integer getQuestionId() {
         return questionId;
@@ -88,7 +88,7 @@ public class QuestionModel {
      * <p>
      * Gets the question lesson id attribute of a question model</p>
      *
-     * @returns the question lesson id attribute
+     * @return the question lesson id attribute
      */
     public Integer getLessonId() {
         return lessonId;
@@ -108,7 +108,7 @@ public class QuestionModel {
      * <p>
      * Gets the question phrase attribute of a question model</p>
      *
-     * @returns the question phrase attribute
+     * @return the question phrase attribute
      */
     public String getPhrase() {
         return phrase;
@@ -128,7 +128,7 @@ public class QuestionModel {
      * <p>
      * Gets the question option 1 attribute of a question model</p>
      *
-     * @returns the question option 1 attribute
+     * @return the question option 1 attribute
      */
     public String getOption1() {
         return option1;
@@ -148,7 +148,7 @@ public class QuestionModel {
      * <p>
      * Gets the question option 2 attribute of a question model</p>
      *
-     * @returns the question option 2 attribute
+     * @return the question option 2 attribute
      */
     public String getOption2() {
         return option2;
@@ -168,7 +168,7 @@ public class QuestionModel {
      * <p>
      * Gets the question option 3 attribute of a question model</p>
      *
-     * @returns the question option 3 attribute
+     * @return the question option 3 attribute
      */
     public String getOption3() {
         return option3;
@@ -188,7 +188,7 @@ public class QuestionModel {
      * <p>
      * Gets the question option 4 attribute of a question model</p>
      *
-     * @returns the question option 4 attribute
+     * @return the question option 4 attribute
      */
     public String getOption4() {
         return option4;
@@ -208,7 +208,7 @@ public class QuestionModel {
      * <p>
      * Gets the question solution attribute of a question model</p>
      *
-     * @returns the question solution attribute
+     * @return the question solution attribute
      */
     public String getSolution() {
         return solution;

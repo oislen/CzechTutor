@@ -62,7 +62,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson id attribute of a lesson model</p>
      *
-     * @returns the lesson id attribute
+     * @return the lesson id attribute
      */
     public Integer getLessonId() {
         return lessonId;
@@ -82,7 +82,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson from language attribute of a lesson model</p>
      *
-     * @returns the lesson from language attribute
+     * @return the lesson from language attribute
      */
     public String getFromLanguage() {
         return fromLanguage;
@@ -102,7 +102,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson to language attribute of a lesson model</p>
      *
-     * @returns the lesson to language attribute
+     * @return the lesson to language attribute
      */
     public String getToLanguage() {
         return toLanguage;
@@ -122,7 +122,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson n questions attribute of a lesson model</p>
      *
-     * @returns the lesson n questions attribute
+     * @return the lesson n questions attribute
      */
     public Integer getNQuestions() {
         return nQuestions;
@@ -142,7 +142,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson n options attribute of a lesson model</p>
      *
-     * @returns the lesson n options attribute
+     * @return the lesson n options attribute
      */
     public Integer getNOptions() {
         return nOptions;
@@ -162,7 +162,7 @@ public class LessonModel {
      * <p>
      * Gets the lesson level attribute of a lesson model</p>
      *
-     * @returns the level options attribute
+     * @return the level options attribute
      */
     public String getLevel() {
         return level;

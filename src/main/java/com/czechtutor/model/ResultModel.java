@@ -56,7 +56,7 @@ public class ResultModel {
      * <p>
      * Gets the result id attribute of a result model</p>
      *
-     * @returns the result id attribute
+     * @return the result id attribute
      */
     public Integer getResultId() {
         return resultId;
@@ -76,7 +76,7 @@ public class ResultModel {
      * <p>
      * Gets the result lesson id attribute of a result model</p>
      *
-     * @returns the result lesson id attribute
+     * @return the result lesson id attribute
      */
     public Integer getLessonId() {
         return lessonId;
@@ -96,7 +96,7 @@ public class ResultModel {
      * <p>
      * Gets the result n correct attribute of a result model</p>
      *
-     * @returns the result n correct attribute
+     * @return the result n correct attribute
      */
     public Integer getNCorrect() {
         return nCorrect;
@@ -116,7 +116,7 @@ public class ResultModel {
      * <p>
      * Gets the result score attribute of a result model</p>
      *
-     * @returns the result score attribute
+     * @return the result score attribute
      */
     public Float getScore() {
         return score;

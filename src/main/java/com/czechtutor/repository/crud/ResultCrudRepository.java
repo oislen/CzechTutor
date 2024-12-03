@@ -18,7 +18,7 @@ public interface ResultCrudRepository extends CrudRepository<ResultModel, Intege
      * Finds a result model with a specified lesson id</p>
      *
      * @param LessonId the lesson id to find by
-     * @returns the result model
+     * @return the result model
      */
     ResultModel findByLessonId(String LessonId);
 

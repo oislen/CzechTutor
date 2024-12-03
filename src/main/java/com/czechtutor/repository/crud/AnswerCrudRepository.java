@@ -20,7 +20,7 @@ public interface AnswerCrudRepository extends CrudRepository<AnswerModel, Intege
      * Finds all answer models with a specified lesson id as an array list</p>
      *
      * @param LessonId the lesson id to find by
-     * @returns the answer models as an array list
+     * @return the answer models as an array list
      */
     ArrayList<AnswerModel> findByLessonId(String LessonId);
 

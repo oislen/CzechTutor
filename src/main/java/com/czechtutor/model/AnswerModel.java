@@ -61,7 +61,7 @@ public class AnswerModel {
      * <p>
      * Gets the answer id attribute of an answer model</p>
      *
-     * @returns the answer id attribute
+     * @return the answer id attribute
      */
     public Integer getAnswerId() {
         return answerId;
@@ -81,7 +81,7 @@ public class AnswerModel {
      * <p>
      * Gets the lesson id attribute of an answer model</p>
      *
-     * @returns the lesson id attribute
+     * @return the lesson id attribute
      */
     public Integer getLessonId() {
         return lessonId;
@@ -101,7 +101,7 @@ public class AnswerModel {
      * <p>
      * Gets the question id attribute of an answer model</p>
      *
-     * @returns the question id attribute
+     * @return the question id attribute
      */
     public Integer getQuestionId() {
         return questionId;
@@ -121,7 +121,7 @@ public class AnswerModel {
      * <p>
      * Gets the answer attribute of an answer model</p>
      *
-     * @returns the answer attribute
+     * @return the answer attribute
      */
     public String getAnswer() {
         return answer;
@@ -141,7 +141,7 @@ public class AnswerModel {
      * <p>
      * Gets the correct attribute of an answer model</p>
      *
-     * @returns the correct attribute
+     * @return the correct attribute
      */
     public Boolean getCorrect() {
         return correct;

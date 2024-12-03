@@ -20,7 +20,7 @@ public interface QuestionCrudRepository extends CrudRepository<QuestionModel, In
      * Finds all question models with a specified lesson id as an array list</p>
      *
      * @param LessonId the lesson id to find by
-     * @returns the question models as an array list
+     * @return the question models as an array list
      */
     ArrayList<QuestionModel> findByLessonId(String LessonId);
 
