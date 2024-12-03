@@ -24,18 +24,20 @@ import com.czechtutor.service.QuestionService;
 import com.czechtutor.service.ResultService;
 
 /**
- * <p>The application controller class controls the routing of get and post requests within the CzechTutor webapp</p>
+ * <p>
+ * The application controller class controls the routing of get and post
+ * requests within the CzechTutor webapp</p>
  *
  * @author oislen
  */
 @Controller
 public class ApplicationController {
-    
+
     private static final Logger logger = LogManager.getLogger(ApplicationController.class);
     final public String czLanguage = "czech";
     final public String enLanguage = "english";
     final public Integer nOptions = 4;
-    
+
     private final LessonService lessonService;
     private final QuestionService questionService;
     private final AnswerService answerService;
@@ -47,23 +49,29 @@ public class ApplicationController {
         this.answerService = answerService;
         this.resultService = resultService;
     }
- 
+
     /**
-     * <p>Redirects any out of scope / undefined get requests to the home template page</p>
+     * <p>
+     * Redirects any out of scope / undefined get requests to the home template
+     * page</p>
+     *
      * @return redirects to the home template
-     */          
-    @GetMapping(value="*")
+     */
+    @GetMapping(value = "*")
     public String redirectIndextoHomePage() {
         logger.info("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
 
     /**
-     * <p>Gets the home template page</p>
-     * @param model the Model ui object for populating the home template with Thymeleaf
+     * <p>
+     * Gets the home template page</p>
+     *
+     * @param model the Model ui object for populating the home template with
+     * Thymeleaf
      * @return the home template
-     */   
-    @GetMapping(value="/home")
+     */
+    @GetMapping(value = "/home")
     public String getHomePage(Model model) {
         // set difficulty levels
         ArrayList<String> levels = new ArrayList<>();
@@ -82,15 +90,17 @@ public class ApplicationController {
     }
 
     /**
-     * <p>Posts user input from the home template page</p>
+     * <p>
+     * Posts user input from the home template page</p>
+     *
      * @param lessonModel the completed lesson model form
      * @return redirects to the lesson template with the generated lesson id
-     */    
-    @PostMapping(value="/home")
+     */
+    @PostMapping(value = "/home")
     public String createLesson(@ModelAttribute LessonModel lessonModel) {
         logger.info("~~~~~ Creating lesson");
         // generate a lesson
-        if (lessonModel.getFromLanguage().equals(czLanguage)){
+        if (lessonModel.getFromLanguage().equals(czLanguage)) {
             lessonModel.setToLanguage(enLanguage);
         } else {
             lessonModel.setToLanguage(czLanguage);
@@ -101,15 +111,17 @@ public class ApplicationController {
         String path = String.valueOf(lessonModel.getLessonId());
         String view = "/lesson/" + path;
         logger.info(lessonModel.getLessonPayload());
-        return "redirect:"+view;
+        return "redirect:" + view;
     }
 
     /**
-     * <p>Creates a question model for a specified lesson id</p>
+     * <p>
+     * Creates a question model for a specified lesson id</p>
+     *
      * @param lessonId the generated lesson id path variable
      * @return redirects to the lesson template with the generated lesson id
-     */    
-    @GetMapping(value="/lesson/{lessonId}")
+     */
+    @GetMapping(value = "/lesson/{lessonId}")
     public String createQuestion(@PathVariable("lessonId") Integer lessonId) {
         // check NQuestions for lessonId against database
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
@@ -126,7 +138,7 @@ public class ApplicationController {
             String view = "/lesson/" + path;
             logger.info(view);
             logger.info(questionModel.getQuestionPayload());
-            return "redirect:"+view;
+            return "redirect:" + view;
         } else {
             logger.info("~~~~~ Creating result.");
             // generate the results of the lesson
@@ -141,18 +153,22 @@ public class ApplicationController {
             String view = "/result/" + path;
             logger.info(view);
             logger.info(resultModel.getResultPayload());
-            return "redirect:"+view;
+            return "redirect:" + view;
         }
     }
 
     /**
-     * <p>Gets the lesson template page for a specified lesson id and question id</p>
+     * <p>
+     * Gets the lesson template page for a specified lesson id and question
+     * id</p>
+     *
      * @param lessonId the generated lesson id path variable
      * @param questionId the generated question id path variable
-     * @param model the Model ui object for populating the lesson template with Thymeleaf
+     * @param model the Model ui object for populating the lesson template with
+     * Thymeleaf
      * @return the lesson template for the given lesson id and question id
-     */    
-    @GetMapping(value="/lesson/{lessonId}/{questionId}")
+     */
+    @GetMapping(value = "/lesson/{lessonId}/{questionId}")
     public String getLessonPage(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, Model model) {
         logger.info("~~~~~ Redirecting to lesson.");
         QuestionModel questionModel = questionService.get(questionId);
@@ -165,13 +181,15 @@ public class ApplicationController {
     }
 
     /**
-     * <p>Posts user input from the lesson template page</p>
+     * <p>
+     * Posts user input from the lesson template page</p>
+     *
      * @param lessonId the generated lesson id path variable
      * @param questionId the generated question id path variable
      * @param answerModel the completed answer model form
      * @return redirects to the lesson template with the lesson id
-     */    
-    @PostMapping(value="/lesson/{lessonId}/{questionId}")
+     */
+    @PostMapping(value = "/lesson/{lessonId}/{questionId}")
     public String createAnswer(@PathVariable("lessonId") Integer lessonId, @PathVariable("questionId") Integer questionId, @ModelAttribute AnswerModel answerModel) {
         logger.info("~~~~~ Creating answer");
         // generate a answer
@@ -183,16 +201,20 @@ public class ApplicationController {
         String view = "/lesson/" + path;
         logger.info(view);
         logger.info(answerModel.getAnswerPayload());
-        return "redirect:"+view;
+        return "redirect:" + view;
     }
 
     /**
-     * <p>Gets the result template page for a specified lesson id and question id</p>
+     * <p>
+     * Gets the result template page for a specified lesson id and question
+     * id</p>
+     *
      * @param lessonId the generated lesson id path variable
-     * @param model the Model ui object for populating the result template with Thymeleaf
+     * @param model the Model ui object for populating the result template with
+     * Thymeleaf
      * @return the result template for the given lesson id
-     */    
-    @GetMapping(value="/result/{lessonId}")
+     */
+    @GetMapping(value = "/result/{lessonId}")
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         logger.info("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
@@ -217,22 +239,27 @@ public class ApplicationController {
     }
 
     /**
-     * <p>Posts user input from the result template page</p>
+     * <p>
+     * Posts user input from the result template page</p>
+     *
      * @param lessonId the generated lesson id path variable
      * @return redirects to the home template
-     */  
-    @PostMapping(value="/resultHome/{lessonId}")
+     */
+    @PostMapping(value = "/resultHome/{lessonId}")
     public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId) {
         logger.info("~~~~~ Redirecting home.");
         return "redirect:/home";
     }
 
     /**
-     * <p>Posts user input from the result template page</p>
+     * <p>
+     * Posts user input from the result template page</p>
+     *
      * @param lessonId the generated lesson id path variable
-     * @return redirects to the lesson template with the same lesson configurations
-     */  
-    @PostMapping(value="/resultRedo/{lessonId}")
+     * @return redirects to the lesson template with the same lesson
+     * configurations
+     */
+    @PostMapping(value = "/resultRedo/{lessonId}")
     public String redirectResulttoLesson(@PathVariable("lessonId") Integer lessonId) {
         logger.info("~~~~~ Creating lesson");
         // generate a new lesson from the current lesson
@@ -248,7 +275,7 @@ public class ApplicationController {
         String path = String.valueOf(newLessonModel.getLessonId());
         String view = "/lesson/" + path;
         logger.info(newLessonModel.getLessonPayload());
-        return "redirect:"+view;
+        return "redirect:" + view;
     }
 
 }
