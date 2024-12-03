@@ -23,7 +23,7 @@ public class AnswerModel_Test {
     }
 
     @Test
-    void AsnwerId_Test() {
+    void AnswerId_Test() {
         Integer obsAnswerId = answerModel.getAnswerId();
         Assertions.assertEquals(expAnswerId, obsAnswerId);
     }
