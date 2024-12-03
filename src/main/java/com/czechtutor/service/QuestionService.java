@@ -21,14 +21,14 @@ import com.czechtutor.repository.crud.QuestionCrudRepository;
  */
 @Service
 public class QuestionService {
-    
+
     private final QuestionCrudRepository questionCrudRepository;
     private final CesCrudRepository cesCrudRepository;
 
     public QuestionService(QuestionCrudRepository questionCrudRepository, CesCrudRepository cesCrudRepository) {
         this.questionCrudRepository = questionCrudRepository;
         this.cesCrudRepository = cesCrudRepository;
-    }   
+    }
 
     /**
      * <p>
@@ -69,13 +69,13 @@ public class QuestionService {
         //}
         // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
         ArrayList<Integer> indexArray = new ArrayList<>();
-        for (int i = 0; i<lessonModel.getNOptions(); i++) {
+        for (int i = 0; i < lessonModel.getNOptions(); i++) {
             Integer index = randomGenerator.nextInt(upperIndexBound);
             indexArray.add(index);
-            }
+        }
         // select the records corresponding to the random indices 
         ArrayList<HashMap<String, Object>> filteredRecordSet = new ArrayList<>();
-        for (int i = 1; i<=upperIndexBound; i++) {
+        for (int i = 1; i <= upperIndexBound; i++) {
             if (indexArray.contains(i)) {
                 CesModel cesModel = cesModelArray.get(i);
                 HashMap<String, Object> cesPayload = cesModel.getCesPayload();
@@ -94,7 +94,7 @@ public class QuestionService {
         lessonPayload.put("phrase", filteredRecordSet.get(phaseIndex).get(lessonModel.getFromLanguage()));
         lessonPayload.put("option1", optionsArray.get(0));
         lessonPayload.put("option2", optionsArray.get(1));
-        lessonPayload.put("option3",  optionsArray.get(2));
+        lessonPayload.put("option3", optionsArray.get(2));
         lessonPayload.put("option4", optionsArray.get(3));
         lessonPayload.put("solution", filteredRecordSet.get(phaseIndex).get(lessonModel.getToLanguage()));
         // create a question
@@ -111,7 +111,7 @@ public class QuestionService {
      * @param LessonId the lesson id to find by
      * @return the question models as an array list
      */
-    public ArrayList<QuestionModel>  findByLessonId(Integer lessonId) {
+    public ArrayList<QuestionModel> findByLessonId(Integer lessonId) {
         return questionCrudRepository.findByLessonId(String.valueOf(lessonId));
     }
 }
