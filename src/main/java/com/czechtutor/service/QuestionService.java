@@ -12,6 +12,13 @@ import com.czechtutor.model.QuestionModel;
 import com.czechtutor.repository.crud.CesCrudRepository;
 import com.czechtutor.repository.crud.QuestionCrudRepository;
 
+/**
+ * <p>
+ * The question service class defines the available processes for generating and
+ * modifying the question model</p>
+ *
+ * @author oislen
+ */
 @Service
 public class QuestionService {
     
@@ -23,14 +30,34 @@ public class QuestionService {
         this.cesCrudRepository = cesCrudRepository;
     }   
 
+    /**
+     * <p>
+     * Finds a question model given a question id</p>
+     *
+     * @param id the question id to find by
+     * @return the question model
+     */
     public QuestionModel get(Integer id) {
         return questionCrudRepository.findById(id).orElse(null);
     }
 
-    public void save(QuestionModel question) {
-        questionCrudRepository.save(question);
+    /**
+     * <p>
+     * Writes a question model to the database</p>
+     *
+     * @param questionModel the question model
+     */
+    public void save(QuestionModel questionModel) {
+        questionCrudRepository.save(questionModel);
     }
 
+    /**
+     * <p>
+     * Creates a question model given a lesson model</p>
+     *
+     * @param lessonModel the lesson model
+     * @return the question model
+     */
     public QuestionModel create(LessonModel lessonModel) {
         // set question
         ArrayList<CesModel> cesModelArray = cesCrudRepository.findByLevel(lessonModel.getLevel());
@@ -77,6 +104,13 @@ public class QuestionService {
         return questionModel;
     }
 
+    /**
+     * <p>
+     * Finds all question models with a specified lesson id as an array list</p>
+     *
+     * @param LessonId the lesson id to find by
+     * @return the question models as an array list
+     */
     public ArrayList<QuestionModel>  findByLessonId(Integer lessonId) {
         return questionCrudRepository.findByLessonId(String.valueOf(lessonId));
     }
