@@ -130,7 +130,7 @@ public class ApplicationController {
             logger.info("~~~~~ Creating question.");
             // generate a question
             LessonModel lessonModel = lessonService.get(lessonId);
-            QuestionModel questionModel = questionService.create(lessonModel);
+            QuestionModel questionModel = questionService.create(lessonModel, null);
             questionService.save(questionModel);
             Integer questionId = questionModel.getQuestionId();
             // redirect to view

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import com.czechtutor.model.LessonModel;
 
-public class Lesson_Test {
+public class LessonModel_Test {
     
     final Integer expLessonId = 1;
     final String expFromLanguage = "CZ";
