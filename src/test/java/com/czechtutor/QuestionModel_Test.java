@@ -14,7 +14,7 @@ public class QuestionModel_Test {
     final String expOption2 = "Běž!";
     final String expOption3 = "Utíkej!";
     final String expOption4 = "Páni!";
-    final String expSolution = "Kdo?";
+    final String expSolution = "Ahoj!";
     QuestionModel questionModel = new QuestionModel();
     
     {
