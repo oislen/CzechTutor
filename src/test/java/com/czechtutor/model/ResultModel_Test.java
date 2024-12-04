@@ -1,4 +1,4 @@
-package com.czechtutor;
+package com.czechtutor.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
