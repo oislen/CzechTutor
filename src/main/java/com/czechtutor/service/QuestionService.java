@@ -58,15 +58,15 @@ public class QuestionService {
      * @param lessonModel the lesson model
      * @return the question model
      */
-    public QuestionModel create(LessonModel lessonModel) {
+    public QuestionModel create(LessonModel lessonModel, Long randomSeed) {
         // set question
         ArrayList<CesModel> cesModelArray = cesCrudRepository.findByLevel(lessonModel.getLevel());
         Integer upperIndexBound = (int) cesModelArray.size();
         // create random generator and set seed if required
         Random randomGenerator = new Random();
-        //if (payload.containsKey("randomSeed")) {
-        //    randomGenerator.setSeed((Long) payload.get("randomSeed"));
-        //}
+        if (randomSeed != null) {
+            randomGenerator.setSeed(randomSeed);
+        }
         // randomly select nOptions to extract from the record set (between 0 and upperIndexBound)
         ArrayList<Integer> indexArray = new ArrayList<>();
         for (int i = 0; i < lessonModel.getNOptions(); i++) {
