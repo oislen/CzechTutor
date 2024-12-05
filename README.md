@@ -2,7 +2,7 @@
 
 ## Overview
 
-A simple single page website for practising Czech phrases and vocabulary.
+A simple single page website for practising Czech phrases and vocabulary. TODO.
 
 ## Running the Application
 
@@ -22,6 +22,10 @@ The webapp can be executed using:
 ```
 docker run --name ct --publish 8080:8080 --memory 7GB --rm oislen/czechtutor:latest
 ```
+
+## Web App Workflow
+
+TODO
 
 ## Data Model
 
