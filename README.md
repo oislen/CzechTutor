@@ -1,22 +1,32 @@
 # Czech Tutor
 
+## Overview
+
 A simple single page website for practising Czech phrases and vocabulary.
 
-# Data Source
+## Data Model
 
 Czech to English phrases and vocabulary sourced from:
 
-- https://www.manythings.org/anki/
-- https://apps.ankiweb.net/
-- https://tatoeba.org/en
+* https://www.manythings.org/anki/
+* https://apps.ankiweb.net/
+* https://tatoeba.org/en
 
-# Execute Web App
+The underlying data model present used in CzechTutor is displayed below. 
+
+![Entity Relationship Diagram](doc/ER.jpg)
+
+For a more detailed account of each column in the dataset see the data dictionary:
+
+* TODO
+
+## Execute Web App
 
 ```
 exeSpring.cmd
 ```
 
-# Data Model
+## Data Model
 
 ```
 select * from lessons as l inner join results as r on l.lesson_id = r.lesson_id;
