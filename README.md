@@ -48,7 +48,7 @@ Czech to English phrases and vocabulary sourced from:
 
 The underlying data model present used in CzechTutor is displayed below. 
 
-![Entity Relationship Diagram](doc/ER.jpg)
+![Entity Relationship Diagram](doc/entity_relation_diagram/ER.jpg)
 
 For a more detailed account of each column in the dataset see the data dictionary:
 
