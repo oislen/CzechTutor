@@ -28,6 +28,10 @@ The web app docker image can then be executed using the following command:
 docker run --name ct --publish 8080:8080 --rm oislen/czechtutor:latest
 ```
 
+Once the web app is running, navigate to localhost:8080 in your prefered browser
+
+* http://localhost:8080/home
+
 ## Web App Workflow
 
 The web app workflow functions as below:
