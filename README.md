@@ -35,8 +35,16 @@ The web app workflow functions as below:
 INSERT_WORKFLOW_IMAGE
 
 1. Users configure a practice quiz on the home page. 
+
+![Home Page](doc/screenshots/home_page.jpg)
+
 2. They then iteratively answer each question in the quiz via the lesson page.
+
+![Lesson Page](doc/screenshots/lesson_page.jpg)
+
 3. The user results are displayed at the end of the quiz on the results page.
+
+![Results Page](doc/screenshots/results_page.jpg)
 
 ## Data Model
 
