@@ -222,7 +222,7 @@ public class ApplicationController {
         ResultModel resultModel = resultService.findByLessonId(lessonId);
         DecimalFormat decimalFormatter = new DecimalFormat("#.##");
         decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
-        String scoreMessage = String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
+        String scoreMessage = "Score: " + String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
