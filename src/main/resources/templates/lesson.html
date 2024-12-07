@@ -10,11 +10,11 @@
 
 <div class="container">
 
-<h4 class="display-4">Lesson</h4>
-
 <h5 class="display-5">Translate the following phase.</h5>
 
-<p th:text="${questionModel.phrase}" />
+<h5 class="display-5" th:text="${questionModel.phrase}" />
+
+<h6 class="display-6">Options:</h6>
 
 <form id="question_form" th:method="post" th:action="@{/lesson/{path}(path=${path})}" th:object="${answerModel}">
     <fieldset id="question">
