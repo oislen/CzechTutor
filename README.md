@@ -32,7 +32,7 @@ docker run --name ct --publish 8080:8080 --rm oislen/czechtutor:latest
 
 The web app workflow functions as below:
 
-INSERT_WORKFLOW_IMAGE
+![Web App Workflow](doc/web_app_flowchart/web_app_flowchart.jpg)
 
 1. Users configure a practice quiz on the home page. 
 
