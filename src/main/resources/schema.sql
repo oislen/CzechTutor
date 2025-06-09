@@ -39,4 +39,5 @@ create table if not exists ces(
   czech varchar(255),
   level varchar(255),
   reference varchar(255)
-) as select * from CSVREAD('/home/ubuntu/CzechTutor/src/main/resources/data/ces.csv');
+-- ) as select * from CSVREAD('/home/ubuntu/CzechTutor/src/main/resources/data/ces.csv');
+) as select * from CSVREAD('E:\GitHub\CzechTutor\src\main\resources\data\ces.csv');
