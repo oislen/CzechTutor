@@ -31,9 +31,8 @@ ENV PATH=${M2_HOME}/bin:${PATH}
 # set up home environment
 RUN mkdir -p /home/${user} && chown -R ${user}: /home/${user}
 
-# clone cat-classifier git repo
-RUN git clone https://github.com/oislen/CzechTutor.git --branch ${GIT_BRANCH} /home/${user}/CzechTutor
-#COPY . /home/${user}/CzechTutor
+# copy CzechTutor repo
+COPY . /home/ubuntu/CzechTutor
 
 WORKDIR /home/${user}/CzechTutor
 # compile maven spring boot project
