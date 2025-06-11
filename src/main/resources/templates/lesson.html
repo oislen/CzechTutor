@@ -1,37 +1,32 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>lesson</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}" />
-    <link rel="shortcut icon" type="image/png" th:href="@{/images/favicon.ico}" />
-</head>
+
+<th:block th:replace="~{fragments/head}"/>
+
 <body>
 
 <div class="container">
 
 <th:block th:replace="~{fragments/navbar}"/>
 
-<h5 class="display-5">Translate the following phase.</h5>
+<h5 id="translationInstructions" class="display-5">Translate the following phase:</h5>
 
-<h5 class="display-5" th:text="${questionModel.phrase}" />
-
-<h6 class="display-6">Options:</h6>
+<p id="translationPhrase" th:text="${questionModel.phrase}"/>
 
 <form id="question_form" th:method="post" th:action="@{/lesson/{path}(path=${path})}" th:object="${answerModel}">
-    <fieldset id="question">
-      <input type="radio" id="question" th:value="${questionModel.option1}" name="option1" th:field="*{answer}" />
+  <h6 class="display-6">Options:</h6>
+    <fieldset id="questionFieldset">
+      <input type="radio" id="option1" th:value="${questionModel.option1}" name="option1" th:field="*{answer}" required />
       <label for="option1" th:text="${questionModel.option1}"></label><br>
-      <input type="radio" id="question" th:value="${questionModel.option2}" name="option2" th:field="*{answer}" />
+      <input type="radio" id="option2" th:value="${questionModel.option2}" name="option2" th:field="*{answer}" />
       <label for="option2" th:text="${questionModel.option2}"></label><br>
-      <input type="radio" id="question" th:value="${questionModel.option3}" name="option3" th:field="*{answer}" />
+      <input type="radio" id="option3" th:value="${questionModel.option3}" name="option3" th:field="*{answer}" />
       <label for="option3" th:text="${questionModel.option3}"></label><br>
-      <input type="radio" id="question" th:value="${questionModel.option4}" name="option4" th:field="*{answer}" />
+      <input type="radio" id="option4" th:value="${questionModel.option4}" name="option4" th:field="*{answer}" />
       <label for="option4" th:text="${questionModel.option4}"></label><br>
     </fieldset>
     <br>
-    <button type="submit" class="btn btn-outline-dark">Submit</button>
+    <button type="submit" id="lessonNextButton" class="btn btn-outline-dark" >Next</button>
 </form>
 
 <th:block th:replace="~{fragments/footer}"/>
