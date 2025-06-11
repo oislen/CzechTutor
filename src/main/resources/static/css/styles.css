@@ -48,7 +48,7 @@ a {
     font-size:12px;
 }
 
-#lesson_config_form {
+#lesson_config_form, #question_form {
     padding:20px;
     border-radius: 5px;
     border-style: solid;
@@ -56,6 +56,17 @@ a {
     margin:20px;
 }
 
-#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect {
+#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect, #questionFieldset {
     margin-left:20px;
+}
+
+#translationInstructions {
+    font-weight: bold;
+    padding-top: 20px;
+
+}
+
+#translationPhrase {
+    font-style: italic;
+    padding:20px;
 }
