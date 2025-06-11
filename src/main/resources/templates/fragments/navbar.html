@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" id="navbar"  th:fragment="navbar">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <form th:method="get" th:action="@{/}">
+          <button type="submit" class="btn btn-light">Home</button>
+        </form>
+      </li>
+      <li class="nav-item">
+        <form th:method="get" th:action="@{/about}">
+          <button type="submit" class="btn btn-light">About</button>
+        </form>
+      </li>
+      <li class="nav-item">
+        <form th:method="get" th:action="@{/scores}">
+          <button type="submit" class="btn btn-light">Scores</button>
+        </form>
+      </li>
+    </ul>
+  </div>
+</nav>

@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>result</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}" />
-</head>
+
+<th:block th:replace="~{fragments/head}"/>
+
 <body>
 
 <div class="container">
 
-<h4 class="display-5">Lesson Results</h5>
+<th:block th:replace="~{fragments/navbar}"/>
 
-<h5 class="display-5" th:text="${scoreMessage}" />
+<p id="lessonResults" >Lesson Results</p>
 
-<h6 class="display-6" th:text="${nCorrectMessage}" />
+<h5 id="lessonScoreMessage" class="display-5" th:text="${scoreMessage}" />
 
-<table class="table table-striped table-hover">
+<div id="lessonResultsContainer" class="container">
+
+<h6 id="lessonNCorrectMessage" class="display-6" th:text="${nCorrectMessage}" />
+
+<table id="resultsTable" class="table table-striped table-hover">
     <thread>
     <tr>
       <th scope="col">Phrase</th>
@@ -36,19 +37,15 @@
 </table>
 <br>
 
-<form th:method="post" th:action="@{/resultHome/{path}(path=${path})}">
-    <button type="submit" class="btn btn-outline-dark">Home</button>
-</form>
-<br>
 <form th:method="post" th:action="@{/resultRedo/{path}(path=${path})}">
     <button type="submit" class="btn btn-outline-dark">Redo</button>
 </form>
 
 </div>
 
-<footer id="footer">
-  <h6>CzechTutor © 2024</h4>
-</footer>
+<th:block th:replace="~{fragments/footer}"/>
+
+</div>
 
 </body>
 </html>

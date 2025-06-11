@@ -1,22 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>home</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" media="all" th:href="@{/css/styles.css}" />
-</head>
+
+<th:block th:replace="~{fragments/head}"/>
+
 <body>
 
 <div class="container">
 
+<th:block th:replace="~{fragments/navbar}"/>
+
 <h4 class="display-4">Czech Tutor</h4>
 
-<p>Configure a Czech - English language lesson below.</p>
+<p>Start a Czech - English language lesson below.</p>
 
 <form id="lesson_config_form" th:method="post" th:action="@{/home}" th:object="${lessonModel}">
     <h5 class="display-5">Select the language to translate from:</h5>
-    <fieldset id="fromLanguage">
+    <fieldset id="fromLanguageFieldset">
       <input type="radio" id="fromCzLanguage" th:value="${czLanguage}" name="fromCzLanguage" th:field="*{fromLanguage}" />
       <label for="fromCzLanguage" th:text="${czLanguage}"></label><br>
       <input type="radio" id="fromEnLanguage" th:value="${enLanguage}" name="fromEnLanguage" th:field="*{fromLanguage}"/>
@@ -26,12 +25,14 @@
     <input id="nQuestionsSlider" type="range" min="2" max="16" th:field="*{nQuestions}" oninput="this.nextElementSibling.value = this.value" />
     <output for="nQuestionsSlider">6</output><br>
     <h5 class="display-5">Select a difficulty</h5>
-    <select class="form-select" th:field="*{level}">
+    <select id="difficultySelect" class="form-select" th:field="*{level}">
     <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"></option>
     </select><br>
     <br>
-    <button type="submit" class="btn btn-outline-dark">Submit</button>
+    <button id="lesson_start_button" type="submit" class="btn btn-outline-dark">Start</button>
 </form>
+
+<th:block th:replace="~{fragments/footer}"/>
 
 <script>
   // defaulting inputs using javascript
@@ -40,10 +41,6 @@
 </script>
 
 </div>
-
-<footer id="footer">
-  <h6>CzechTutor © 2024</h4>
-</footer>
 
 </body>
 </html>
