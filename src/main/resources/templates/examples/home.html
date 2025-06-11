@@ -10,31 +10,31 @@
 </head>
 <body>
 
+<div class="container">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Home</a>
+        <button type="submit" class="btn btn-light">Home</button>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+        <button type="submit" class="btn btn-light">About</button>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Scores</a>
+        <button type="submit" class="btn btn-light">Score</button>
       </li>
     </ul>
   </div>
 </nav>
 
-<div class="container">
-
 <h4 class="display-4">Czech Tutor</h4>
 
-<p>Configure a Czech - English language lesson below.</p>
+<p>Start a Czech - English language lesson below.</p>
 
 <form id="lesson_config_form" method="post">
     <h5 class="display-5">Select the language to translate from:</h5>
-    <fieldset id="fromLanguage">
+    <fieldset id="fromLanguageFieldset">
       <input type="radio" id="fromCzLanguage" value="Czech" name="fromCzLanguage" checked/>
       <label for="fromCzLanguage" text="Czech">Czech</label><br>
       <input type="radio" id="fromEnLanguage" value="English" name="fromEnLanguage"/>
@@ -44,13 +44,13 @@
     <input id="nQuestionsSlider" type="range" min="2" max="16" oninput="this.nextElementSibling.value = this.value" />
     <output for="nQuestionsSlider">6</output><br>
     <h5 class="display-5">Select a difficulty</h5>
-    <select class="form-select">
+    <select id="difficultySelect" class="form-select">
     <option each="Beginner" value="Beginner">Beginner</option>
     <option each="Medium" value="Medium">Medium</option>
     <option each="Hard" value="Hard">Hard</option>
     </select><br>
     <br>
-    <button type="submit" class="btn btn-outline-dark">Submit</button>
+    <button id="lesson_start_button" type="submit" class="btn btn-outline-dark">Start</button>
 </form>
 
 <script>
