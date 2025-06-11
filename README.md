@@ -8,30 +8,6 @@ Questions are randomly generated using the anki manythings ces dataset with resp
 The user answers for each question in a practice quiz are stored locally in an in-memory H2 database.
 A final quiz score is calculate at the end of each practice quiz, and a lesson summary showing the question, answers and solutions is displayed.
 
-## Running the Application
-
-### Docker Image
-
-The latests web app docker image can be found on dockerhub here:
-
-* https://hub.docker.com/repository/docker/oislen/czechtutor/general
-
-The image can be pull from docker hub using the following command:
-
-```
-docker pull oislen/czechtutor:latest
-```
-
-The web app docker image can then be executed using the following command:
-
-```
-docker run --name ct --publish 8080:8080 --rm oislen/czechtutor:latest
-```
-
-Once the web app is running, navigate to localhost:8080 in your prefered browser
-
-* http://localhost:8080/home
-
 ## Web App Workflow
 
 The web app workflow functions as below:
@@ -65,3 +41,28 @@ The underlying data model present used in CzechTutor is displayed below.
 For a more detailed account of each column in the dataset see the data dictionary:
 
 * https://github.com/oislen/CzechTutor/blob/main/doc/data_dictionary.xlsx
+
+
+## Running the Application
+
+### Docker Image
+
+The latests web app docker image can be found on dockerhub here:
+
+* https://hub.docker.com/repository/docker/oislen/czechtutor/general
+
+The image can be pull from docker hub using the following command:
+
+```
+docker pull oislen/czechtutor:latest
+```
+
+The web app docker image can then be executed using the following command:
+
+```
+docker run --name ct --publish 8080:8080 --rm oislen/czechtutor:latest
+```
+
+Once the web app is running, navigate to localhost:8080 in your prefered browser
+
+* http://localhost:8080/home
