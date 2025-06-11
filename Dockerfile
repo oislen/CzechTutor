@@ -10,7 +10,7 @@ RUN apt-get update
 RUN apt-get install -y apt-utils vim curl wget unzip git 
 
 # install java
-RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/java/23/latest/jdk-23_linux-x64_bin.tar.gz
+RUN wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/java/23/archive/jdk-23_linux-x64_bin.tar.gz
 RUN tar -xvf jdk-23_linux-x64_bin.tar.gz
 RUN mv jdk-23.0.1 /opt/
 RUN rm jdk-23_linux-x64_bin.tar.gz
