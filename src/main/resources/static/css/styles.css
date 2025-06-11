@@ -56,11 +56,11 @@ a {
     margin:20px;
 }
 
-#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect, #questionFieldset {
+#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect, #questionFieldset, #lessonResultsContainer, #resultsTable {
     margin-left:20px;
 }
 
-#translationInstructions {
+#translationInstructions, #lessonResults {
     font-weight: bold;
     padding-top: 20px;
 
@@ -69,4 +69,13 @@ a {
 #translationPhrase {
     font-style: italic;
     padding:20px;
+}
+
+#lessonScoreMessage {
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+#lessonNCorrectMessage {
+    padding-bottom:20px;
 }
