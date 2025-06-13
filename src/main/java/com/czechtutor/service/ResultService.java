@@ -40,6 +40,20 @@ public class ResultService {
 
     /**
      * <p>
+     * Finds all result models</p>
+     *
+     * @return all result models
+     */
+    public ArrayList<ResultModel> getAll() {
+        ArrayList<ResultModel> resultModelArrayList = new ArrayList<>();
+        for (ResultModel resultModel : resultCrudRepository.findAll()) {
+            resultModelArrayList.add(resultModel);
+        }
+        return resultModelArrayList;
+    }
+
+    /**
+     * <p>
      * Writes a result model to the database</p>
      *
      * @param resultModel the result model
@@ -134,7 +148,7 @@ public class ResultService {
      * @param nLessons the number of lessons
      * @return the results summary
      */
-    public ArrayList<HashMap<String, Object>> createResultSummary(ArrayList<LessonModel> lessons, ArrayList<ResultModel> results, Integer nLessons) {
+    public ArrayList<HashMap<String, Object>> createResultSummary(ArrayList<LessonModel> lessons, ArrayList<ResultModel> results, Long nLessons) {
         // initialise output object
         ArrayList<HashMap<String, Object>> lessonResultsArray = new ArrayList<>();
         // iterate over each question index
@@ -145,6 +159,7 @@ public class ResultService {
             LessonModel lesson = lessons.get(i);
             ResultModel result = results.get(i);
             // put relevant data into temporary object
+            lessonQuestionsAnswers.put("lessonId", lesson.getLessonId());
             lessonQuestionsAnswers.put("fromLanguage", lesson.getFromLanguage());
             lessonQuestionsAnswers.put("toLanguage", lesson.getToLanguage());
             lessonQuestionsAnswers.put("level", lesson.getLevel());
