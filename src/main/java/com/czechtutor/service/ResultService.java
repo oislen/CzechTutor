@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
+import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
 import com.czechtutor.repository.crud.ResultCrudRepository;
@@ -35,6 +36,20 @@ public class ResultService {
      */
     public ResultModel get(Integer id) {
         return resultCrudRepository.findById(id).orElse(null);
+    }
+
+    /**
+     * <p>
+     * Finds all result models</p>
+     *
+     * @return all result models
+     */
+    public ArrayList<ResultModel> getAll() {
+        ArrayList<ResultModel> resultModelArrayList = new ArrayList<>();
+        for (ResultModel resultModel : resultCrudRepository.findAll()) {
+            resultModelArrayList.add(resultModel);
+        }
+        return resultModelArrayList;
     }
 
     /**
@@ -121,6 +136,39 @@ public class ResultService {
             lessonQuestionsAnswersArray.add(lessonQuestionsAnswers);
         }
         return lessonQuestionsAnswersArray;
+    }
+
+    /**
+     * <p>
+     * Creates a result summary given array lists of lesson models and results
+     * models, and n lessons</p>
+     *
+     * @param lessons the lesson models
+     * @param results the results models
+     * @param nLessons the number of lessons
+     * @return the results summary
+     */
+    public ArrayList<HashMap<String, Object>> createResultSummary(ArrayList<LessonModel> lessons, ArrayList<ResultModel> results, Long nLessons) {
+        // initialise output object
+        ArrayList<HashMap<String, Object>> lessonResultsArray = new ArrayList<>();
+        // iterate over each question index
+        for (int i = 0; i < nLessons; i++) {
+            // create a temporary object to fill
+            HashMap<String, Object> lessonQuestionsAnswers = new HashMap<>();
+            // extract out lesson and result
+            LessonModel lesson = lessons.get(i);
+            ResultModel result = results.get(i);
+            // put relevant data into temporary object
+            lessonQuestionsAnswers.put("lessonId", lesson.getLessonId());
+            lessonQuestionsAnswers.put("fromLanguage", lesson.getFromLanguage());
+            lessonQuestionsAnswers.put("toLanguage", lesson.getToLanguage());
+            lessonQuestionsAnswers.put("level", lesson.getLevel());
+            lessonQuestionsAnswers.put("nQuestions", lesson.getNQuestions());
+            lessonQuestionsAnswers.put("nCorrect", result.getNCorrect());
+            lessonQuestionsAnswers.put("score", result.getScore());
+            lessonResultsArray.add(lessonQuestionsAnswers);
+        }
+        return lessonResultsArray;
     }
 
 }

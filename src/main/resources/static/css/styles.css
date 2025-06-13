@@ -56,7 +56,7 @@ a {
     margin:20px;
 }
 
-#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect, #questionFieldset, #lessonResultsContainer, #resultsTable {
+#fromLanguageFieldset, #nQuestionsSlider, #difficultySelect, #questionFieldset, #lessonResultsContainer, #resultsTable, #scoresTable {
     margin-left:20px;
 }
 
