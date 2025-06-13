@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{fragments/head :: head (titleName='CzechTutor - Scores')}"/>
+
+<body>
+
+<div class="container">
+
+<th:block th:replace="~{fragments/navbar}"/>
+
+<h4 id="lessonScores" class="display-4">Scores</h4>
+
+<table id="scoresTable" class="table table-striped table-hover">
+    <thread>
+    <tr>
+      <th scope="col">Lesson Id</th>
+      <th scope="col">From Language</th>
+      <th scope="col">To Language</th>
+      <th scope="col">Level</th>
+      <th scope="col">N Questions</th>
+      <th scope="col">N Correct</th>
+      <th scope="col">Score</th>
+    </tr>
+    </thread>
+    <tbody>
+    <tr th:each="lessonResults : ${lessonResultsArray}">
+      <td th:text="${lessonResults.get('lessonId')}" />
+      <td th:text="${lessonResults.get('fromLanguage')}" />
+      <td th:text="${lessonResults.get('toLanguage')}" />
+      <td th:text="${lessonResults.get('level')}" />
+      <td th:text="${lessonResults.get('nQuestions')}" />
+      <td th:text="${lessonResults.get('nCorrect')}" />
+      <td th:text="${lessonResults.get('score')}" />
+    </tr>
+    </tbody>
+</table>
+<br>
+
+</div>
+
+<th:block th:replace="~{fragments/footer}"/>
+
+</div>
+
+</body>
+</html>
