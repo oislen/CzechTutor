@@ -91,6 +91,19 @@ public class ApplicationController {
 
     /**
      * <p>
+     * Gets the about template page</p>
+     *
+     * Thymeleaf
+     * @return the about template
+     */
+    @GetMapping(value = "/about")
+    public String getAboutPage() {
+        logger.info("~~~~~ At about.");
+        return "about";
+    }
+
+    /**
+     * <p>
      * Posts user input from the home template page</p>
      *
      * @param lessonModel the completed lesson model form

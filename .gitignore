@@ -46,3 +46,4 @@ build/
 
 # custom paths
 .creds
+spring-boot-h2-db.lock.db
