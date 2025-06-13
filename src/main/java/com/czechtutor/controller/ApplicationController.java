@@ -104,6 +104,27 @@ public class ApplicationController {
 
     /**
      * <p>
+     * Gets the scores template page</p>
+     *
+     * Thymeleaf
+     * @return the scores template
+     */
+    @GetMapping(value = "/scores")
+    public String getScoresPage(Model model) {
+        logger.info("~~~~~ Creating scores.");
+        Long nLessons = lessonService.countLessons();
+        // generate combined lesson questions and answers
+        ArrayList<LessonModel> lessons = lessonService.getAll();
+        ArrayList<ResultModel> results = resultService.getAll();
+        ArrayList<HashMap<String, Object>> lessonResultsArray = resultService.createResultSummary(lessons, results, nLessons);
+        // add attributes to model object
+        model.addAttribute("lessonResultsArray", lessonResultsArray);
+        logger.info(model.toString());
+        return "scores";
+    }
+
+    /**
+     * <p>
      * Posts user input from the home template page</p>
      *
      * @param lessonModel the completed lesson model form
@@ -154,10 +175,13 @@ public class ApplicationController {
             return "redirect:" + view;
         } else {
             logger.info("~~~~~ Creating result.");
+            // define decimal formatter
+            DecimalFormat decimalFormatter = new DecimalFormat("#.####");
+            decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
             // generate the results of the lesson
             ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
             Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
-            Float score = Float.valueOf(nCorrect) / Float.valueOf(nQuestions);
+            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions)));
             // create a result
             ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
             resultService.save(resultModel);
