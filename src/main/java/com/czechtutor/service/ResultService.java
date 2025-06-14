@@ -5,10 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
-import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.ResultModel;
-import com.czechtutor.model.custom.LessonQuestionAnswer;
-import com.czechtutor.model.custom.LessonResult;
 import com.czechtutor.repository.crud.ResultCrudRepository;
 
 /**
@@ -106,38 +103,6 @@ public class ResultService {
      */
     public ResultModel findByLessonId(Integer lessonId) {
         return resultCrudRepository.findByLessonId(String.valueOf(lessonId));
-    }
-
-    /**
-     * <p>
-     * Creates a lesson summary given array lists of question models and answer
-     * models, and n questions</p>
-     *
-     * @param lessonQuestions the lesson question models
-     * @param lessonAnswers the lesson answer models
-     * @param nQuestions the n questions
-     * @return the lesson summary
-     */
-    public ArrayList<LessonQuestionAnswer>  createLessonSummary(LessonModel lessonModel) {
-        // pull all lesson results for lesson id
-        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = resultCrudRepository.findAllQuestionsAnswersByLesson(lessonModel);
-        return lessonQuestionsAnswers;
-    }
-
-    /**
-     * <p>
-     * Creates a result summary given array lists of lesson models and results
-     * models, and n lessons</p>
-     *
-     * @param lessons the lesson models
-     * @param results the results models
-     * @param nLessons the number of lessons
-     * @return the results summary
-     */
-    public ArrayList<LessonResult> createResultSummary() {
-        // pull all lessons and results
-        ArrayList<LessonResult> lessonsResults = resultCrudRepository.findAllLessonsResults();
-        return lessonsResults;
     }
 
 }
