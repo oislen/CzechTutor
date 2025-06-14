@@ -26,14 +26,14 @@
     </tr>
     </thread>
     <tbody>
-    <tr th:each="lessonResults : ${lessonResultsArray}">
-      <td th:text="${lessonResults.get('lessonId')}" />
-      <td th:text="${lessonResults.get('fromLanguage')}" />
-      <td th:text="${lessonResults.get('toLanguage')}" />
-      <td th:text="${lessonResults.get('level')}" />
-      <td th:text="${lessonResults.get('nQuestions')}" />
-      <td th:text="${lessonResults.get('nCorrect')}" />
-      <td th:text="${lessonResults.get('score')}" />
+    <tr th:each="lessonResult : ${lessonsResults}">
+      <td th:text="${lessonResult.getLessonId()}" />
+      <td th:text="${lessonResult.getFromLanguage()}" />
+      <td th:text="${lessonResult.getToLanguage()}" />
+      <td th:text="${lessonResult.getLevel()}" />
+      <td th:text="${lessonResult.getNQuestions()}" />
+      <td th:text="${lessonResult.getNCorrect()}" />
+      <td th:text="${lessonResult.getScore()}" />
     </tr>
     </tbody>
 </table>

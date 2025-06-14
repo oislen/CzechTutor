@@ -3,7 +3,6 @@ package com.czechtutor.controller;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,10 +17,14 @@ import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
+import com.czechtutor.model.custom.LessonQuestionAnswer;
+import com.czechtutor.model.custom.LessonResult;
 import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
 import com.czechtutor.service.ResultService;
+import com.czechtutor.service.custom.LessonQuestionAnswerService;
+import com.czechtutor.service.custom.LessonResultService;
 
 /**
  * <p>
@@ -42,12 +45,16 @@ public class ApplicationController {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final ResultService resultService;
+    private final LessonQuestionAnswerService lessonQuestionAnswerService;
+    private final LessonResultService lessonResultService;
 
-    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService) {
+    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService, LessonQuestionAnswerService lessonQuestionAnswerService, LessonResultService lessonResultService) {
         this.lessonService = lessonService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.resultService = resultService;
+        this.lessonQuestionAnswerService = lessonQuestionAnswerService;
+        this.lessonResultService = lessonResultService;
     }
 
     /**
@@ -112,13 +119,10 @@ public class ApplicationController {
     @GetMapping(value = "/scores")
     public String getScoresPage(Model model) {
         logger.info("~~~~~ Creating scores.");
-        Long nLessons = lessonService.countLessons();
-        // generate combined lesson questions and answers
-        ArrayList<LessonModel> lessons = lessonService.getAll();
-        ArrayList<ResultModel> results = resultService.getAll();
-        ArrayList<HashMap<String, Object>> lessonResultsArray = resultService.createResultSummary(lessons, results, nLessons);
+        // generate summary of all lessons and results
+        ArrayList<LessonResult> lessonsResults = lessonResultService.createResultSummary();
         // add attributes to model object
-        model.addAttribute("lessonResultsArray", lessonResultsArray);
+        model.addAttribute("lessonsResults", lessonsResults);
         logger.info(model.toString());
         return "scores";
     }
@@ -176,12 +180,12 @@ public class ApplicationController {
         } else {
             logger.info("~~~~~ Creating result.");
             // define decimal formatter
-            DecimalFormat decimalFormatter = new DecimalFormat("#.####");
+            DecimalFormat decimalFormatter = new DecimalFormat("#.##");
             decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
             // generate the results of the lesson
             ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
             Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
-            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions)));
+            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions) * 100));
             // create a result
             ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
             resultService.save(resultModel);
@@ -255,21 +259,18 @@ public class ApplicationController {
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         logger.info("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
+        LessonModel lessonModel = lessonService.get(lessonId);
         // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
-        DecimalFormat decimalFormatter = new DecimalFormat("#.##");
-        decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
-        String scoreMessage = "Score: " + String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
+        String scoreMessage = "Score: " + String.valueOf(resultModel.getScore()) + "%";
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
-        ArrayList<QuestionModel> lessonQuestions = questionService.findByLessonId(lessonId);
-        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
-        ArrayList<HashMap<String, Object>> lessonQuestionsAnswersArray = resultService.createLessonSummary(lessonQuestions, lessonAnswers, nQuestions);
+        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = lessonQuestionAnswerService.createLessonSummary(lessonModel);
         // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
-        model.addAttribute("lessonQuestionsAnswersArray", lessonQuestionsAnswersArray);
+        model.addAttribute("lessonQuestionsAnswers", lessonQuestionsAnswers);
         model.addAttribute("path", path);
         logger.info(model.toString());
         return "result";

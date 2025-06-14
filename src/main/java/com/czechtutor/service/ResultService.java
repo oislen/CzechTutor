@@ -1,13 +1,10 @@
 package com.czechtutor.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
-import com.czechtutor.model.LessonModel;
-import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
 import com.czechtutor.repository.crud.ResultCrudRepository;
 
@@ -106,69 +103,6 @@ public class ResultService {
      */
     public ResultModel findByLessonId(Integer lessonId) {
         return resultCrudRepository.findByLessonId(String.valueOf(lessonId));
-    }
-
-    /**
-     * <p>
-     * Creates a lesson summary given array lists of question models and answer
-     * models, and n questions</p>
-     *
-     * @param lessonQuestions the lesson question models
-     * @param lessonAnswers the lesson answer models
-     * @param nQuestions the n questions
-     * @return the lesson summary
-     */
-    public ArrayList<HashMap<String, Object>> createLessonSummary(ArrayList<QuestionModel> lessonQuestions, ArrayList<AnswerModel> lessonAnswers, Integer nQuestions) {
-        // initialise output object
-        ArrayList<HashMap<String, Object>> lessonQuestionsAnswersArray = new ArrayList<>();
-        // iterate over each question index
-        for (int i = 0; i < nQuestions; i++) {
-            // create a temporary object to fill
-            HashMap<String, Object> lessonQuestionsAnswers = new HashMap<>();
-            // extract out question and answer
-            QuestionModel question = lessonQuestions.get(i);
-            AnswerModel answer = lessonAnswers.get(i);
-            // put relevant data into temporary object
-            lessonQuestionsAnswers.put("phrase", question.getPhrase());
-            lessonQuestionsAnswers.put("solution", question.getSolution());
-            lessonQuestionsAnswers.put("answer", answer.getAnswer());
-            lessonQuestionsAnswers.put("correct", answer.getCorrect());
-            lessonQuestionsAnswersArray.add(lessonQuestionsAnswers);
-        }
-        return lessonQuestionsAnswersArray;
-    }
-
-    /**
-     * <p>
-     * Creates a result summary given array lists of lesson models and results
-     * models, and n lessons</p>
-     *
-     * @param lessons the lesson models
-     * @param results the results models
-     * @param nLessons the number of lessons
-     * @return the results summary
-     */
-    public ArrayList<HashMap<String, Object>> createResultSummary(ArrayList<LessonModel> lessons, ArrayList<ResultModel> results, Long nLessons) {
-        // initialise output object
-        ArrayList<HashMap<String, Object>> lessonResultsArray = new ArrayList<>();
-        // iterate over each question index
-        for (int i = 0; i < nLessons; i++) {
-            // create a temporary object to fill
-            HashMap<String, Object> lessonQuestionsAnswers = new HashMap<>();
-            // extract out lesson and result
-            LessonModel lesson = lessons.get(i);
-            ResultModel result = results.get(i);
-            // put relevant data into temporary object
-            lessonQuestionsAnswers.put("lessonId", lesson.getLessonId());
-            lessonQuestionsAnswers.put("fromLanguage", lesson.getFromLanguage());
-            lessonQuestionsAnswers.put("toLanguage", lesson.getToLanguage());
-            lessonQuestionsAnswers.put("level", lesson.getLevel());
-            lessonQuestionsAnswers.put("nQuestions", lesson.getNQuestions());
-            lessonQuestionsAnswers.put("nCorrect", result.getNCorrect());
-            lessonQuestionsAnswers.put("score", result.getScore());
-            lessonResultsArray.add(lessonQuestionsAnswers);
-        }
-        return lessonResultsArray;
     }
 
 }
