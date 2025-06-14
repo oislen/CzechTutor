@@ -23,6 +23,8 @@ import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
 import com.czechtutor.service.ResultService;
+import com.czechtutor.service.custom.LessonQuestionAnswerService;
+import com.czechtutor.service.custom.LessonResultService;
 
 /**
  * <p>
@@ -43,12 +45,16 @@ public class ApplicationController {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final ResultService resultService;
+    private final LessonQuestionAnswerService lessonQuestionAnswerService;
+    private final LessonResultService lessonResultService;
 
-    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService) {
+    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService, LessonQuestionAnswerService lessonQuestionAnswerService, LessonResultService lessonResultService) {
         this.lessonService = lessonService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.resultService = resultService;
+        this.lessonQuestionAnswerService = lessonQuestionAnswerService;
+        this.lessonResultService = lessonResultService;
     }
 
     /**
@@ -114,7 +120,7 @@ public class ApplicationController {
     public String getScoresPage(Model model) {
         logger.info("~~~~~ Creating scores.");
         // generate summary of all lessons and results
-        ArrayList<LessonResult> lessonsResults = resultService.createResultSummary();
+        ArrayList<LessonResult> lessonsResults = lessonResultService.createResultSummary();
         // add attributes to model object
         model.addAttribute("lessonsResults", lessonsResults);
         logger.info(model.toString());
@@ -174,12 +180,12 @@ public class ApplicationController {
         } else {
             logger.info("~~~~~ Creating result.");
             // define decimal formatter
-            DecimalFormat decimalFormatter = new DecimalFormat("#.####");
+            DecimalFormat decimalFormatter = new DecimalFormat("#.##");
             decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
             // generate the results of the lesson
             ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
             Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
-            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions)));
+            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions) * 100));
             // create a result
             ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
             resultService.save(resultModel);
@@ -256,13 +262,11 @@ public class ApplicationController {
         LessonModel lessonModel = lessonService.get(lessonId);
         // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
-        DecimalFormat decimalFormatter = new DecimalFormat("#.##");
-        decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
-        String scoreMessage = "Score: " + String.valueOf(decimalFormatter.format(resultModel.getScore() * 100)) + "%";
+        String scoreMessage = "Score: " + String.valueOf(resultModel.getScore()) + "%";
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
-        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = resultService.createLessonSummary(lessonModel);
+        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = lessonQuestionAnswerService.createLessonSummary(lessonModel);
         // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
