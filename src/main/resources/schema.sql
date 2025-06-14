@@ -4,7 +4,9 @@ create table if not exists lessons (
     to_Language varchar(32) not null,
     n_questions tinyint not null,
     n_options tinyint not null,
-    level varchar(32) not null
+    level varchar(32) not null,
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists questions (
@@ -15,7 +17,9 @@ create table if not exists questions (
     option2 varchar(255) not null,
     option3 varchar(255) not null,
     option4 varchar(255) not null,
-    solution varchar(255) not null
+    solution varchar(255) not null,
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists answers (
@@ -23,14 +27,18 @@ create table if not exists answers (
     lesson_id bigint not null,
     question_id bigint not null,
     answer varchar(255) not null,
-    correct boolean not null
+    correct boolean not null,
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists results (
     result_id bigint auto_increment primary key,
     lesson_id bigint not null,
     n_correct tinyint not null,
-    score real not null
+    score real not null,
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists ces(

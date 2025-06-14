@@ -1,5 +1,6 @@
 package com.czechtutor.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
@@ -23,6 +24,8 @@ public class QuestionModel {
     private String option3;
     private String option4;
     private String solution;
+    private LocalDateTime dateTime;
+    private String dateTimeHash;
 
     /**
      * <p>
@@ -41,6 +44,8 @@ public class QuestionModel {
         this.option3 = (String) payload.get("option3");
         this.option4 = (String) payload.get("option4");
         this.solution = (String) payload.get("solution");
+        this.dateTime = (LocalDateTime) payload.get("dateTime");
+        this.dateTimeHash = (String) payload.get("dateTimeHash");
     }
 
     /**
@@ -61,6 +66,8 @@ public class QuestionModel {
         questionPayload.put("option3", option3);
         questionPayload.put("option4", option4);
         questionPayload.put("solution", solution);
+        questionPayload.put("dateTime", dateTime);
+        questionPayload.put("dateTimeHash", dateTimeHash);
         return questionPayload;
     }
 
@@ -223,4 +230,45 @@ public class QuestionModel {
     public void setSolution(String solution) {
         this.solution = solution;
     }
+
+    /**
+     * <p>
+     * Gets the date time attribute of an question model</p>
+     *
+     * @return the date time attribute
+     */
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * <p>
+     * Sets the date time attribute of an question model</p>
+     *
+     * @param dateTime the date time attribute
+     */
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    /**
+     * <p>
+     * Gets the date time hash attribute of a lesson model</p>
+     *
+     * @return the date time hash attribute
+     */
+    public String getDateTimedHash() {
+        return dateTimeHash;
+    }
+
+    /**
+     * <p>
+     * Sets the date time hash attribute of a lesson model</p>
+     *
+     * @param dateTimeHash the lesson id hash attribute
+     */
+    public void setDateTimeHash(String dateTimeHash) {
+        this.dateTimeHash = dateTimeHash;
+    }
+
 }
