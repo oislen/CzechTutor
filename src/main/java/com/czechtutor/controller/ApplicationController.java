@@ -18,6 +18,7 @@ import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
+import com.czechtutor.model.custom.LessonQuestionsAnswers;
 import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
@@ -255,6 +256,7 @@ public class ApplicationController {
     public String getResultPage(@PathVariable("lessonId") Integer lessonId, Model model) {
         logger.info("~~~~~ Creating result.");
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
+        LessonModel lessonModel = lessonService.get(lessonId);
         // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
         DecimalFormat decimalFormatter = new DecimalFormat("#.##");
@@ -263,13 +265,11 @@ public class ApplicationController {
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
-        ArrayList<QuestionModel> lessonQuestions = questionService.findByLessonId(lessonId);
-        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
-        ArrayList<HashMap<String, Object>> lessonQuestionsAnswersArray = resultService.createLessonSummary(lessonQuestions, lessonAnswers, nQuestions);
+        ArrayList<LessonQuestionsAnswers> lessonQuestionsAnswers = resultService.createLessonSummary(lessonModel);
         // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
-        model.addAttribute("lessonQuestionsAnswersArray", lessonQuestionsAnswersArray);
+        model.addAttribute("lessonQuestionsAnswers", lessonQuestionsAnswers);
         model.addAttribute("path", path);
         logger.info(model.toString());
         return "result";
