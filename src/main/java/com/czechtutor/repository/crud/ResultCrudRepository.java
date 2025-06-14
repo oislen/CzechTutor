@@ -8,7 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.ResultModel;
-import com.czechtutor.model.custom.LessonQuestionsAnswers;
+import com.czechtutor.model.custom.LessonQuestionAnswer;
+import com.czechtutor.model.custom.LessonResult;
 
 /**
  * <p>
@@ -40,7 +41,17 @@ public interface ResultCrudRepository extends CrudRepository<ResultModel, Intege
     """;
 
     @Query(LESSON_QUESTIONS_ANSWERS_QUERY)
-    //public List<UserProjection> getAllRequestResponseRecords();
-    ArrayList<LessonQuestionsAnswers> findAllQuestionsAnswersByLessonId(@Param("lessonModel") LessonModel lessonModel);
+    ArrayList<LessonQuestionAnswer> findAllQuestionsAnswersByLesson(@Param("lessonModel") LessonModel lessonModel);
 
+    public static final String LESSONS_RESULTS_QUERY = """
+    select 
+        l.lesson_id, l.from_Language, l.to_Language, l.n_questions, l.n_options, l.level,
+        r.result_id, r.n_correct, r.score
+    from lessons as l
+    inner join results as r on l.lesson_id = r.lesson_id
+    ;
+    """;
+
+    @Query(LESSONS_RESULTS_QUERY)
+    ArrayList<LessonResult> findAllLessonsResults();
 }
