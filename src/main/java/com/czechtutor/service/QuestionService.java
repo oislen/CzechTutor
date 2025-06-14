@@ -11,6 +11,7 @@ import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
 import com.czechtutor.repository.crud.CesCrudRepository;
 import com.czechtutor.repository.crud.QuestionCrudRepository;
+import com.czechtutor.service.custom.UtilityService;
 
 /**
  * <p>
@@ -24,10 +25,12 @@ public class QuestionService {
 
     private final QuestionCrudRepository questionCrudRepository;
     private final CesCrudRepository cesCrudRepository;
+    private final UtilityService utilityService;
 
-    public QuestionService(QuestionCrudRepository questionCrudRepository, CesCrudRepository cesCrudRepository) {
+    public QuestionService(QuestionCrudRepository questionCrudRepository, CesCrudRepository cesCrudRepository, UtilityService utilityService) {
         this.questionCrudRepository = questionCrudRepository;
         this.cesCrudRepository = cesCrudRepository;
+        this.utilityService = utilityService;
     }
 
     /**
@@ -101,6 +104,7 @@ public class QuestionService {
         questionModel.setOption4(optionsArray.get(3));
         questionModel.setSolution((String) cesModelArray.get(phaseIndex).getCesPayload().get(lessonModel.getToLanguage()));
         questionModel.setDateTime(LocalDateTime.now());
+        questionModel.setDateTimeHash(utilityService.MD5DateTimeHash(questionModel.getDateTime()));
         return questionModel;
     }
 

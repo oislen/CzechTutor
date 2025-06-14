@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.ResultModel;
 import com.czechtutor.repository.crud.ResultCrudRepository;
+import com.czechtutor.service.custom.UtilityService;
 
 /**
  * <p>
@@ -20,9 +21,11 @@ import com.czechtutor.repository.crud.ResultCrudRepository;
 public class ResultService {
 
     private final ResultCrudRepository resultCrudRepository;
+    private final UtilityService utilityService;
 
-    public ResultService(ResultCrudRepository resultCrudRepository) {
+    public ResultService(ResultCrudRepository resultCrudRepository, UtilityService utilityService) {
         this.resultCrudRepository = resultCrudRepository;
+        this.utilityService = utilityService;
     }
 
     /**
@@ -93,6 +96,7 @@ public class ResultService {
         resultModel.setNCorrect(nCorrect);
         resultModel.setScore(score);
         resultModel.setDateTime(LocalDateTime.now());
+        resultModel.setDateTimeHash(utilityService.MD5DateTimeHash(resultModel.getDateTime()));
         return resultModel;
     }
 
