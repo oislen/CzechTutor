@@ -27,11 +27,11 @@
     </tr>
     </thread>
     <tbody>
-    <tr th:each="lessonQuestionsAnswers : ${lessonQuestionsAnswersArray}">
-      <td th:text="${lessonQuestionsAnswers.get('phrase')}" />
-      <td th:text="${lessonQuestionsAnswers.get('solution')}" />
-      <td th:text="${lessonQuestionsAnswers.get('answer')}" />
-      <td th:text="${lessonQuestionsAnswers.get('correct')}" />
+    <tr th:each="lessonQuestionAnswer : ${lessonQuestionsAnswers}">
+      <td th:text="${lessonQuestionAnswer.getPhrase()}" />
+      <td th:text="${lessonQuestionAnswer.getSolution()}" />
+      <td th:text="${lessonQuestionAnswer.getAnswer()}" />
+      <td th:text="${lessonQuestionAnswer.getCorrect()}" />
     </tr>
     </tbody>
 </table>
