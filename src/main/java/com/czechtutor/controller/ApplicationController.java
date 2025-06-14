@@ -26,6 +26,7 @@ import com.czechtutor.service.QuestionService;
 import com.czechtutor.service.ResultService;
 import com.czechtutor.service.custom.LessonQuestionAnswerService;
 import com.czechtutor.service.custom.LessonResultService;
+import com.czechtutor.service.custom.UtilityService;
 
 /**
  * <p>
@@ -48,14 +49,16 @@ public class ApplicationController {
     private final ResultService resultService;
     private final LessonQuestionAnswerService lessonQuestionAnswerService;
     private final LessonResultService lessonResultService;
+    private final UtilityService utilityService;
 
-    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService, LessonQuestionAnswerService lessonQuestionAnswerService, LessonResultService lessonResultService) {
+    public ApplicationController(LessonService lessonService, QuestionService questionService, AnswerService answerService, ResultService resultService, LessonQuestionAnswerService lessonQuestionAnswerService, LessonResultService lessonResultService, UtilityService utilityService) {
         this.lessonService = lessonService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.resultService = resultService;
         this.lessonQuestionAnswerService = lessonQuestionAnswerService;
         this.lessonResultService = lessonResultService;
+        this.utilityService = utilityService;
     }
 
     /**
@@ -146,6 +149,7 @@ public class ApplicationController {
         }
         lessonModel.setNOptions(nOptions);
         lessonModel.setDateTime(LocalDateTime.now());
+        lessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(lessonModel.getDateTime()));
         lessonService.save(lessonModel);
         // redirect to view
         String path = String.valueOf(lessonModel.getLessonId());
@@ -239,6 +243,7 @@ public class ApplicationController {
         QuestionModel questionModel = questionService.get(questionId);
         answerModel.setCorrect(answerService.isCorrect(questionModel, answerModel));
         answerModel.setDateTime(LocalDateTime.now());
+        answerModel.setDateTimeHash(utilityService.MD5DateTimeHash(answerModel.getDateTime()));
         answerService.save(answerModel);
         // redirect to view
         String path = String.valueOf(lessonId);
@@ -312,6 +317,7 @@ public class ApplicationController {
         newLessonModel.setNOptions(currentLessonModel.getNOptions());
         newLessonModel.setLevel(currentLessonModel.getLevel());
         newLessonModel.setDateTime(LocalDateTime.now());
+        newLessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(newLessonModel.getDateTime()));
         lessonService.save(newLessonModel);
         // redirect to view
         String path = String.valueOf(newLessonModel.getLessonId());
