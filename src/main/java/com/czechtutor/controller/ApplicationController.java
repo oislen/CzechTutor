@@ -2,6 +2,7 @@ package com.czechtutor.controller;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.apache.logging.log4j.LogManager;
@@ -144,6 +145,7 @@ public class ApplicationController {
             lessonModel.setToLanguage(czLanguage);
         }
         lessonModel.setNOptions(nOptions);
+        lessonModel.setDateTime(LocalDateTime.now());
         lessonService.save(lessonModel);
         // redirect to view
         String path = String.valueOf(lessonModel.getLessonId());
@@ -236,6 +238,7 @@ public class ApplicationController {
         // generate a answer
         QuestionModel questionModel = questionService.get(questionId);
         answerModel.setCorrect(answerService.isCorrect(questionModel, answerModel));
+        answerModel.setDateTime(LocalDateTime.now());
         answerService.save(answerModel);
         // redirect to view
         String path = String.valueOf(lessonId);
@@ -308,6 +311,7 @@ public class ApplicationController {
         newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
         newLessonModel.setNOptions(currentLessonModel.getNOptions());
         newLessonModel.setLevel(currentLessonModel.getLevel());
+        newLessonModel.setDateTime(LocalDateTime.now());
         lessonService.save(newLessonModel);
         // redirect to view
         String path = String.valueOf(newLessonModel.getLessonId());
