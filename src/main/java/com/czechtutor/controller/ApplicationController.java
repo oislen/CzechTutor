@@ -3,7 +3,6 @@ package com.czechtutor.controller;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +17,8 @@ import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.QuestionModel;
 import com.czechtutor.model.ResultModel;
-import com.czechtutor.model.custom.LessonQuestionsAnswers;
+import com.czechtutor.model.custom.LessonQuestionAnswer;
+import com.czechtutor.model.custom.LessonResult;
 import com.czechtutor.service.AnswerService;
 import com.czechtutor.service.LessonService;
 import com.czechtutor.service.QuestionService;
@@ -113,13 +113,10 @@ public class ApplicationController {
     @GetMapping(value = "/scores")
     public String getScoresPage(Model model) {
         logger.info("~~~~~ Creating scores.");
-        Long nLessons = lessonService.countLessons();
-        // generate combined lesson questions and answers
-        ArrayList<LessonModel> lessons = lessonService.getAll();
-        ArrayList<ResultModel> results = resultService.getAll();
-        ArrayList<HashMap<String, Object>> lessonResultsArray = resultService.createResultSummary(lessons, results, nLessons);
+        // generate summary of all lessons and results
+        ArrayList<LessonResult> lessonsResults = resultService.createResultSummary();
         // add attributes to model object
-        model.addAttribute("lessonResultsArray", lessonResultsArray);
+        model.addAttribute("lessonsResults", lessonsResults);
         logger.info(model.toString());
         return "scores";
     }
@@ -265,7 +262,7 @@ public class ApplicationController {
         String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
-        ArrayList<LessonQuestionsAnswers> lessonQuestionsAnswers = resultService.createLessonSummary(lessonModel);
+        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = resultService.createLessonSummary(lessonModel);
         // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
