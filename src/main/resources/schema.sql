@@ -5,7 +5,8 @@ create table if not exists lessons (
     n_questions tinyint not null,
     n_options tinyint not null,
     level varchar(32) not null,
-    date_time datetime not null
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists questions (
@@ -17,7 +18,8 @@ create table if not exists questions (
     option3 varchar(255) not null,
     option4 varchar(255) not null,
     solution varchar(255) not null,
-    date_time datetime not null
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists answers (
@@ -26,7 +28,8 @@ create table if not exists answers (
     question_id bigint not null,
     answer varchar(255) not null,
     correct boolean not null,
-    date_time datetime not null
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists results (
@@ -34,7 +37,8 @@ create table if not exists results (
     lesson_id bigint not null,
     n_correct tinyint not null,
     score real not null,
-    date_time datetime not null
+    date_time datetime not null,
+    date_time_hash varchar(32) not null
 );
 
 create table if not exists ces(
