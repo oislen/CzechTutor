@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class UtilityService {
     public String MD5DateTimeHash(LocalDateTime dateTime) {
         // create hash value
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
         String formattedDateTime = dateTime.format(formatter);
         try {
             byte[] bytesOfMessage = formattedDateTime.getBytes(StandardCharsets.UTF_8);
