@@ -1,5 +1,6 @@
 package com.czechtutor.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
@@ -21,6 +22,7 @@ public class LessonModel {
     private Integer nQuestions;
     private Integer nOptions;
     private String level;
+    private LocalDateTime dateTime;
 
     /**
      * <p>
@@ -37,6 +39,7 @@ public class LessonModel {
         this.nQuestions = (Integer) payload.get("nQuestions");
         this.nOptions = (Integer) payload.get("nOptions");
         this.level = (String) payload.get("level");
+        this.dateTime = (LocalDateTime) payload.get("dateTime");
     }
 
     /**
@@ -55,6 +58,7 @@ public class LessonModel {
         lessonPayload.put("nQuestions", nQuestions);
         lessonPayload.put("nOptions", nOptions);
         lessonPayload.put("level", level);
+        lessonPayload.put("dateTime", dateTime);
         return lessonPayload;
     }
 
@@ -176,6 +180,26 @@ public class LessonModel {
      */
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    /**
+     * <p>
+     * Gets the date time attribute of an lesson model</p>
+     *
+     * @return the date time attribute
+     */
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * <p>
+     * Sets the date time attribute of an lesson model</p>
+     *
+     * @param dateTime the date time attribute
+     */
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
 }

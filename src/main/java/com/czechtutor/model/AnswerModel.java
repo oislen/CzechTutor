@@ -1,5 +1,6 @@
 package com.czechtutor.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
@@ -20,6 +21,7 @@ public class AnswerModel {
     private Integer questionId;
     private String answer;
     private Boolean correct;
+    private LocalDateTime dateTime;
 
     /**
      * <p>
@@ -37,6 +39,7 @@ public class AnswerModel {
         this.answer = (String) questionPayload.get("answer");
         // determine if answer was correct for the question
         this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
+        this.dateTime = (LocalDateTime) questionPayload.get("dateTime");
     }
 
     /**
@@ -54,6 +57,7 @@ public class AnswerModel {
         answerPayload.put("questionId", questionId);
         answerPayload.put("answer", answer);
         answerPayload.put("correct", correct);
+        answerPayload.put("dateTime", dateTime);
         return answerPayload;
     }
 
@@ -156,4 +160,25 @@ public class AnswerModel {
     public void setCorrect(Boolean correct) {
         this.correct = correct;
     }
+
+    /**
+     * <p>
+     * Gets the date time attribute of an answer model</p>
+     *
+     * @return the date time attribute
+     */
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    /**
+     * <p>
+     * Sets the date time attribute of an answer model</p>
+     *
+     * @param dateTime the date time attribute
+     */
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
+    }
+
 }
