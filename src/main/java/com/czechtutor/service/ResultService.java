@@ -1,5 +1,6 @@
 package com.czechtutor.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
@@ -91,6 +92,7 @@ public class ResultService {
         resultModel.setLessonId(lessonId);
         resultModel.setNCorrect(nCorrect);
         resultModel.setScore(score);
+        resultModel.setDateTime(LocalDateTime.now());
         return resultModel;
     }
 

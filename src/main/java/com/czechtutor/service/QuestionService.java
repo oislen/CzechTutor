@@ -1,5 +1,6 @@
 package com.czechtutor.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -99,7 +100,7 @@ public class QuestionService {
         questionModel.setOption3(optionsArray.get(2));
         questionModel.setOption4(optionsArray.get(3));
         questionModel.setSolution((String) cesModelArray.get(phaseIndex).getCesPayload().get(lessonModel.getToLanguage()));
-        questionCrudRepository.save(questionModel);
+        questionModel.setDateTime(LocalDateTime.now());
         return questionModel;
     }
 
