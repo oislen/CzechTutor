@@ -4,11 +4,11 @@ import java.util.HashMap;
 
 /**
  * <p>
- * Custom lesson results class for retrieving lessons, questions and answers</p>
+ * Custom class for retrieving lessons, questions and answers</p>
  *
  * @author oislen
  */
-public class LessonQuestionsAnswers {
+public class LessonQuestionAnswer {
 
     private Integer lessonId;
     private String fromLanguage;
@@ -29,10 +29,10 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the attributes of a custom results model using a hashmap of attribute
+     * Sets the attributes of a custom lesson questions answers model using a hashmap of attribute
      * values</p>
      *
-     * @param payload a hashmap of attributes to set the lesson model with
+     * @param payload a hashmap of attributes to set the custom lesson questions answers model with
      */
     public void set(HashMap<String, Object> payload) {
         // set the class objects
@@ -55,10 +55,10 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the attributes of a custom lesson results model as a hashmap of attribute
+     * Gets the attributes of a custom lesson questions answers model as a hashmap of attribute
      * values</p>
      *
-     * @return a hashmap of the lesson model attributes
+     * @return a hashmap of the custom lesson questions answers model attributes
      */
     public HashMap<String, Object> getLessonResultsPayload() {
         // construct lesson payload
@@ -83,7 +83,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson id attribute of a custom lesson results model</p>
+     * Gets the lesson id attribute of a custom lesson questions answers model</p>
      *
      * @return the lesson id attribute
      */
@@ -93,7 +93,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson id attribute of a custom lesson results model</p>
+     * Sets the lesson id attribute of a custom lesson questions answers model</p>
      *
      * @param lessonId the lesson id attribute
      */
@@ -103,7 +103,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson from language attribute of a custom lesson results model</p>
+     * Gets the lesson from language attribute of a custom lesson questions answers model</p>
      *
      * @return the lesson from language attribute
      */
@@ -113,7 +113,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson from language attribute of a custom lesson results model</p>
+     * Sets the lesson from language attribute of a custom lesson questions answers model</p>
      *
      * @param fromLanguage the lesson from language attribute
      */
@@ -123,7 +123,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson to language attribute of a custom lesson results model</p>
+     * Gets the lesson to language attribute of a custom lesson questions answers model</p>
      *
      * @return the lesson to language attribute
      */
@@ -133,7 +133,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson to language attribute of a custom lesson results model</p>
+     * Sets the lesson to language attribute of a custom lesson questions answers model</p>
      *
      * @param toLanguage the lesson to language attribute
      */
@@ -143,7 +143,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson n questions attribute of a custom lesson results model</p>
+     * Gets the lesson n questions attribute of a custom lesson questions answers model</p>
      *
      * @return the lesson n questions attribute
      */
@@ -153,7 +153,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson n questions attribute of a custom lesson results model</p>
+     * Sets the lesson n questions attribute of a custom lesson questions answers model</p>
      *
      * @param nQuestions the lesson n questions attribute
      */
@@ -163,7 +163,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson n options attribute of a custom lesson results model</p>
+     * Gets the lesson n options attribute of a custom lesson questions answers model</p>
      *
      * @return the lesson n options attribute
      */
@@ -173,7 +173,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson n options attribute of a custom lesson results model</p>
+     * Sets the lesson n options attribute of a custom lesson questions answers model</p>
      *
      * @param nOptions the lesson n options attribute
      */
@@ -183,7 +183,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the lesson level attribute of a custom lesson results model</p>
+     * Gets the lesson level attribute of a custom lesson questions answers model</p>
      *
      * @return the level options attribute
      */
@@ -193,7 +193,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the lesson level attribute of a custom lesson results model</p>
+     * Sets the lesson level attribute of a custom lesson questions answers model</p>
      *
      * @param level the lesson level attribute
      */
@@ -203,7 +203,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question id attribute of a custom lesson results model</p>
+     * Gets the question id attribute of a custom lesson questions answers model</p>
      *
      * @return the question id attribute
      */
@@ -213,7 +213,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question id attribute of a custom lesson results model</p>
+     * Sets the question id attribute of a custom lesson questions answers model</p>
      *
      * @param questionId the question id attribute
      */
@@ -223,7 +223,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question phrase attribute of a custom lesson results model</p>
+     * Gets the question phrase attribute of a custom lesson questions answers model</p>
      *
      * @return the question phrase attribute
      */
@@ -233,7 +233,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question phrase attribute of a custom lesson results model</p>
+     * Sets the question phrase attribute of a custom lesson questions answers model</p>
      *
      * @param phrase the question phrase attribute
      */
@@ -243,7 +243,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question option 1 attribute of a custom lesson results model</p>
+     * Gets the question option 1 attribute of a custom lesson questions answers model</p>
      *
      * @return the question option 1 attribute
      */
@@ -253,7 +253,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question option 1 attribute of a custom lesson results model</p>
+     * Sets the question option 1 attribute of a custom lesson questions answers model</p>
      *
      * @param option1 the question option 1 attribute
      */
@@ -263,7 +263,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question option 2 attribute of a custom lesson results model</p>
+     * Gets the question option 2 attribute of a custom lesson questions answers model</p>
      *
      * @return the question option 2 attribute
      */
@@ -273,7 +273,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question option 2 attribute of a custom lesson results model</p>
+     * Sets the question option 2 attribute of a custom lesson questions answers model</p>
      *
      * @param option2 the question option 2 attribute
      */
@@ -283,7 +283,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question option 3 attribute of a custom lesson results model</p>
+     * Gets the question option 3 attribute of a custom lesson questions answers model</p>
      *
      * @return the question option 3 attribute
      */
@@ -293,7 +293,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question option 3 attribute of a custom lesson results model</p>
+     * Sets the question option 3 attribute of a custom lesson questions answers model</p>
      *
      * @param option3 the question option 3 attribute
      */
@@ -303,7 +303,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question option 4 attribute of a custom lesson results model</p>
+     * Gets the question option 4 attribute of a custom lesson questions answers model</p>
      *
      * @return the question option 4 attribute
      */
@@ -313,7 +313,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question option 4 attribute of a custom lesson results model</p>
+     * Sets the question option 4 attribute of a custom lesson questions answers model</p>
      *
      * @param option4 the question option 4 attribute
      */
@@ -323,7 +323,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the question solution attribute of a custom lesson results model</p>
+     * Gets the question solution attribute of a custom lesson questions answers model</p>
      *
      * @return the question solution attribute
      */
@@ -333,7 +333,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the question solution attribute of a custom lesson results model</p>
+     * Sets the question solution attribute of a custom lesson questions answers model</p>
      *
      * @param solution the question solution attribute
      */
@@ -343,7 +343,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the answer id attribute of a custom lesson results model</p>
+     * Gets the answer id attribute of a custom lesson questions answers model</p>
      *
      * @return the answer id attribute
      */
@@ -353,7 +353,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the answer id attribute of a custom lesson results model</p>
+     * Sets the answer id attribute of a custom lesson questions answers model</p>
      *
      * @param answerId the answer id attribute
      */
@@ -363,7 +363,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the answer attribute of a custom lesson results model</p>
+     * Gets the answer attribute of a custom lesson questions answers model</p>
      *
      * @return the answer attribute
      */
@@ -373,7 +373,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the answer attribute of a custom lesson results model</p>
+     * Sets the answer attribute of a custom lesson questions answers model</p>
      *
      * @param answer the answer attribute
      */
@@ -383,7 +383,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Gets the correct attribute of a custom lesson results model</p>
+     * Gets the correct attribute of a custom lesson questions answers model</p>
      *
      * @return the correct attribute
      */
@@ -393,7 +393,7 @@ public class LessonQuestionsAnswers {
 
     /**
      * <p>
-     * Sets the correct attribute of a custom lesson results model</p>
+     * Sets the correct attribute of a custom lesson questions answers model</p>
      *
      * @param correct the correct attribute
      */
