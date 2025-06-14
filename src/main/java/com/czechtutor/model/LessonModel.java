@@ -23,6 +23,7 @@ public class LessonModel {
     private Integer nOptions;
     private String level;
     private LocalDateTime dateTime;
+    private String dateTimeHash;
 
     /**
      * <p>
@@ -40,6 +41,7 @@ public class LessonModel {
         this.nOptions = (Integer) payload.get("nOptions");
         this.level = (String) payload.get("level");
         this.dateTime = (LocalDateTime) payload.get("dateTime");
+        this.dateTimeHash = (String) payload.get("dateTimeHash");
     }
 
     /**
@@ -59,6 +61,7 @@ public class LessonModel {
         lessonPayload.put("nOptions", nOptions);
         lessonPayload.put("level", level);
         lessonPayload.put("dateTime", dateTime);
+        lessonPayload.put("dateTimeHash", dateTimeHash);
         return lessonPayload;
     }
 
@@ -200,6 +203,26 @@ public class LessonModel {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    /**
+     * <p>
+     * Gets the date time hash attribute of a lesson model</p>
+     *
+     * @return the date time hash attribute
+     */
+    public String getDateTimedHash() {
+        return dateTimeHash;
+    }
+
+    /**
+     * <p>
+     * Sets the date time hash attribute of a lesson model</p>
+     *
+     * @param dateTimeHash the lesson id hash attribute
+     */
+    public void setDateTimeHash(String dateTimeHash) {
+        this.dateTimeHash = dateTimeHash;
     }
 
 }

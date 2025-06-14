@@ -22,6 +22,7 @@ public class AnswerModel {
     private String answer;
     private Boolean correct;
     private LocalDateTime dateTime;
+    private String dateTimeHash;
 
     /**
      * <p>
@@ -40,6 +41,7 @@ public class AnswerModel {
         // determine if answer was correct for the question
         this.correct = (Boolean) questionPayload.get("answer").toString().toLowerCase().trim().equals(questionPayload.get("solution").toString().toLowerCase().trim());
         this.dateTime = (LocalDateTime) questionPayload.get("dateTime");
+        this.dateTimeHash = (String) questionPayload.get("dateTimeHash");
     }
 
     /**
@@ -58,6 +60,7 @@ public class AnswerModel {
         answerPayload.put("answer", answer);
         answerPayload.put("correct", correct);
         answerPayload.put("dateTime", dateTime);
+        answerPayload.put("dateTimeHash", dateTimeHash);
         return answerPayload;
     }
 
@@ -179,6 +182,26 @@ public class AnswerModel {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    /**
+     * <p>
+     * Gets the date time hash attribute of a lesson model</p>
+     *
+     * @return the date time hash attribute
+     */
+    public String getDateTimedHash() {
+        return dateTimeHash;
+    }
+
+    /**
+     * <p>
+     * Sets the date time hash attribute of a lesson model</p>
+     *
+     * @param dateTimeHash the lesson id hash attribute
+     */
+    public void setDateTimeHash(String dateTimeHash) {
+        this.dateTimeHash = dateTimeHash;
     }
 
 }

@@ -25,6 +25,7 @@ public class QuestionModel {
     private String option4;
     private String solution;
     private LocalDateTime dateTime;
+    private String dateTimeHash;
 
     /**
      * <p>
@@ -44,6 +45,7 @@ public class QuestionModel {
         this.option4 = (String) payload.get("option4");
         this.solution = (String) payload.get("solution");
         this.dateTime = (LocalDateTime) payload.get("dateTime");
+        this.dateTimeHash = (String) payload.get("dateTimeHash");
     }
 
     /**
@@ -65,6 +67,7 @@ public class QuestionModel {
         questionPayload.put("option4", option4);
         questionPayload.put("solution", solution);
         questionPayload.put("dateTime", dateTime);
+        questionPayload.put("dateTimeHash", dateTimeHash);
         return questionPayload;
     }
 
@@ -246,6 +249,26 @@ public class QuestionModel {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    /**
+     * <p>
+     * Gets the date time hash attribute of a lesson model</p>
+     *
+     * @return the date time hash attribute
+     */
+    public String getDateTimedHash() {
+        return dateTimeHash;
+    }
+
+    /**
+     * <p>
+     * Sets the date time hash attribute of a lesson model</p>
+     *
+     * @param dateTimeHash the lesson id hash attribute
+     */
+    public void setDateTimeHash(String dateTimeHash) {
+        this.dateTimeHash = dateTimeHash;
     }
 
 }

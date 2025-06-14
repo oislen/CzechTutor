@@ -21,6 +21,7 @@ public class ResultModel {
     private Integer nCorrect;
     private Float score;
     private LocalDateTime dateTime;
+    private String dateTimeHash;
 
     /**
      * <p>
@@ -36,6 +37,7 @@ public class ResultModel {
         this.nCorrect = (Integer) payload.get("nCorrect");
         this.score = (Float) payload.get("score");
         this.dateTime = (LocalDateTime) payload.get("dateTime");
+        this.dateTimeHash = (String) payload.get("dateTimeHash");
     }
 
     /**
@@ -53,6 +55,7 @@ public class ResultModel {
         resultsPayload.put("nCorrect", nCorrect);
         resultsPayload.put("score", score);
         resultsPayload.put("dateTime", dateTime);
+        resultsPayload.put("dateTimeHash", dateTimeHash);
         return resultsPayload;
     }
 
@@ -154,6 +157,26 @@ public class ResultModel {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    /**
+     * <p>
+     * Gets the date time hash attribute of a lesson model</p>
+     *
+     * @return the date time hash attribute
+     */
+    public String getDateTimedHash() {
+        return dateTimeHash;
+    }
+
+    /**
+     * <p>
+     * Sets the date time hash attribute of a lesson model</p>
+     *
+     * @param dateTimeHash the lesson id hash attribute
+     */
+    public void setDateTimeHash(String dateTimeHash) {
+        this.dateTimeHash = dateTimeHash;
     }
 
 }
