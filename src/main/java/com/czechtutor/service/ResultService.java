@@ -1,14 +1,14 @@
 package com.czechtutor.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.stereotype.Service;
 
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
 import com.czechtutor.model.ResultModel;
-import com.czechtutor.model.custom.LessonQuestionsAnswers;
+import com.czechtutor.model.custom.LessonQuestionAnswer;
+import com.czechtutor.model.custom.LessonResult;
 import com.czechtutor.repository.crud.ResultCrudRepository;
 
 /**
@@ -118,9 +118,9 @@ public class ResultService {
      * @param nQuestions the n questions
      * @return the lesson summary
      */
-    public ArrayList<LessonQuestionsAnswers>  createLessonSummary(LessonModel lessonModel) {
+    public ArrayList<LessonQuestionAnswer>  createLessonSummary(LessonModel lessonModel) {
         // pull all lesson results for lesson id
-        ArrayList<LessonQuestionsAnswers> lessonQuestionsAnswers = resultCrudRepository.findAllQuestionsAnswersByLessonId(lessonModel);
+        ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = resultCrudRepository.findAllQuestionsAnswersByLesson(lessonModel);
         return lessonQuestionsAnswers;
     }
 
@@ -134,27 +134,10 @@ public class ResultService {
      * @param nLessons the number of lessons
      * @return the results summary
      */
-    public ArrayList<HashMap<String, Object>> createResultSummary(ArrayList<LessonModel> lessons, ArrayList<ResultModel> results, Long nLessons) {
-        // initialise output object
-        ArrayList<HashMap<String, Object>> lessonResultsArray = new ArrayList<>();
-        // iterate over each question index
-        for (int i = 0; i < nLessons; i++) {
-            // create a temporary object to fill
-            HashMap<String, Object> lessonQuestionsAnswers = new HashMap<>();
-            // extract out lesson and result
-            LessonModel lesson = lessons.get(i);
-            ResultModel result = results.get(i);
-            // put relevant data into temporary object
-            lessonQuestionsAnswers.put("lessonId", lesson.getLessonId());
-            lessonQuestionsAnswers.put("fromLanguage", lesson.getFromLanguage());
-            lessonQuestionsAnswers.put("toLanguage", lesson.getToLanguage());
-            lessonQuestionsAnswers.put("level", lesson.getLevel());
-            lessonQuestionsAnswers.put("nQuestions", lesson.getNQuestions());
-            lessonQuestionsAnswers.put("nCorrect", result.getNCorrect());
-            lessonQuestionsAnswers.put("score", result.getScore());
-            lessonResultsArray.add(lessonQuestionsAnswers);
-        }
-        return lessonResultsArray;
+    public ArrayList<LessonResult> createResultSummary() {
+        // pull all lessons and results
+        ArrayList<LessonResult> lessonsResults = resultCrudRepository.findAllLessonsResults();
+        return lessonsResults;
     }
 
 }
