@@ -37,9 +37,14 @@
 </table>
 <br>
 
-<form th:method="post" th:action="@{/resultRedo/{path}(path=${path})}">
-    <button type="submit" class="btn btn-outline-dark">Redo</button>
+<div class="container" id="buttonContainer">
+<form th:method="post" th:action="@{/resultRetry/{path}(path=${path})}" id="retryLessonButtonForm">
+    <button type="submit" class="btn btn-outline-dark" id="retryLessonButton">Retry Lesson</button>
 </form>
+<form th:method="post" th:action="@{/resultNew/{path}(path=${path})}" id="newLessonButtonForm">
+    <button type="submit" class="btn btn-outline-dark" id="newLessonButton">New Lesson</button>
+</form>
+</div>
 
 </div>
 
