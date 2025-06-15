@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
@@ -59,6 +60,62 @@ public class ApplicationController {
         this.lessonQuestionAnswerService = lessonQuestionAnswerService;
         this.lessonResultService = lessonResultService;
         this.utilityService = utilityService;
+    }
+
+    /**
+     * <p>
+     * Creates a question model for a specified lesson id</p>
+     *
+     * @param lessonId the lesson id to create a new question model for
+     * @return redirects to the lesson template with the generated lesson id
+     */
+    public String createLessonQuestion(Integer lessonId) {
+        logger.info("~~~~~ Creating lesson question.");
+        // generate a question
+        LessonModel lessonModel = lessonService.get(lessonId);
+        QuestionModel questionModel = questionService.create(lessonModel, null);
+        questionService.save(questionModel);
+        Integer lessonQuestionId = questionModel.getLessonQuestionId();
+        // redirect to view
+        String path = String.valueOf(lessonId) + "/" + String.valueOf(lessonQuestionId);
+        String view = "/lesson/" + path;
+        logger.info(view);
+        logger.info(questionModel.getQuestionPayload());
+        return "redirect:" + view;
+    }
+
+    /**
+     * <p>
+     * Creates a result for a completed lesson id</p>
+     *
+     * @param lessonId the lesson id to create a result model for
+     * @return redirects to the result template with the generated result model
+     */
+    public String createLessonResults(Integer lessonId) {
+        logger.info("~~~~~ Creating lesson result.");
+        // pull nQuestions from lesson model
+        Integer nQuestions = lessonService.get(lessonId).getNQuestions();
+        // define decimal formatter
+        DecimalFormat decimalFormatter = new DecimalFormat("#.##");
+        decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
+        // generate the results of the lesson
+        ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
+        Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
+        Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions) * 100));
+        // create a result
+        ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
+        // check if an existing results model already exists for the lesson id
+        if (resultService.existsByLessonId(lessonId)) {
+            // overwrite the result id with the result id from the result model corresponding to the existing lesson id
+            resultModel.setResultId(resultService.findByLessonId(lessonId).getResultId());
+        }
+        resultService.save(resultModel);
+        // redirect to view
+        String path = String.valueOf(lessonId);
+        String view = "/result/" + path;
+        logger.info(view);
+        logger.info(resultModel.getResultPayload());
+        return "redirect:" + view;
     }
 
     /**
@@ -152,33 +209,8 @@ public class ApplicationController {
         lessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(lessonModel.getDateTime()));
         lessonService.save(lessonModel);
         // redirect to view
-        String path = String.valueOf(lessonModel.getLessonId());
-        String view = "/newLessonQuestion/" + path;
         logger.info(lessonModel.getLessonPayload());
-        return "redirect:" + view;
-    }
-
-    /**
-     * <p>
-     * Creates a question model for a specified lesson id</p>
-     *
-     * @param lessonId the generated lesson id path variable
-     * @return redirects to the lesson template with the generated lesson id
-     */
-    @GetMapping(value = "/newLessonQuestion/{lessonId}")
-    public String createLessonQuestion(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Creating question.");
-        // generate a question
-        LessonModel lessonModel = lessonService.get(lessonId);
-        QuestionModel questionModel = questionService.create(lessonModel, null);
-        questionService.save(questionModel);
-        Integer lessonQuestionId = questionModel.getLessonQuestionId();
-        // redirect to view
-        String path = String.valueOf(lessonId) + "/" + String.valueOf(lessonQuestionId);
-        String view = "/lesson/" + path;
-        logger.info(view);
-        logger.info(questionModel.getQuestionPayload());
-        return "redirect:" + view;
+        return createLessonQuestion(lessonModel.getLessonId());
     }
 
     /**
@@ -230,18 +262,14 @@ public class ApplicationController {
             answerModel.setAnswerId(answerService.findByQuestionId(questionModel.getQuestionId()).getAnswerId());
         }
         answerService.save(answerModel);
+        logger.info(answerModel.getAnswerPayload());
         // check NQuestions for lessonId against database
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
         // if the lesson question id is greater than the number of available questions, and also less than the total required questions
         if (lessonQuestionId >= nLessonQuestions && lessonQuestionId < nQuestions) {
-            logger.info("~~~~~ Redirecting to new question.");
-            // redirect to new lesson question view
-            String path = String.valueOf(lessonId);
-            String view = "/newLessonQuestion/" + path;
-            logger.info(view);
-            logger.info(answerModel.getAnswerPayload());
-            return "redirect:" + view;
+            //  create a new question for the lesson
+            return createLessonQuestion(lessonId);
         // otherwise if the lesson question id is less than the number of available question, and also less the total required questions
         } else if (lessonQuestionId < nQuestions && lessonQuestionId < nQuestions) {
             logger.info("~~~~~ Redirecting to next question.");
@@ -256,28 +284,8 @@ public class ApplicationController {
             return "redirect:" + view;
         // otherwise all questions have been completed and redirect to results view
         } else {
-            logger.info("~~~~~ Creating result.");
-            // define decimal formatter
-            DecimalFormat decimalFormatter = new DecimalFormat("#.##");
-            decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
-            // generate the results of the lesson
-            ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
-            Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
-            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions) * 100));
-            // create a result
-            ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
-            // check if an existing results model already exists for the lesson id
-            if (resultService.existsByLessonId(lessonId)) {
-                // overwrite the result id with the result id from the result model corresponding to the existing lesson id
-                resultModel.setResultId(resultService.findByLessonId(lessonId).getResultId());
-            }
-            resultService.save(resultModel);
-            // redirect to view
-            String path = String.valueOf(lessonId);
-            String view = "/result/" + path;
-            logger.info(view);
-            logger.info(resultModel.getResultPayload());
-            return "redirect:" + view;
+            // generate the lesson results
+            return createLessonResults(lessonId);
         }
     }
 
@@ -330,45 +338,34 @@ public class ApplicationController {
      * @return redirects to the lesson template with the same lesson
      * configurations
      */
-    @PostMapping(value = "/resultNew/{lessonId}")
-    public String redirectResultToNewLesson(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Creating new lesson");
-        // generate a new lesson from the current lesson
-        LessonModel currentLessonModel = lessonService.get(lessonId);
-        LessonModel newLessonModel = new LessonModel();
-        newLessonModel.setFromLanguage(currentLessonModel.getFromLanguage());
-        newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
-        newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
-        newLessonModel.setNOptions(currentLessonModel.getNOptions());
-        newLessonModel.setLevel(currentLessonModel.getLevel());
-        newLessonModel.setDateTime(LocalDateTime.now());
-        newLessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(newLessonModel.getDateTime()));
-        lessonService.save(newLessonModel);
-        // redirect to view
-        String path = String.valueOf(newLessonModel.getLessonId());
-        String view = "/newLessonQuestion/" + path;
-        logger.info(newLessonModel.getLessonPayload());
-        return "redirect:" + view;
-    }
-
-    /**
-     * <p>
-     * Posts user input from the result template page</p>
-     *
-     * @param lessonId the generated lesson id path variable
-     * @return redirects to the lesson template with the same lesson
-     * configurations
-     */
-    @PostMapping(value = "/resultRetry/{lessonId}")
-    public String redirectResultToRetryLesson(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Retrying lesson");
-        // generate a new lesson from the current lesson
-        LessonModel currentLessonModel = lessonService.get(lessonId);
-        // redirect to view
-        String path = String.valueOf(lessonId) + "/1";
-        String view = "/lesson/" + path;
-        logger.info(currentLessonModel.getLessonPayload());
-        return "redirect:" + view;
+    @PostMapping(value = "/result/{lessonId}")
+    public String redirectResultToNewLesson(@PathVariable("lessonId") Integer lessonId, @RequestParam String action) {
+        logger.info(action);
+        if (action.equals("newLesson")) {
+            logger.info("~~~~~ Creating new lesson");        // generate a new lesson from the current lesson
+            LessonModel currentLessonModel = lessonService.get(lessonId);
+            LessonModel newLessonModel = new LessonModel();
+            newLessonModel.setFromLanguage(currentLessonModel.getFromLanguage());
+            newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
+            newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
+            newLessonModel.setNOptions(currentLessonModel.getNOptions());
+            newLessonModel.setLevel(currentLessonModel.getLevel());
+            newLessonModel.setDateTime(LocalDateTime.now());
+            newLessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(newLessonModel.getDateTime()));
+            lessonService.save(newLessonModel);
+            // redirect to view
+            logger.info(newLessonModel.getLessonPayload());
+            return createLessonQuestion(newLessonModel.getLessonId());
+        } else {
+            logger.info("~~~~~ Retrying lesson");
+            // generate a new lesson from the current lesson
+            LessonModel currentLessonModel = lessonService.get(lessonId);
+            // redirect to view
+            String path = String.valueOf(lessonId) + "/1";
+            String view = "/lesson/" + path;
+            logger.info(currentLessonModel.getLessonPayload());
+            return "redirect:" + view;
+        }
     }
 
 }
