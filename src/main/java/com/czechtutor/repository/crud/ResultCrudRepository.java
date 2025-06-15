@@ -22,4 +22,13 @@ public interface ResultCrudRepository extends CrudRepository<ResultModel, Intege
      */
     ResultModel findByLessonId(String LessonId);
 
+    /**
+     * <p>
+     * Determines if a results model exists for a lesson id</p>
+     *
+     * @param LessonId the lesson id to find if results exist for
+     * @return whether the result model exists
+     */
+    Boolean existsByLessonId(String LessonId);
+
 }
