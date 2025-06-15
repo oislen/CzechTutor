@@ -18,6 +18,7 @@ public class QuestionModel {
     @Id
     private Integer questionId;
     private Integer lessonId;
+    private Integer lessonQuestionId;
     private String phrase;
     private String option1;
     private String option2;
@@ -38,6 +39,7 @@ public class QuestionModel {
         // set the class objects
         //this.questionId = (Integer) payload.get("questionId");
         this.lessonId = (Integer) payload.get("lessonId");
+        this.lessonQuestionId = (Integer) payload.get("lessonQuestionId");
         this.phrase = (String) payload.get("phrase");
         this.option1 = (String) payload.get("option1");
         this.option2 = (String) payload.get("option2");
@@ -60,6 +62,7 @@ public class QuestionModel {
         HashMap<String, Object> questionPayload = new HashMap<>();
         questionPayload.put("questionId", questionId);
         questionPayload.put("lessonId", lessonId);
+        questionPayload.put("lessonQuestionId", lessonQuestionId);
         questionPayload.put("phrase", phrase);
         questionPayload.put("option1", option1);
         questionPayload.put("option2", option2);
@@ -93,12 +96,33 @@ public class QuestionModel {
 
     /**
      * <p>
+     * Gets the lesson id attribute of a question model</p>
+     *
+     * @return the lesson id attribute
+     */
+    public Integer getLessonId() {
+        return lessonId;
+    }
+
+    /**
+     * <p>
+     * Sets the lesson id attribute of a question model</p>
+     *
+     * @param lessonId the lesson id attribute
+     */
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
+    }
+
+
+    /**
+     * <p>
      * Gets the question lesson id attribute of a question model</p>
      *
      * @return the question lesson id attribute
      */
-    public Integer getLessonId() {
-        return lessonId;
+    public Integer getLessonQuestionId() {
+        return lessonQuestionId;
     }
 
     /**
@@ -107,8 +131,8 @@ public class QuestionModel {
      *
      * @param lessonId the question lesson id attribute
      */
-    public void setLessonId(Integer lessonId) {
-        this.lessonId = lessonId;
+    public void setQuestionLessonId(Integer lessonQuestionId) {
+        this.lessonQuestionId = lessonQuestionId;
     }
 
     /**
