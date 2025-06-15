@@ -111,4 +111,26 @@ public class ResultService {
         return resultCrudRepository.findByLessonId(String.valueOf(lessonId));
     }
 
+    /**
+     * <p>
+     * Determines if a result already exists by a result id</p>
+     *
+     * @param resultId the result id to find if exists
+     * @return whether the result model exists or not
+     */
+    public Boolean existsById(Integer resultId) {
+        return resultCrudRepository.existsById(resultId);
+    }
+
+    /**
+     * <p>
+     * Determines if a result already exists by a lesson id</p>
+     *
+     * @param lessonId the lesson id to find if results exists for
+     * @return whether the result model exists or not
+     */
+    public Boolean existsByLessonId(Integer lessonId) {
+        return resultCrudRepository.existsByLessonId(String.valueOf(lessonId));
+    }
+
 }
