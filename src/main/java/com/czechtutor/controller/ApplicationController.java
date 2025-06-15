@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.czechtutor.model.AnswerModel;
 import com.czechtutor.model.LessonModel;
@@ -337,43 +338,34 @@ public class ApplicationController {
      * @return redirects to the lesson template with the same lesson
      * configurations
      */
-    @PostMapping(value = "/resultNew/{lessonId}")
-    public String redirectResultToNewLesson(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Creating new lesson");
-        // generate a new lesson from the current lesson
-        LessonModel currentLessonModel = lessonService.get(lessonId);
-        LessonModel newLessonModel = new LessonModel();
-        newLessonModel.setFromLanguage(currentLessonModel.getFromLanguage());
-        newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
-        newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
-        newLessonModel.setNOptions(currentLessonModel.getNOptions());
-        newLessonModel.setLevel(currentLessonModel.getLevel());
-        newLessonModel.setDateTime(LocalDateTime.now());
-        newLessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(newLessonModel.getDateTime()));
-        lessonService.save(newLessonModel);
-        // redirect to view
-        logger.info(newLessonModel.getLessonPayload());
-        return createLessonQuestion(newLessonModel.getLessonId());
-    }
-
-    /**
-     * <p>
-     * Posts user input from the result template page</p>
-     *
-     * @param lessonId the generated lesson id path variable
-     * @return redirects to the lesson template with the same lesson
-     * configurations
-     */
-    @PostMapping(value = "/resultRetry/{lessonId}")
-    public String redirectResultToRetryLesson(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Retrying lesson");
-        // generate a new lesson from the current lesson
-        LessonModel currentLessonModel = lessonService.get(lessonId);
-        // redirect to view
-        String path = String.valueOf(lessonId) + "/1";
-        String view = "/lesson/" + path;
-        logger.info(currentLessonModel.getLessonPayload());
-        return "redirect:" + view;
+    @PostMapping(value = "/result/{lessonId}")
+    public String redirectResultToNewLesson(@PathVariable("lessonId") Integer lessonId, @RequestParam String action) {
+        logger.info(action);
+        if (action.equals("newLesson")) {
+            logger.info("~~~~~ Creating new lesson");        // generate a new lesson from the current lesson
+            LessonModel currentLessonModel = lessonService.get(lessonId);
+            LessonModel newLessonModel = new LessonModel();
+            newLessonModel.setFromLanguage(currentLessonModel.getFromLanguage());
+            newLessonModel.setToLanguage(currentLessonModel.getToLanguage());
+            newLessonModel.setNQuestions(currentLessonModel.getNQuestions());
+            newLessonModel.setNOptions(currentLessonModel.getNOptions());
+            newLessonModel.setLevel(currentLessonModel.getLevel());
+            newLessonModel.setDateTime(LocalDateTime.now());
+            newLessonModel.setDateTimeHash(utilityService.MD5DateTimeHash(newLessonModel.getDateTime()));
+            lessonService.save(newLessonModel);
+            // redirect to view
+            logger.info(newLessonModel.getLessonPayload());
+            return createLessonQuestion(newLessonModel.getLessonId());
+        } else {
+            logger.info("~~~~~ Retrying lesson");
+            // generate a new lesson from the current lesson
+            LessonModel currentLessonModel = lessonService.get(lessonId);
+            // redirect to view
+            String path = String.valueOf(lessonId) + "/1";
+            String view = "/lesson/" + path;
+            logger.info(currentLessonModel.getLessonPayload());
+            return "redirect:" + view;
+        }
     }
 
 }
