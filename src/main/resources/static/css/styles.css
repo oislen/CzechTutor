@@ -79,3 +79,8 @@ a {
 #lessonNCorrectMessage {
     padding-bottom:20px;
 }
+
+#buttonContainer, #newLessonButtonForm, #retryLessonButtonForm, #newLessonButton, #retryLessonButton {
+    display: inline-block;
+    margin-left: 5px;
+}

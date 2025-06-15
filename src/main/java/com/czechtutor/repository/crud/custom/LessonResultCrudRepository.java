@@ -21,7 +21,8 @@ public interface LessonResultCrudRepository extends CrudRepository<LessonResult,
         l.lesson_id, l.from_Language, l.to_Language, l.n_questions, l.n_options, l.level,
         r.result_id, r.n_correct, r.score
     from lessons as l
-    inner join results as r on l.lesson_id = r.lesson_id
+    left join results as r on l.lesson_id = r.lesson_id
+    order by lesson_id
     ;
     """;
 

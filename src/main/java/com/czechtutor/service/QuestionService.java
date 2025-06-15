@@ -97,6 +97,7 @@ public class QuestionService {
         // create a question
         QuestionModel questionModel = new QuestionModel();
         questionModel.setLessonId(lessonModel.getLessonId());
+        questionModel.setQuestionLessonId(questionCrudRepository.findByLessonId(String.valueOf(lessonModel.getLessonId())).size()+1);
         questionModel.setPhrase((String) cesModelArray.get(phaseIndex).getCesPayload().get(lessonModel.getFromLanguage()));
         questionModel.setOption1(optionsArray.get(0));
         questionModel.setOption2(optionsArray.get(1));
@@ -117,5 +118,17 @@ public class QuestionService {
      */
     public ArrayList<QuestionModel> findByLessonId(Integer lessonId) {
         return questionCrudRepository.findByLessonId(String.valueOf(lessonId));
+    }
+
+    /**
+     * <p>
+     * Retrieves a question model using a lesson id and a question lesson id.</p>
+     *
+     * @param lessonLid the lesson question to find
+     * @param lessonQuestionId the lesson question id to find
+     * @return the question model
+     */
+    public QuestionModel getQuestionByLessonQuestionIds(Integer lessonLid, Integer lessonQuestionId) {
+        return questionCrudRepository.getQuestionByLessonQuestionIds(lessonLid, lessonQuestionId);
     }
 }

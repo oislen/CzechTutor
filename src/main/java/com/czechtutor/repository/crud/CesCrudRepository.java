@@ -19,9 +19,9 @@ public interface CesCrudRepository extends CrudRepository<CesModel, Integer> {
      * <p>
      * Finds all ces models with a specified level as an array list</p>
      *
-     * @param Level the Level to find by
+     * @param level the Level to find by
      * @return the ces models as an array list
      */
-    ArrayList<CesModel> findByLevel(String Level);
+    ArrayList<CesModel> findByLevel(String level);
 
 }

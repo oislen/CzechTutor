@@ -12,6 +12,7 @@ create table if not exists lessons (
 create table if not exists questions (
     question_id bigint auto_increment primary key,
     lesson_id bigint not null,
+    lesson_question_id tinyint not null,
     phrase varchar(255) not null,
     option1 varchar(255) not null,
     option2 varchar(255) not null,
