@@ -69,4 +69,15 @@ public class AnswerService {
         return answerCrudRepository.findByLessonId(String.valueOf(lessonId));
     }
 
+    /**
+     * <p>
+     * Determines if an answer already exists by an answer id</p>
+     *
+     * @param answerId the answer id to find if exists
+     * @return whether the answer model exists or not
+     */
+    public Boolean existsById(Integer answerId) {
+        return answerCrudRepository.existsById(answerId);
+    }
+
 }
