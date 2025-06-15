@@ -27,7 +27,7 @@
     </thread>
     <tbody>
     <tr th:each="lessonResult : ${lessonsResults}">
-      <td th:text="${lessonResult.getLessonId()}" />
+      <td><a th:href="@{/result/{lessonId}(lessonId=${lessonResult.getLessonId()})}" th:text="${lessonResult.getLessonId()}" /></td>
       <td th:text="${lessonResult.getFromLanguage()}" />
       <td th:text="${lessonResult.getToLanguage()}" />
       <td th:text="${lessonResult.getLevel()}" />
