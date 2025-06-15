@@ -24,9 +24,10 @@ public interface LessonQuestionAnswerCrudRepository extends CrudRepository<Lesso
         q.question_id, q.phrase, q.option1, q.option2, q.option3, q.option4, q.solution,
         a.answer_id, a.answer, a.correct
     from lessons as l
-    inner join questions as q on l.lesson_id = q.lesson_id
-    inner join answers as a on q.question_id = a.question_id
+    left join questions as q on l.lesson_id = q.lesson_id
+    left join answers as a on q.question_id = a.question_id
     where l.lesson_id = :#{#lessonModel.LessonId}
+    order by question_id
     """;
 
     @Query(LESSON_QUESTIONS_ANSWERS_QUERY)
