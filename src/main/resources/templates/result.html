@@ -21,16 +21,16 @@
     <thread>
     <tr>
       <th scope="col">Phrase</th>
-      <th scope="col">Solution</th>
       <th scope="col">Answer</th>
+      <th scope="col">Solution</th>
       <th scope="col">Correct</th>
     </tr>
     </thread>
     <tbody>
     <tr th:each="lessonQuestionAnswer : ${lessonQuestionsAnswers}">
       <td th:text="${lessonQuestionAnswer.getPhrase()}" />
-      <td th:text="${lessonQuestionAnswer.getSolution()}" />
       <td th:text="${lessonQuestionAnswer.getAnswer()}" />
+      <td th:text="${lessonQuestionAnswer.getSolution()}" />
       <td th:text="${lessonQuestionAnswer.getCorrect()}" />
     </tr>
     </tbody>
