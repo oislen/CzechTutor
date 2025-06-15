@@ -167,42 +167,18 @@ public class ApplicationController {
      */
     @GetMapping(value = "/newLessonQuestion/{lessonId}")
     public String createLessonQuestion(@PathVariable("lessonId") Integer lessonId) {
-        // check NQuestions for lessonId against database
-        Integer nQuestions = lessonService.get(lessonId).getNQuestions();
-        Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
-        if (nLessonQuestions < nQuestions) {
-            logger.info("~~~~~ Creating question.");
-            // generate a question
-            LessonModel lessonModel = lessonService.get(lessonId);
-            QuestionModel questionModel = questionService.create(lessonModel, null);
-            questionService.save(questionModel);
-            // Integer questionId = questionModel.getQuestionId();
-            Integer lessonQuestionId = questionModel.getLessonQuestionId();
-            // redirect to view
-            String path = String.valueOf(lessonId) + "/" + String.valueOf(lessonQuestionId);
-            String view = "/lesson/" + path;
-            logger.info(view);
-            logger.info(questionModel.getQuestionPayload());
-            return "redirect:" + view;
-        } else {
-            logger.info("~~~~~ Creating result.");
-            // define decimal formatter
-            DecimalFormat decimalFormatter = new DecimalFormat("#.##");
-            decimalFormatter.setRoundingMode(RoundingMode.HALF_EVEN);
-            // generate the results of the lesson
-            ArrayList<AnswerModel> lessonAnswers = answerService.findByLessonId(lessonId);
-            Integer nCorrect = resultService.countTotalCorrect(lessonAnswers);
-            Float score = Float.valueOf(decimalFormatter.format(Float.valueOf(nCorrect) / Float.valueOf(nQuestions) * 100));
-            // create a result
-            ResultModel resultModel = resultService.create(lessonId, nCorrect, score);
-            resultService.save(resultModel);
-            // redirect to view
-            String path = String.valueOf(lessonId);
-            String view = "/result/" + path;
-            logger.info(view);
-            logger.info(resultModel.getResultPayload());
-            return "redirect:" + view;
-        }
+        logger.info("~~~~~ Creating question.");
+        // generate a question
+        LessonModel lessonModel = lessonService.get(lessonId);
+        QuestionModel questionModel = questionService.create(lessonModel, null);
+        questionService.save(questionModel);
+        Integer lessonQuestionId = questionModel.getLessonQuestionId();
+        // redirect to view
+        String path = String.valueOf(lessonId) + "/" + String.valueOf(lessonQuestionId);
+        String view = "/lesson/" + path;
+        logger.info(view);
+        logger.info(questionModel.getQuestionPayload());
+        return "redirect:" + view;
     }
 
     /**
@@ -211,7 +187,7 @@ public class ApplicationController {
      * id</p>
      *
      * @param lessonId the generated lesson id path variable
-     * @param questionId the generated question id path variable
+     * @param lessonQuestionId the generated lesson question id path variable
      * @param model the Model ui object for populating the lesson template with
      * Thymeleaf
      * @return the lesson template for the given lesson id and question id
@@ -221,7 +197,6 @@ public class ApplicationController {
         logger.info("~~~~~ Redirecting to lesson.");
         // pull lesson model for lesson id and lesson question id
         QuestionModel questionModel = questionService.getQuestionByLessonQuestionIds(lessonId, lessonQuestionId);
-        // QuestionModel questionModel = questionService.get(questionId);
         String path = String.valueOf(lessonId) + "/" + String.valueOf(lessonQuestionId);
         model.addAttribute("questionModel", questionModel);
         model.addAttribute("answerModel", new AnswerModel());
@@ -235,7 +210,7 @@ public class ApplicationController {
      * Posts user input from the lesson template page</p>
      *
      * @param lessonId the generated lesson id path variable
-     * @param questionId the generated question id path variable
+     * @param lessonQuestionId the generated lesson question id path variable
      * @param answerModel the completed answer model form
      * @return redirects to the lesson template with the lesson id
      */
@@ -244,31 +219,33 @@ public class ApplicationController {
         logger.info("~~~~~ Creating answer");
         // pull lesson model for lesson id and lesson question id
         QuestionModel questionModel = questionService.getQuestionByLessonQuestionIds(lessonId, lessonQuestionId);
-        // QuestionModel questionModel = questionService.get(questionId);
         // generate a answer
         answerModel.setQuestionId(questionModel.getQuestionId());
         answerModel.setCorrect(answerService.isCorrect(questionModel, answerModel));
         answerModel.setDateTime(LocalDateTime.now());
         answerModel.setDateTimeHash(utilityService.MD5DateTimeHash(answerModel.getDateTime()));
         // check if answer already exists for the question id
-        if (answerService.existsById(questionModel.getQuestionId())) {
+        if (answerService.existsByQuestionId(questionModel.getQuestionId())) {
             // if ot does assign answer id and overwrite existing result
-            answerModel.setAnswerId(questionModel.getQuestionId());
+            answerModel.setAnswerId(answerService.findByQuestionId(questionModel.getQuestionId()).getAnswerId());
         }
         answerService.save(answerModel);
         // check NQuestions for lessonId against database
         Integer nQuestions = lessonService.get(lessonId).getNQuestions();
         Integer nLessonQuestions = questionService.findByLessonId(lessonId).size();
-        Boolean allLessonQuestionsExist = nLessonQuestions.equals(nQuestions);
-        if (!allLessonQuestionsExist) {
-            // redirect to view
+        // if the lesson question id is greater than the number of available questions, and also less than the total required questions
+        if (lessonQuestionId >= nLessonQuestions && lessonQuestionId < nQuestions) {
+            logger.info("~~~~~ Redirecting to new question.");
+            // redirect to new lesson question view
             String path = String.valueOf(lessonId);
             String view = "/newLessonQuestion/" + path;
             logger.info(view);
             logger.info(answerModel.getAnswerPayload());
             return "redirect:" + view;
-        } else if (lessonQuestionId < nQuestions) {
-            // pull the next lesson question model
+        // otherwise if the lesson question id is less than the number of available question, and also less the total required questions
+        } else if (lessonQuestionId < nQuestions && lessonQuestionId < nQuestions) {
+            logger.info("~~~~~ Redirecting to next question.");
+            // redirect to the the new question in the lesson view
             Integer nextLessonQuestionId = lessonQuestionId + 1;
             QuestionModel nextQuestionModel = questionService.getQuestionByLessonQuestionIds(lessonId, nextLessonQuestionId);
             // redirect to view
@@ -277,6 +254,7 @@ public class ApplicationController {
             logger.info(view);
             logger.info(nextQuestionModel.getQuestionPayload());
             return "redirect:" + view;
+        // otherwise all questions have been completed and redirect to results view
         } else {
             logger.info("~~~~~ Creating result.");
             // define decimal formatter
@@ -329,6 +307,12 @@ public class ApplicationController {
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
         ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = lessonQuestionAnswerService.createLessonSummary(lessonModel);
+        // map solution to null if answers have not been provided
+        for (LessonQuestionAnswer lessonQuestionAnswer : lessonQuestionsAnswers) {
+            if (lessonQuestionAnswer.getAnswerId() == null) {
+                lessonQuestionAnswer.setSolution(null);
+            }
+        }
         // add attributes to model object
         model.addAttribute("scoreMessage", scoreMessage);
         model.addAttribute("nCorrectMessage", nCorrectMessage);
@@ -336,19 +320,6 @@ public class ApplicationController {
         model.addAttribute("path", path);
         logger.info(model.toString());
         return "result";
-    }
-
-    /**
-     * <p>
-     * Posts user input from the result template page</p>
-     *
-     * @param lessonId the generated lesson id path variable
-     * @return redirects to the home template
-     */
-    @PostMapping(value = "/resultHome/{lessonId}")
-    public String redirectResulttoHome(@PathVariable("lessonId") Integer lessonId) {
-        logger.info("~~~~~ Redirecting home.");
-        return "redirect:/home";
     }
 
     /**
