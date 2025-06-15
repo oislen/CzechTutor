@@ -320,8 +320,12 @@ public class ApplicationController {
         LessonModel lessonModel = lessonService.get(lessonId);
         // create results messages
         ResultModel resultModel = resultService.findByLessonId(lessonId);
-        String scoreMessage = "Score: " + String.valueOf(resultModel.getScore()) + "%";
-        String nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
+        String scoreMessage = "This lesson is incomplete.";
+        String nCorrectMessage = "Complete using 'Retry Lesson' below.";
+        if (resultService.existsByLessonId(lessonId)) {
+            scoreMessage = "Score: " + String.valueOf(resultModel.getScore()) + "%";
+            nCorrectMessage = "Answered " + String.valueOf(resultModel.getNCorrect()) + " out of " + String.valueOf(nQuestions) + " questions correctly";
+        }
         String path = String.valueOf(lessonId);
         // generate combined lesson questions and answers
         ArrayList<LessonQuestionAnswer> lessonQuestionsAnswers = lessonQuestionAnswerService.createLessonSummary(lessonModel);
